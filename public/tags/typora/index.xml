@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+    <channel>
+        <title>Typora on 羡鱼先生的空间</title>
+        <link>https://lyoshur.gitee.io/tags/typora/</link>
+        <description>Recent content in Typora on 羡鱼先生的空间</description>
+        <generator>Hugo -- gohugo.io</generator>
+        <language>zh-cn</language>
+        <lastBuildDate>Sun, 06 Mar 2022 00:00:00 +0000</lastBuildDate><atom:link href="https://lyoshur.gitee.io/tags/typora/index.xml" rel="self" type="application/rss+xml" /><item>
+        <title>Typora使用教程</title>
+        <link>https://lyoshur.gitee.io/p/typora%E4%BD%BF%E7%94%A8%E6%95%99%E7%A8%8B/</link>
+        <pubDate>Sun, 06 Mar 2022 00:00:00 +0000</pubDate>
+        
+        <guid>https://lyoshur.gitee.io/p/typora%E4%BD%BF%E7%94%A8%E6%95%99%E7%A8%8B/</guid>
+        <description>&lt;h2 id=&#34;typora使用教程&#34;&gt;Typora使用教程&lt;/h2&gt;
+&lt;h3 id=&#34;1快捷键&#34;&gt;1.快捷键&lt;/h3&gt;
+&lt;p&gt;Ctrl + 1 插入一级标题&lt;/p&gt;
+&lt;p&gt;Ctrl + 2 插入二级标题&lt;/p&gt;
+&lt;p&gt;Ctrl + 3 插入三级标题&lt;/p&gt;
+&lt;p&gt;Ctrl + 4 插入四级标题&lt;/p&gt;
+&lt;p&gt;Ctrl + 5 插入五级标题&lt;/p&gt;
+&lt;p&gt;Ctrl + 6 插入六级标题&lt;/p&gt;
+&lt;p&gt;Ctrl + Shinf + K 插入代码块&lt;/p&gt;
+&lt;p&gt;Ctrl + Shinf + Q 插入引用&lt;/p&gt;
+&lt;p&gt;Ctrl + Shinf + [ 有序列表&lt;/p&gt;
+&lt;p&gt;Ctrl + Shinf + ] 无序列表&lt;/p&gt;
+&lt;p&gt;Ctrl + T 插入表格&lt;/p&gt;
+</description>
+        </item>
+        
+    </channel>
+</rss>
