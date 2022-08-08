@@ -2,16 +2,16 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
     <channel>
         <title>GIT on 羡鱼先生的空间</title>
-        <link>https://lyoshur.gitee.io/tags/git/</link>
+        <link>https://lyoshur.github.io/stack/tags/git/</link>
         <description>Recent content in GIT on 羡鱼先生的空间</description>
         <generator>Hugo -- gohugo.io</generator>
         <language>zh-cn</language>
-        <lastBuildDate>Sun, 06 Mar 2022 00:00:00 +0000</lastBuildDate><atom:link href="https://lyoshur.gitee.io/tags/git/index.xml" rel="self" type="application/rss+xml" /><item>
+        <lastBuildDate>Sun, 06 Mar 2022 00:00:00 +0000</lastBuildDate><atom:link href="https://lyoshur.github.io/stack/tags/git/index.xml" rel="self" type="application/rss+xml" /><item>
         <title>git分支管理</title>
-        <link>https://lyoshur.gitee.io/p/git%E5%88%86%E6%94%AF%E7%AE%A1%E7%90%86/</link>
+        <link>https://lyoshur.github.io/stack/p/git%E5%88%86%E6%94%AF%E7%AE%A1%E7%90%86/</link>
         <pubDate>Sun, 06 Mar 2022 00:00:00 +0000</pubDate>
         
-        <guid>https://lyoshur.gitee.io/p/git%E5%88%86%E6%94%AF%E7%AE%A1%E7%90%86/</guid>
+        <guid>https://lyoshur.github.io/stack/p/git%E5%88%86%E6%94%AF%E7%AE%A1%E7%90%86/</guid>
         <description>&lt;h2 id=&#34;git分支管理&#34;&gt;git分支管理&lt;/h2&gt;
 &lt;h3 id=&#34;1查看全部分支&#34;&gt;1.查看全部分支&lt;/h3&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
@@ -99,10 +99,10 @@
         </item>
         <item>
         <title>git基础命令</title>
-        <link>https://lyoshur.gitee.io/p/git%E5%9F%BA%E7%A1%80%E5%91%BD%E4%BB%A4/</link>
+        <link>https://lyoshur.github.io/stack/p/git%E5%9F%BA%E7%A1%80%E5%91%BD%E4%BB%A4/</link>
         <pubDate>Sun, 06 Mar 2022 00:00:00 +0000</pubDate>
         
-        <guid>https://lyoshur.gitee.io/p/git%E5%9F%BA%E7%A1%80%E5%91%BD%E4%BB%A4/</guid>
+        <guid>https://lyoshur.github.io/stack/p/git%E5%9F%BA%E7%A1%80%E5%91%BD%E4%BB%A4/</guid>
         <description>&lt;h2 id=&#34;git基础命令&#34;&gt;git基础命令&lt;/h2&gt;
 &lt;h3 id=&#34;1创建一个空仓库&#34;&gt;1.创建一个空仓库&lt;/h3&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
@@ -222,10 +222,10 @@
         </item>
         <item>
         <title>git远程命令</title>
-        <link>https://lyoshur.gitee.io/p/git%E8%BF%9C%E7%A8%8B%E5%91%BD%E4%BB%A4/</link>
+        <link>https://lyoshur.github.io/stack/p/git%E8%BF%9C%E7%A8%8B%E5%91%BD%E4%BB%A4/</link>
         <pubDate>Sun, 06 Mar 2022 00:00:00 +0000</pubDate>
         
-        <guid>https://lyoshur.gitee.io/p/git%E8%BF%9C%E7%A8%8B%E5%91%BD%E4%BB%A4/</guid>
+        <guid>https://lyoshur.github.io/stack/p/git%E8%BF%9C%E7%A8%8B%E5%91%BD%E4%BB%A4/</guid>
         <description>&lt;h2 id=&#34;git远程命令&#34;&gt;git远程命令&lt;/h2&gt;
 &lt;h3 id=&#34;1显示所有远程仓库&#34;&gt;1.显示所有远程仓库&lt;/h3&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;

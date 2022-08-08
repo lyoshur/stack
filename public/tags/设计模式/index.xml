@@ -2,16 +2,16 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
     <channel>
         <title>设计模式 on 羡鱼先生的空间</title>
-        <link>https://lyoshur.gitee.io/tags/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/</link>
+        <link>https://lyoshur.github.io/stack/tags/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/</link>
         <description>Recent content in 设计模式 on 羡鱼先生的空间</description>
         <generator>Hugo -- gohugo.io</generator>
         <language>zh-cn</language>
-        <lastBuildDate>Sun, 06 Mar 2022 00:00:00 +0000</lastBuildDate><atom:link href="https://lyoshur.gitee.io/tags/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/index.xml" rel="self" type="application/rss+xml" /><item>
+        <lastBuildDate>Sun, 06 Mar 2022 00:00:00 +0000</lastBuildDate><atom:link href="https://lyoshur.github.io/stack/tags/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/index.xml" rel="self" type="application/rss+xml" /><item>
         <title>1.工厂模式</title>
-        <link>https://lyoshur.gitee.io/p/1.%E5%B7%A5%E5%8E%82%E6%A8%A1%E5%BC%8F/</link>
+        <link>https://lyoshur.github.io/stack/p/1.%E5%B7%A5%E5%8E%82%E6%A8%A1%E5%BC%8F/</link>
         <pubDate>Sun, 06 Mar 2022 00:00:00 +0000</pubDate>
         
-        <guid>https://lyoshur.gitee.io/p/1.%E5%B7%A5%E5%8E%82%E6%A8%A1%E5%BC%8F/</guid>
+        <guid>https://lyoshur.github.io/stack/p/1.%E5%B7%A5%E5%8E%82%E6%A8%A1%E5%BC%8F/</guid>
         <description>&lt;h2 id=&#34;工厂模式学习笔记java&#34;&gt;工厂模式学习笔记（JAVA）&lt;/h2&gt;
 &lt;p&gt;首先在开始声明，文中内容部分取自菜鸟教程。特此附上链接&lt;/p&gt;
 &lt;blockquote&gt;
@@ -350,10 +350,10 @@
         </item>
         <item>
         <title>2.建造者模式</title>
-        <link>https://lyoshur.gitee.io/p/2.%E5%BB%BA%E9%80%A0%E8%80%85%E6%A8%A1%E5%BC%8F/</link>
+        <link>https://lyoshur.github.io/stack/p/2.%E5%BB%BA%E9%80%A0%E8%80%85%E6%A8%A1%E5%BC%8F/</link>
         <pubDate>Sun, 06 Mar 2022 00:00:00 +0000</pubDate>
         
-        <guid>https://lyoshur.gitee.io/p/2.%E5%BB%BA%E9%80%A0%E8%80%85%E6%A8%A1%E5%BC%8F/</guid>
+        <guid>https://lyoshur.github.io/stack/p/2.%E5%BB%BA%E9%80%A0%E8%80%85%E6%A8%A1%E5%BC%8F/</guid>
         <description>&lt;h2 id=&#34;建造者模式学习笔记java&#34;&gt;建造者模式学习笔记（JAVA）&lt;/h2&gt;
 &lt;p&gt;关于文章声明部分，上章博客写了，不再赘述。&lt;/p&gt;
 &lt;h3 id=&#34;建造者模式&#34;&gt;建造者模式&lt;/h3&gt;
@@ -835,10 +835,10 @@
         </item>
         <item>
         <title>3.单例模式</title>
-        <link>https://lyoshur.gitee.io/p/3.%E5%8D%95%E4%BE%8B%E6%A8%A1%E5%BC%8F/</link>
+        <link>https://lyoshur.github.io/stack/p/3.%E5%8D%95%E4%BE%8B%E6%A8%A1%E5%BC%8F/</link>
         <pubDate>Sun, 06 Mar 2022 00:00:00 +0000</pubDate>
         
-        <guid>https://lyoshur.gitee.io/p/3.%E5%8D%95%E4%BE%8B%E6%A8%A1%E5%BC%8F/</guid>
+        <guid>https://lyoshur.github.io/stack/p/3.%E5%8D%95%E4%BE%8B%E6%A8%A1%E5%BC%8F/</guid>
         <description>&lt;h2 id=&#34;单例模式学习笔记java&#34;&gt;单例模式学习笔记（JAVA）&lt;/h2&gt;
 &lt;p&gt;关于文章声明部分，上章博客写了，不再赘述。&lt;/p&gt;
 &lt;p&gt;ps:本文中的代码，仅仅是为了说明问题，并不保证生产中可用，大家看看就好。&lt;/p&gt;

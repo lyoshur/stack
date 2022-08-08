@@ -2,16 +2,16 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
     <channel>
         <title>Chrome on 羡鱼先生的空间</title>
-        <link>https://lyoshur.gitee.io/tags/chrome/</link>
+        <link>https://lyoshur.github.io/stack/tags/chrome/</link>
         <description>Recent content in Chrome on 羡鱼先生的空间</description>
         <generator>Hugo -- gohugo.io</generator>
         <language>zh-cn</language>
-        <lastBuildDate>Sun, 06 Mar 2022 00:00:00 +0000</lastBuildDate><atom:link href="https://lyoshur.gitee.io/tags/chrome/index.xml" rel="self" type="application/rss+xml" /><item>
+        <lastBuildDate>Sun, 06 Mar 2022 00:00:00 +0000</lastBuildDate><atom:link href="https://lyoshur.github.io/stack/tags/chrome/index.xml" rel="self" type="application/rss+xml" /><item>
         <title>Chrome开启多线程下载</title>
-        <link>https://lyoshur.gitee.io/p/chrome%E5%BC%80%E5%90%AF%E5%A4%9A%E7%BA%BF%E7%A8%8B%E4%B8%8B%E8%BD%BD/</link>
+        <link>https://lyoshur.github.io/stack/p/chrome%E5%BC%80%E5%90%AF%E5%A4%9A%E7%BA%BF%E7%A8%8B%E4%B8%8B%E8%BD%BD/</link>
         <pubDate>Sun, 06 Mar 2022 00:00:00 +0000</pubDate>
         
-        <guid>https://lyoshur.gitee.io/p/chrome%E5%BC%80%E5%90%AF%E5%A4%9A%E7%BA%BF%E7%A8%8B%E4%B8%8B%E8%BD%BD/</guid>
+        <guid>https://lyoshur.github.io/stack/p/chrome%E5%BC%80%E5%90%AF%E5%A4%9A%E7%BA%BF%E7%A8%8B%E4%B8%8B%E8%BD%BD/</guid>
         <description>&lt;h2 id=&#34;多线程下载&#34;&gt;多线程下载&lt;/h2&gt;
 &lt;p&gt;在地址栏输入&lt;/p&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;

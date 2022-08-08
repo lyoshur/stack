@@ -2,16 +2,16 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
     <channel>
         <title>Docker on 羡鱼先生的空间</title>
-        <link>https://lyoshur.gitee.io/tags/docker/</link>
+        <link>https://lyoshur.github.io/stack/tags/docker/</link>
         <description>Recent content in Docker on 羡鱼先生的空间</description>
         <generator>Hugo -- gohugo.io</generator>
         <language>zh-cn</language>
-        <lastBuildDate>Sun, 06 Mar 2022 00:00:00 +0000</lastBuildDate><atom:link href="https://lyoshur.gitee.io/tags/docker/index.xml" rel="self" type="application/rss+xml" /><item>
+        <lastBuildDate>Sun, 06 Mar 2022 00:00:00 +0000</lastBuildDate><atom:link href="https://lyoshur.github.io/stack/tags/docker/index.xml" rel="self" type="application/rss+xml" /><item>
         <title>docker仓库管理</title>
-        <link>https://lyoshur.gitee.io/p/docker%E4%BB%93%E5%BA%93%E7%AE%A1%E7%90%86/</link>
+        <link>https://lyoshur.github.io/stack/p/docker%E4%BB%93%E5%BA%93%E7%AE%A1%E7%90%86/</link>
         <pubDate>Sun, 06 Mar 2022 00:00:00 +0000</pubDate>
         
-        <guid>https://lyoshur.gitee.io/p/docker%E4%BB%93%E5%BA%93%E7%AE%A1%E7%90%86/</guid>
+        <guid>https://lyoshur.github.io/stack/p/docker%E4%BB%93%E5%BA%93%E7%AE%A1%E7%90%86/</guid>
         <description>&lt;h2 id=&#34;docker仓库管理&#34;&gt;docker仓库管理&lt;/h2&gt;
 &lt;h3 id=&#34;1登录远程仓库&#34;&gt;1.登录远程仓库&lt;/h3&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
@@ -62,10 +62,10 @@
         </item>
         <item>
         <title>docker常用命令</title>
-        <link>https://lyoshur.gitee.io/p/docker%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4/</link>
+        <link>https://lyoshur.github.io/stack/p/docker%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4/</link>
         <pubDate>Sun, 06 Mar 2022 00:00:00 +0000</pubDate>
         
-        <guid>https://lyoshur.gitee.io/p/docker%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4/</guid>
+        <guid>https://lyoshur.github.io/stack/p/docker%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4/</guid>
         <description>&lt;h2 id=&#34;docker常用命令&#34;&gt;docker常用命令&lt;/h2&gt;
 &lt;h3 id=&#34;1获取本地镜像列表&#34;&gt;1.获取本地镜像列表&lt;/h3&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
@@ -282,10 +282,10 @@
         </item>
         <item>
         <title>Docker网络</title>
-        <link>https://lyoshur.gitee.io/p/docker%E7%BD%91%E7%BB%9C/</link>
+        <link>https://lyoshur.github.io/stack/p/docker%E7%BD%91%E7%BB%9C/</link>
         <pubDate>Sun, 06 Mar 2022 00:00:00 +0000</pubDate>
         
-        <guid>https://lyoshur.gitee.io/p/docker%E7%BD%91%E7%BB%9C/</guid>
+        <guid>https://lyoshur.github.io/stack/p/docker%E7%BD%91%E7%BB%9C/</guid>
         <description>&lt;h2 id=&#34;docker网络&#34;&gt;Docker网络&lt;/h2&gt;
 &lt;h3 id=&#34;1新建docker网络&#34;&gt;1.新建Docker网络&lt;/h3&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
@@ -362,10 +362,10 @@
         </item>
         <item>
         <title>使用Dockerfile构建镜像</title>
-        <link>https://lyoshur.gitee.io/p/%E4%BD%BF%E7%94%A8dockerfile%E6%9E%84%E5%BB%BA%E9%95%9C%E5%83%8F/</link>
+        <link>https://lyoshur.github.io/stack/p/%E4%BD%BF%E7%94%A8dockerfile%E6%9E%84%E5%BB%BA%E9%95%9C%E5%83%8F/</link>
         <pubDate>Sun, 06 Mar 2022 00:00:00 +0000</pubDate>
         
-        <guid>https://lyoshur.gitee.io/p/%E4%BD%BF%E7%94%A8dockerfile%E6%9E%84%E5%BB%BA%E9%95%9C%E5%83%8F/</guid>
+        <guid>https://lyoshur.github.io/stack/p/%E4%BD%BF%E7%94%A8dockerfile%E6%9E%84%E5%BB%BA%E9%95%9C%E5%83%8F/</guid>
         <description>&lt;h2 id=&#34;使用dockerfile构建镜像&#34;&gt;使用Dockerfile构建镜像&lt;/h2&gt;
 &lt;p&gt;我们使用命令 &lt;strong&gt;docker build&lt;/strong&gt; ， 从零开始来创建一个新的镜像。为此，我们需要创建一个 Dockerfile 文件，其中包含一组指令来告诉 Docker 如何构建我们的镜像。&lt;/p&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;

@@ -2,16 +2,16 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
     <channel>
         <title>JAVA on 羡鱼先生的空间</title>
-        <link>https://lyoshur.gitee.io/categories/java/</link>
+        <link>https://lyoshur.github.io/stack/categories/java/</link>
         <description>Recent content in JAVA on 羡鱼先生的空间</description>
         <generator>Hugo -- gohugo.io</generator>
         <language>zh-cn</language>
-        <lastBuildDate>Thu, 10 Mar 2022 00:00:00 +0000</lastBuildDate><atom:link href="https://lyoshur.gitee.io/categories/java/index.xml" rel="self" type="application/rss+xml" /><item>
+        <lastBuildDate>Thu, 10 Mar 2022 00:00:00 +0000</lastBuildDate><atom:link href="https://lyoshur.github.io/stack/categories/java/index.xml" rel="self" type="application/rss+xml" /><item>
         <title>stream流操作</title>
-        <link>https://lyoshur.gitee.io/p/stream%E6%B5%81%E6%93%8D%E4%BD%9C/</link>
+        <link>https://lyoshur.github.io/stack/p/stream%E6%B5%81%E6%93%8D%E4%BD%9C/</link>
         <pubDate>Thu, 10 Mar 2022 00:00:00 +0000</pubDate>
         
-        <guid>https://lyoshur.gitee.io/p/stream%E6%B5%81%E6%93%8D%E4%BD%9C/</guid>
+        <guid>https://lyoshur.github.io/stack/p/stream%E6%B5%81%E6%93%8D%E4%BD%9C/</guid>
         <description>&lt;h2 id=&#34;stream流操作&#34;&gt;stream流操作&lt;/h2&gt;
 &lt;p&gt;stream位于java.util包中，是java8中新增类。&lt;/p&gt;
 &lt;h3 id=&#34;1创建stream&#34;&gt;1.创建Stream&lt;/h3&gt;
@@ -534,10 +534,10 @@
         </item>
         <item>
         <title>java9 中的 Module, ModulePath 和 ClassPath</title>
-        <link>https://lyoshur.gitee.io/p/java9-%E4%B8%AD%E7%9A%84-module-modulepath-%E5%92%8C-classpath/</link>
+        <link>https://lyoshur.github.io/stack/p/java9-%E4%B8%AD%E7%9A%84-module-modulepath-%E5%92%8C-classpath/</link>
         <pubDate>Wed, 09 Mar 2022 00:00:00 +0000</pubDate>
         
-        <guid>https://lyoshur.gitee.io/p/java9-%E4%B8%AD%E7%9A%84-module-modulepath-%E5%92%8C-classpath/</guid>
+        <guid>https://lyoshur.github.io/stack/p/java9-%E4%B8%AD%E7%9A%84-module-modulepath-%E5%92%8C-classpath/</guid>
         <description>&lt;h1 id=&#34;java9-中的-module-modulepath-和-classpath&#34;&gt;java9 中的 Module, ModulePath 和 ClassPath&lt;/h1&gt;
 &lt;p&gt;我们都知道，从 Java9 开始，引入了模块系统，提供了对大型复杂系统很重要的隔离，依赖管理等特性。&lt;/p&gt;
 &lt;p&gt;首先是个吐槽。&lt;/p&gt;
@@ -604,10 +604,10 @@
         </item>
         <item>
         <title>java反编译</title>
-        <link>https://lyoshur.gitee.io/p/java%E5%8F%8D%E7%BC%96%E8%AF%91/</link>
+        <link>https://lyoshur.github.io/stack/p/java%E5%8F%8D%E7%BC%96%E8%AF%91/</link>
         <pubDate>Tue, 08 Mar 2022 00:00:00 +0000</pubDate>
         
-        <guid>https://lyoshur.gitee.io/p/java%E5%8F%8D%E7%BC%96%E8%AF%91/</guid>
+        <guid>https://lyoshur.github.io/stack/p/java%E5%8F%8D%E7%BC%96%E8%AF%91/</guid>
         <description>&lt;h2 id=&#34;java反编译&#34;&gt;java反编译&lt;/h2&gt;
 &lt;p&gt;在使用idea进行反编译class文件时，发现文件头会带有&lt;/p&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
@@ -671,10 +671,10 @@
         </item>
         <item>
         <title>0.说明-spring-boot(2.0.3.RELEASE)&#43;spring-cloud(Finchley.RELEASE)</title>
-        <link>https://lyoshur.gitee.io/p/0.%E8%AF%B4%E6%98%8E-spring-boot2.0.3.release-spring-cloudfinchley.release/</link>
+        <link>https://lyoshur.github.io/stack/p/0.%E8%AF%B4%E6%98%8E-spring-boot2.0.3.release-spring-cloudfinchley.release/</link>
         <pubDate>Sun, 06 Mar 2022 00:00:00 +0000</pubDate>
         
-        <guid>https://lyoshur.gitee.io/p/0.%E8%AF%B4%E6%98%8E-spring-boot2.0.3.release-spring-cloudfinchley.release/</guid>
+        <guid>https://lyoshur.github.io/stack/p/0.%E8%AF%B4%E6%98%8E-spring-boot2.0.3.release-spring-cloudfinchley.release/</guid>
         <description>&lt;p&gt;文中内容需要java、spring、maven等基础知识。&lt;/p&gt;
 &lt;p&gt;使用的spring boot版本为 2.0.3.RELEASE&lt;br&gt;
 使用的spring cloud版本为 Finchley.RELEASE&lt;/p&gt;
@@ -691,10 +691,10 @@
         </item>
         <item>
         <title>0.说明-spring-boot(2.1.8.RELEASE)&#43;spring-cloud(Greenwich.SR3)</title>
-        <link>https://lyoshur.gitee.io/p/0.%E8%AF%B4%E6%98%8E-spring-boot2.1.8.release-spring-cloudgreenwich.sr3/</link>
+        <link>https://lyoshur.github.io/stack/p/0.%E8%AF%B4%E6%98%8E-spring-boot2.1.8.release-spring-cloudgreenwich.sr3/</link>
         <pubDate>Sun, 06 Mar 2022 00:00:00 +0000</pubDate>
         
-        <guid>https://lyoshur.gitee.io/p/0.%E8%AF%B4%E6%98%8E-spring-boot2.1.8.release-spring-cloudgreenwich.sr3/</guid>
+        <guid>https://lyoshur.github.io/stack/p/0.%E8%AF%B4%E6%98%8E-spring-boot2.1.8.release-spring-cloudgreenwich.sr3/</guid>
         <description>&lt;p&gt;文中内容需要java、spring、maven等基础知识。&lt;/p&gt;
 &lt;p&gt;使用的spring boot版本为 2.1.8.RELEASE&lt;br&gt;
 使用的spring cloud版本为 Greenwich.SR3&lt;/p&gt;
@@ -711,10 +711,10 @@
         </item>
         <item>
         <title>1.Eureka-spring-boot(2.0.3.RELEASE)&#43;spring-cloud(Finchley.RELEASE)</title>
-        <link>https://lyoshur.gitee.io/p/1.eureka-spring-boot2.0.3.release-spring-cloudfinchley.release/</link>
+        <link>https://lyoshur.github.io/stack/p/1.eureka-spring-boot2.0.3.release-spring-cloudfinchley.release/</link>
         <pubDate>Sun, 06 Mar 2022 00:00:00 +0000</pubDate>
         
-        <guid>https://lyoshur.gitee.io/p/1.eureka-spring-boot2.0.3.release-spring-cloudfinchley.release/</guid>
+        <guid>https://lyoshur.github.io/stack/p/1.eureka-spring-boot2.0.3.release-spring-cloudfinchley.release/</guid>
         <description>&lt;p&gt;本文非完全原创，仅仅是整理自网上博客加上一部分自己的理解。参考文章：&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;方志朋&lt;br&gt;
@@ -1484,10 +1484,10 @@ Eureka，服务注册和发现，它提供了一个服务注册中心、服务�
         </item>
         <item>
         <title>1.Eureka-spring-boot(2.1.8.RELEASE)&#43;spring-cloud(Greenwich.SR3)</title>
-        <link>https://lyoshur.gitee.io/p/1.eureka-spring-boot2.1.8.release-spring-cloudgreenwich.sr3/</link>
+        <link>https://lyoshur.github.io/stack/p/1.eureka-spring-boot2.1.8.release-spring-cloudgreenwich.sr3/</link>
         <pubDate>Sun, 06 Mar 2022 00:00:00 +0000</pubDate>
         
-        <guid>https://lyoshur.gitee.io/p/1.eureka-spring-boot2.1.8.release-spring-cloudgreenwich.sr3/</guid>
+        <guid>https://lyoshur.github.io/stack/p/1.eureka-spring-boot2.1.8.release-spring-cloudgreenwich.sr3/</guid>
         <description>&lt;p&gt;本文非完全原创，仅仅是整理自网上博客加上一部分自己的理解。参考文章：&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;方志朋&lt;br&gt;
@@ -2257,10 +2257,10 @@ Eureka，服务注册和发现，它提供了一个服务注册中心、服务�
         </item>
         <item>
         <title>1.Hadoop安装常见错误</title>
-        <link>https://lyoshur.gitee.io/p/1.hadoop%E5%AE%89%E8%A3%85%E5%B8%B8%E8%A7%81%E9%94%99%E8%AF%AF/</link>
+        <link>https://lyoshur.github.io/stack/p/1.hadoop%E5%AE%89%E8%A3%85%E5%B8%B8%E8%A7%81%E9%94%99%E8%AF%AF/</link>
         <pubDate>Sun, 06 Mar 2022 00:00:00 +0000</pubDate>
         
-        <guid>https://lyoshur.gitee.io/p/1.hadoop%E5%AE%89%E8%A3%85%E5%B8%B8%E8%A7%81%E9%94%99%E8%AF%AF/</guid>
+        <guid>https://lyoshur.github.io/stack/p/1.hadoop%E5%AE%89%E8%A3%85%E5%B8%B8%E8%A7%81%E9%94%99%E8%AF%AF/</guid>
         <description>&lt;h4 id=&#34;1伪分布式节点启动报错&#34;&gt;1.伪分布式节点启动报错&lt;/h4&gt;
 &lt;p&gt;执行命令 ./start-dfs.sh&lt;/p&gt;
 &lt;p&gt;错误信息：&lt;/p&gt;
@@ -2417,10 +2417,10 @@ Eureka，服务注册和发现，它提供了一个服务注册中心、服务�
         </item>
         <item>
         <title>1.工厂模式</title>
-        <link>https://lyoshur.gitee.io/p/1.%E5%B7%A5%E5%8E%82%E6%A8%A1%E5%BC%8F/</link>
+        <link>https://lyoshur.github.io/stack/p/1.%E5%B7%A5%E5%8E%82%E6%A8%A1%E5%BC%8F/</link>
         <pubDate>Sun, 06 Mar 2022 00:00:00 +0000</pubDate>
         
-        <guid>https://lyoshur.gitee.io/p/1.%E5%B7%A5%E5%8E%82%E6%A8%A1%E5%BC%8F/</guid>
+        <guid>https://lyoshur.github.io/stack/p/1.%E5%B7%A5%E5%8E%82%E6%A8%A1%E5%BC%8F/</guid>
         <description>&lt;h2 id=&#34;工厂模式学习笔记java&#34;&gt;工厂模式学习笔记（JAVA）&lt;/h2&gt;
 &lt;p&gt;首先在开始声明，文中内容部分取自菜鸟教程。特此附上链接&lt;/p&gt;
 &lt;blockquote&gt;
@@ -2759,10 +2759,10 @@ Eureka，服务注册和发现，它提供了一个服务注册中心、服务�
         </item>
         <item>
         <title>1.关于maven中的Group、Artifact、Version</title>
-        <link>https://lyoshur.gitee.io/p/1.%E5%85%B3%E4%BA%8Emaven%E4%B8%AD%E7%9A%84groupartifactversion/</link>
+        <link>https://lyoshur.github.io/stack/p/1.%E5%85%B3%E4%BA%8Emaven%E4%B8%AD%E7%9A%84groupartifactversion/</link>
         <pubDate>Sun, 06 Mar 2022 00:00:00 +0000</pubDate>
         
-        <guid>https://lyoshur.gitee.io/p/1.%E5%85%B3%E4%BA%8Emaven%E4%B8%AD%E7%9A%84groupartifactversion/</guid>
+        <guid>https://lyoshur.github.io/stack/p/1.%E5%85%B3%E4%BA%8Emaven%E4%B8%AD%E7%9A%84groupartifactversion/</guid>
         <description>&lt;p&gt;本文非完全原创，仅仅是整理自网上博客加上一部分自己的理解。参考文章：&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;aigoV &lt;a class=&#34;link&#34; href=&#34;https://blog.csdn.net/aigoV/article/details/89884501&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
@@ -2786,10 +2786,10 @@ ArtifactID定义了一个maven项目在组中的唯一id。&lt;/p&gt;
         </item>
         <item>
         <title>2.Ribbon-spring-boot(2.0.3.RELEASE)&#43;spring-cloud(Finchley.RELEASE)</title>
-        <link>https://lyoshur.gitee.io/p/2.ribbon-spring-boot2.0.3.release-spring-cloudfinchley.release/</link>
+        <link>https://lyoshur.github.io/stack/p/2.ribbon-spring-boot2.0.3.release-spring-cloudfinchley.release/</link>
         <pubDate>Sun, 06 Mar 2022 00:00:00 +0000</pubDate>
         
-        <guid>https://lyoshur.gitee.io/p/2.ribbon-spring-boot2.0.3.release-spring-cloudfinchley.release/</guid>
+        <guid>https://lyoshur.github.io/stack/p/2.ribbon-spring-boot2.0.3.release-spring-cloudfinchley.release/</guid>
         <description>&lt;p&gt;本文非完全原创，仅仅是整理自网上博客加上一部分自己的理解。参考文章：&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;方志朋&lt;br&gt;
@@ -3165,10 +3165,10 @@ ArtifactID定义了一个maven项目在组中的唯一id。&lt;/p&gt;
         </item>
         <item>
         <title>2.Ribbon-spring-boot(2.1.8.RELEASE)&#43;spring-cloud(Greenwich.SR3)</title>
-        <link>https://lyoshur.gitee.io/p/2.ribbon-spring-boot2.1.8.release-spring-cloudgreenwich.sr3/</link>
+        <link>https://lyoshur.github.io/stack/p/2.ribbon-spring-boot2.1.8.release-spring-cloudgreenwich.sr3/</link>
         <pubDate>Sun, 06 Mar 2022 00:00:00 +0000</pubDate>
         
-        <guid>https://lyoshur.gitee.io/p/2.ribbon-spring-boot2.1.8.release-spring-cloudgreenwich.sr3/</guid>
+        <guid>https://lyoshur.github.io/stack/p/2.ribbon-spring-boot2.1.8.release-spring-cloudgreenwich.sr3/</guid>
         <description>&lt;p&gt;本文非完全原创，仅仅是整理自网上博客加上一部分自己的理解。参考文章：&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;方志朋&lt;br&gt;
@@ -3544,10 +3544,10 @@ ArtifactID定义了一个maven项目在组中的唯一id。&lt;/p&gt;
         </item>
         <item>
         <title>2.关于maven中的relativePath</title>
-        <link>https://lyoshur.gitee.io/p/2.%E5%85%B3%E4%BA%8Emaven%E4%B8%AD%E7%9A%84relativepath/</link>
+        <link>https://lyoshur.github.io/stack/p/2.%E5%85%B3%E4%BA%8Emaven%E4%B8%AD%E7%9A%84relativepath/</link>
         <pubDate>Sun, 06 Mar 2022 00:00:00 +0000</pubDate>
         
-        <guid>https://lyoshur.gitee.io/p/2.%E5%85%B3%E4%BA%8Emaven%E4%B8%AD%E7%9A%84relativepath/</guid>
+        <guid>https://lyoshur.github.io/stack/p/2.%E5%85%B3%E4%BA%8Emaven%E4%B8%AD%E7%9A%84relativepath/</guid>
         <description>&lt;p&gt;本文非完全原创，仅仅是整理自网上博客加上一部分自己的理解。参考文章：&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;xinwendewen &lt;a class=&#34;link&#34; href=&#34;https://blog.csdn.net/zwt0909/article/details/52218222&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
@@ -3583,10 +3583,10 @@ ArtifactID定义了一个maven项目在组中的唯一id。&lt;/p&gt;
         </item>
         <item>
         <title>2.建造者模式</title>
-        <link>https://lyoshur.gitee.io/p/2.%E5%BB%BA%E9%80%A0%E8%80%85%E6%A8%A1%E5%BC%8F/</link>
+        <link>https://lyoshur.github.io/stack/p/2.%E5%BB%BA%E9%80%A0%E8%80%85%E6%A8%A1%E5%BC%8F/</link>
         <pubDate>Sun, 06 Mar 2022 00:00:00 +0000</pubDate>
         
-        <guid>https://lyoshur.gitee.io/p/2.%E5%BB%BA%E9%80%A0%E8%80%85%E6%A8%A1%E5%BC%8F/</guid>
+        <guid>https://lyoshur.github.io/stack/p/2.%E5%BB%BA%E9%80%A0%E8%80%85%E6%A8%A1%E5%BC%8F/</guid>
         <description>&lt;h2 id=&#34;建造者模式学习笔记java&#34;&gt;建造者模式学习笔记（JAVA）&lt;/h2&gt;
 &lt;p&gt;关于文章声明部分，上章博客写了，不再赘述。&lt;/p&gt;
 &lt;h3 id=&#34;建造者模式&#34;&gt;建造者模式&lt;/h3&gt;
@@ -4068,10 +4068,10 @@ ArtifactID定义了一个maven项目在组中的唯一id。&lt;/p&gt;
         </item>
         <item>
         <title>3.Feign-spring-boot(2.0.3.RELEASE)&#43;spring-cloud(Finchley.RELEASE)</title>
-        <link>https://lyoshur.gitee.io/p/3.feign-spring-boot2.0.3.release-spring-cloudfinchley.release/</link>
+        <link>https://lyoshur.github.io/stack/p/3.feign-spring-boot2.0.3.release-spring-cloudfinchley.release/</link>
         <pubDate>Sun, 06 Mar 2022 00:00:00 +0000</pubDate>
         
-        <guid>https://lyoshur.gitee.io/p/3.feign-spring-boot2.0.3.release-spring-cloudfinchley.release/</guid>
+        <guid>https://lyoshur.github.io/stack/p/3.feign-spring-boot2.0.3.release-spring-cloudfinchley.release/</guid>
         <description>&lt;p&gt;本文非完全原创，仅仅是整理自网上博客加上一部分自己的理解。参考文章：&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;方志朋&lt;br&gt;
@@ -4353,10 +4353,10 @@ ArtifactID定义了一个maven项目在组中的唯一id。&lt;/p&gt;
         </item>
         <item>
         <title>3.Feign-spring-boot(2.1.8.RELEASE)&#43;spring-cloud(Greenwich.SR3)</title>
-        <link>https://lyoshur.gitee.io/p/3.feign-spring-boot2.1.8.release-spring-cloudgreenwich.sr3/</link>
+        <link>https://lyoshur.github.io/stack/p/3.feign-spring-boot2.1.8.release-spring-cloudgreenwich.sr3/</link>
         <pubDate>Sun, 06 Mar 2022 00:00:00 +0000</pubDate>
         
-        <guid>https://lyoshur.gitee.io/p/3.feign-spring-boot2.1.8.release-spring-cloudgreenwich.sr3/</guid>
+        <guid>https://lyoshur.github.io/stack/p/3.feign-spring-boot2.1.8.release-spring-cloudgreenwich.sr3/</guid>
         <description>&lt;p&gt;本文非完全原创，仅仅是整理自网上博客加上一部分自己的理解。参考文章：&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;方志朋&lt;br&gt;
@@ -4638,10 +4638,10 @@ ArtifactID定义了一个maven项目在组中的唯一id。&lt;/p&gt;
         </item>
         <item>
         <title>3.单例模式</title>
-        <link>https://lyoshur.gitee.io/p/3.%E5%8D%95%E4%BE%8B%E6%A8%A1%E5%BC%8F/</link>
+        <link>https://lyoshur.github.io/stack/p/3.%E5%8D%95%E4%BE%8B%E6%A8%A1%E5%BC%8F/</link>
         <pubDate>Sun, 06 Mar 2022 00:00:00 +0000</pubDate>
         
-        <guid>https://lyoshur.gitee.io/p/3.%E5%8D%95%E4%BE%8B%E6%A8%A1%E5%BC%8F/</guid>
+        <guid>https://lyoshur.github.io/stack/p/3.%E5%8D%95%E4%BE%8B%E6%A8%A1%E5%BC%8F/</guid>
         <description>&lt;h2 id=&#34;单例模式学习笔记java&#34;&gt;单例模式学习笔记（JAVA）&lt;/h2&gt;
 &lt;p&gt;关于文章声明部分，上章博客写了，不再赘述。&lt;/p&gt;
 &lt;p&gt;ps:本文中的代码，仅仅是为了说明问题，并不保证生产中可用，大家看看就好。&lt;/p&gt;
@@ -4877,10 +4877,10 @@ ArtifactID定义了一个maven项目在组中的唯一id。&lt;/p&gt;
         </item>
         <item>
         <title>4.Hystrix-spring-boot(2.0.3.RELEASE)&#43;spring-cloud(Finchley.RELEASE)</title>
-        <link>https://lyoshur.gitee.io/p/4.hystrix-spring-boot2.0.3.release-spring-cloudfinchley.release/</link>
+        <link>https://lyoshur.github.io/stack/p/4.hystrix-spring-boot2.0.3.release-spring-cloudfinchley.release/</link>
         <pubDate>Sun, 06 Mar 2022 00:00:00 +0000</pubDate>
         
-        <guid>https://lyoshur.gitee.io/p/4.hystrix-spring-boot2.0.3.release-spring-cloudfinchley.release/</guid>
+        <guid>https://lyoshur.github.io/stack/p/4.hystrix-spring-boot2.0.3.release-spring-cloudfinchley.release/</guid>
         <description>&lt;p&gt;本文非完全原创，仅仅是整理自网上博客加上一部分自己的理解。参考文章：&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;方志朋&lt;br&gt;
@@ -5002,10 +5002,10 @@ ArtifactID定义了一个maven项目在组中的唯一id。&lt;/p&gt;
         </item>
         <item>
         <title>4.Hystrix-spring-boot(2.1.8.RELEASE)&#43;spring-cloud(Greenwich.SR3)</title>
-        <link>https://lyoshur.gitee.io/p/4.hystrix-spring-boot2.1.8.release-spring-cloudgreenwich.sr3/</link>
+        <link>https://lyoshur.github.io/stack/p/4.hystrix-spring-boot2.1.8.release-spring-cloudgreenwich.sr3/</link>
         <pubDate>Sun, 06 Mar 2022 00:00:00 +0000</pubDate>
         
-        <guid>https://lyoshur.gitee.io/p/4.hystrix-spring-boot2.1.8.release-spring-cloudgreenwich.sr3/</guid>
+        <guid>https://lyoshur.github.io/stack/p/4.hystrix-spring-boot2.1.8.release-spring-cloudgreenwich.sr3/</guid>
         <description>&lt;p&gt;本文非完全原创，仅仅是整理自网上博客加上一部分自己的理解。参考文章：&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;方志朋&lt;br&gt;
@@ -5127,10 +5127,10 @@ ArtifactID定义了一个maven项目在组中的唯一id。&lt;/p&gt;
         </item>
         <item>
         <title>5.Zuul-spring-boot(2.0.3.RELEASE)&#43;spring-cloud(Finchley.RELEASE)</title>
-        <link>https://lyoshur.gitee.io/p/5.zuul-spring-boot2.0.3.release-spring-cloudfinchley.release/</link>
+        <link>https://lyoshur.github.io/stack/p/5.zuul-spring-boot2.0.3.release-spring-cloudfinchley.release/</link>
         <pubDate>Sun, 06 Mar 2022 00:00:00 +0000</pubDate>
         
-        <guid>https://lyoshur.gitee.io/p/5.zuul-spring-boot2.0.3.release-spring-cloudfinchley.release/</guid>
+        <guid>https://lyoshur.github.io/stack/p/5.zuul-spring-boot2.0.3.release-spring-cloudfinchley.release/</guid>
         <description>&lt;p&gt;本文非完全原创，仅仅是整理自网上博客加上一部分自己的理解。参考文章：&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;方志朋&lt;br&gt;
@@ -5502,10 +5502,10 @@ ArtifactID定义了一个maven项目在组中的唯一id。&lt;/p&gt;
         </item>
         <item>
         <title>5.Zuul-spring-boot(2.1.8.RELEASE)&#43;spring-cloud(Greenwich.SR3)</title>
-        <link>https://lyoshur.gitee.io/p/5.zuul-spring-boot2.1.8.release-spring-cloudgreenwich.sr3/</link>
+        <link>https://lyoshur.github.io/stack/p/5.zuul-spring-boot2.1.8.release-spring-cloudgreenwich.sr3/</link>
         <pubDate>Sun, 06 Mar 2022 00:00:00 +0000</pubDate>
         
-        <guid>https://lyoshur.gitee.io/p/5.zuul-spring-boot2.1.8.release-spring-cloudgreenwich.sr3/</guid>
+        <guid>https://lyoshur.github.io/stack/p/5.zuul-spring-boot2.1.8.release-spring-cloudgreenwich.sr3/</guid>
         <description>&lt;p&gt;本文非完全原创，仅仅是整理自网上博客加上一部分自己的理解。参考文章：&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;方志朋&lt;br&gt;
@@ -5877,10 +5877,10 @@ ArtifactID定义了一个maven项目在组中的唯一id。&lt;/p&gt;
         </item>
         <item>
         <title>6.Config-spring-boot(2.0.3.RELEASE)&#43;spring-cloud(Finchley.RELEASE)</title>
-        <link>https://lyoshur.gitee.io/p/6.config-spring-boot2.0.3.release-spring-cloudfinchley.release/</link>
+        <link>https://lyoshur.github.io/stack/p/6.config-spring-boot2.0.3.release-spring-cloudfinchley.release/</link>
         <pubDate>Sun, 06 Mar 2022 00:00:00 +0000</pubDate>
         
-        <guid>https://lyoshur.gitee.io/p/6.config-spring-boot2.0.3.release-spring-cloudfinchley.release/</guid>
+        <guid>https://lyoshur.github.io/stack/p/6.config-spring-boot2.0.3.release-spring-cloudfinchley.release/</guid>
         <description>&lt;p&gt;本文非完全原创，仅仅是整理自网上博客加上一部分自己的理解。参考文章：&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;方志朋&lt;br&gt;
@@ -6195,10 +6195,10 @@ ArtifactID定义了一个maven项目在组中的唯一id。&lt;/p&gt;
         </item>
         <item>
         <title>6.Config-spring-boot(2.1.8.RELEASE)&#43;spring-cloud(Greenwich.SR3)</title>
-        <link>https://lyoshur.gitee.io/p/6.config-spring-boot2.1.8.release-spring-cloudgreenwich.sr3/</link>
+        <link>https://lyoshur.github.io/stack/p/6.config-spring-boot2.1.8.release-spring-cloudgreenwich.sr3/</link>
         <pubDate>Sun, 06 Mar 2022 00:00:00 +0000</pubDate>
         
-        <guid>https://lyoshur.gitee.io/p/6.config-spring-boot2.1.8.release-spring-cloudgreenwich.sr3/</guid>
+        <guid>https://lyoshur.github.io/stack/p/6.config-spring-boot2.1.8.release-spring-cloudgreenwich.sr3/</guid>
         <description>&lt;p&gt;本文非完全原创，仅仅是整理自网上博客加上一部分自己的理解。参考文章：&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;方志朋&lt;br&gt;
@@ -6513,10 +6513,10 @@ ArtifactID定义了一个maven项目在组中的唯一id。&lt;/p&gt;
         </item>
         <item>
         <title>7.Config高可用改造-spring-boot(2.0.3.RELEASE)&#43;spring-cloud(Finchley.RELEASE)</title>
-        <link>https://lyoshur.gitee.io/p/7.config%E9%AB%98%E5%8F%AF%E7%94%A8%E6%94%B9%E9%80%A0-spring-boot2.0.3.release-spring-cloudfinchley.release/</link>
+        <link>https://lyoshur.github.io/stack/p/7.config%E9%AB%98%E5%8F%AF%E7%94%A8%E6%94%B9%E9%80%A0-spring-boot2.0.3.release-spring-cloudfinchley.release/</link>
         <pubDate>Sun, 06 Mar 2022 00:00:00 +0000</pubDate>
         
-        <guid>https://lyoshur.gitee.io/p/7.config%E9%AB%98%E5%8F%AF%E7%94%A8%E6%94%B9%E9%80%A0-spring-boot2.0.3.release-spring-cloudfinchley.release/</guid>
+        <guid>https://lyoshur.github.io/stack/p/7.config%E9%AB%98%E5%8F%AF%E7%94%A8%E6%94%B9%E9%80%A0-spring-boot2.0.3.release-spring-cloudfinchley.release/</guid>
         <description>&lt;p&gt;本文非完全原创，仅仅是整理自网上博客加上一部分自己的理解。参考文章：&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;方志朋&lt;br&gt;
@@ -6657,10 +6657,10 @@ ArtifactID定义了一个maven项目在组中的唯一id。&lt;/p&gt;
         </item>
         <item>
         <title>7.Config高可用改造-spring-boot(2.1.8.RELEASE)&#43;spring-cloud(Greenwich.SR3)</title>
-        <link>https://lyoshur.gitee.io/p/7.config%E9%AB%98%E5%8F%AF%E7%94%A8%E6%94%B9%E9%80%A0-spring-boot2.1.8.release-spring-cloudgreenwich.sr3/</link>
+        <link>https://lyoshur.github.io/stack/p/7.config%E9%AB%98%E5%8F%AF%E7%94%A8%E6%94%B9%E9%80%A0-spring-boot2.1.8.release-spring-cloudgreenwich.sr3/</link>
         <pubDate>Sun, 06 Mar 2022 00:00:00 +0000</pubDate>
         
-        <guid>https://lyoshur.gitee.io/p/7.config%E9%AB%98%E5%8F%AF%E7%94%A8%E6%94%B9%E9%80%A0-spring-boot2.1.8.release-spring-cloudgreenwich.sr3/</guid>
+        <guid>https://lyoshur.github.io/stack/p/7.config%E9%AB%98%E5%8F%AF%E7%94%A8%E6%94%B9%E9%80%A0-spring-boot2.1.8.release-spring-cloudgreenwich.sr3/</guid>
         <description>&lt;p&gt;本文非完全原创，仅仅是整理自网上博客加上一部分自己的理解。参考文章：&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;方志朋&lt;br&gt;
@@ -6801,10 +6801,10 @@ ArtifactID定义了一个maven项目在组中的唯一id。&lt;/p&gt;
         </item>
         <item>
         <title>8.Actuator-spring-boot(2.0.3.RELEASE)&#43;spring-cloud(Finchley.RELEASE)</title>
-        <link>https://lyoshur.gitee.io/p/8.actuator-spring-boot2.0.3.release-spring-cloudfinchley.release/</link>
+        <link>https://lyoshur.github.io/stack/p/8.actuator-spring-boot2.0.3.release-spring-cloudfinchley.release/</link>
         <pubDate>Sun, 06 Mar 2022 00:00:00 +0000</pubDate>
         
-        <guid>https://lyoshur.gitee.io/p/8.actuator-spring-boot2.0.3.release-spring-cloudfinchley.release/</guid>
+        <guid>https://lyoshur.github.io/stack/p/8.actuator-spring-boot2.0.3.release-spring-cloudfinchley.release/</guid>
         <description>&lt;p&gt;本文非完全原创，仅仅是整理自网上博客加上一部分自己的理解。参考文章：&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;风的姿态&lt;br&gt;
@@ -6845,10 +6845,10 @@ ArtifactID定义了一个maven项目在组中的唯一id。&lt;/p&gt;
         </item>
         <item>
         <title>doc2docx</title>
-        <link>https://lyoshur.gitee.io/p/doc2docx/</link>
+        <link>https://lyoshur.github.io/stack/p/doc2docx/</link>
         <pubDate>Sun, 06 Mar 2022 00:00:00 +0000</pubDate>
         
-        <guid>https://lyoshur.gitee.io/p/doc2docx/</guid>
+        <guid>https://lyoshur.github.io/stack/p/doc2docx/</guid>
         <description>&lt;h3 id=&#34;doc转docx&#34;&gt;doc转docx&lt;/h3&gt;
 &lt;p&gt;使用jacob.jar&lt;/p&gt;
 &lt;p&gt;示例代码：&lt;/p&gt;
@@ -6988,10 +6988,10 @@ ArtifactID定义了一个maven项目在组中的唯一id。&lt;/p&gt;
         </item>
         <item>
         <title>java9中的module</title>
-        <link>https://lyoshur.gitee.io/p/java9%E4%B8%AD%E7%9A%84module/</link>
+        <link>https://lyoshur.github.io/stack/p/java9%E4%B8%AD%E7%9A%84module/</link>
         <pubDate>Sun, 06 Mar 2022 00:00:00 +0000</pubDate>
         
-        <guid>https://lyoshur.gitee.io/p/java9%E4%B8%AD%E7%9A%84module/</guid>
+        <guid>https://lyoshur.github.io/stack/p/java9%E4%B8%AD%E7%9A%84module/</guid>
         <description>&lt;h1 id=&#34;java9中的module&#34;&gt;java9中的module&lt;/h1&gt;
 &lt;p&gt;1.模块的声明文件module-info.java位于src目录下，对整个模块进行描述。否则会提示&lt;/p&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
@@ -7067,10 +7067,10 @@ ArtifactID定义了一个maven项目在组中的唯一id。&lt;/p&gt;
         </item>
         <item>
         <title>JAVA核心技术 卷1学习笔记</title>
-        <link>https://lyoshur.gitee.io/p/java%E6%A0%B8%E5%BF%83%E6%8A%80%E6%9C%AF-%E5%8D%B71%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/</link>
+        <link>https://lyoshur.github.io/stack/p/java%E6%A0%B8%E5%BF%83%E6%8A%80%E6%9C%AF-%E5%8D%B71%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/</link>
         <pubDate>Sun, 06 Mar 2022 00:00:00 +0000</pubDate>
         
-        <guid>https://lyoshur.gitee.io/p/java%E6%A0%B8%E5%BF%83%E6%8A%80%E6%9C%AF-%E5%8D%B71%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/</guid>
+        <guid>https://lyoshur.github.io/stack/p/java%E6%A0%B8%E5%BF%83%E6%8A%80%E6%9C%AF-%E5%8D%B71%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/</guid>
         <description>&lt;h2 id=&#34;java核心技术-卷1&#34;&gt;JAVA核心技术 卷1&lt;/h2&gt;
 &lt;p&gt;jdk9 jshell&lt;/p&gt;
 &lt;p&gt;jdk10 var a = 12;&lt;/p&gt;
@@ -7141,10 +7141,10 @@ ArtifactID定义了一个maven项目在组中的唯一id。&lt;/p&gt;
         </item>
         <item>
         <title>java日志基本知识</title>
-        <link>https://lyoshur.gitee.io/p/java%E6%97%A5%E5%BF%97%E5%9F%BA%E6%9C%AC%E7%9F%A5%E8%AF%86/</link>
+        <link>https://lyoshur.github.io/stack/p/java%E6%97%A5%E5%BF%97%E5%9F%BA%E6%9C%AC%E7%9F%A5%E8%AF%86/</link>
         <pubDate>Sun, 06 Mar 2022 00:00:00 +0000</pubDate>
         
-        <guid>https://lyoshur.gitee.io/p/java%E6%97%A5%E5%BF%97%E5%9F%BA%E6%9C%AC%E7%9F%A5%E8%AF%86/</guid>
+        <guid>https://lyoshur.github.io/stack/p/java%E6%97%A5%E5%BF%97%E5%9F%BA%E6%9C%AC%E7%9F%A5%E8%AF%86/</guid>
         <description>&lt;h2 id=&#34;java日志基本知识&#34;&gt;java日志基本知识&lt;/h2&gt;
 &lt;h3 id=&#34;1为什么要使用日志&#34;&gt;1.为什么要使用日志&lt;/h3&gt;
 &lt;ul&gt;
@@ -7276,10 +7276,10 @@ ArtifactID定义了一个maven项目在组中的唯一id。&lt;/p&gt;
         </item>
         <item>
         <title>附：Spring版本以及Maven spring-milestones作用</title>
-        <link>https://lyoshur.gitee.io/p/%E9%99%84spring%E7%89%88%E6%9C%AC%E4%BB%A5%E5%8F%8Amaven-spring-milestones%E4%BD%9C%E7%94%A8/</link>
+        <link>https://lyoshur.github.io/stack/p/%E9%99%84spring%E7%89%88%E6%9C%AC%E4%BB%A5%E5%8F%8Amaven-spring-milestones%E4%BD%9C%E7%94%A8/</link>
         <pubDate>Sun, 06 Mar 2022 00:00:00 +0000</pubDate>
         
-        <guid>https://lyoshur.gitee.io/p/%E9%99%84spring%E7%89%88%E6%9C%AC%E4%BB%A5%E5%8F%8Amaven-spring-milestones%E4%BD%9C%E7%94%A8/</guid>
+        <guid>https://lyoshur.github.io/stack/p/%E9%99%84spring%E7%89%88%E6%9C%AC%E4%BB%A5%E5%8F%8Amaven-spring-milestones%E4%BD%9C%E7%94%A8/</guid>
         <description>&lt;p&gt;本文非完全原创，仅仅是整理自网上博客加上一部分自己的理解。参考文章：&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;徐小冠 &lt;a class=&#34;link&#34; href=&#34;https://blog.csdn.net/weixin_42114097/article/details/82354534&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
@@ -7356,10 +7356,10 @@ Spring的政策是向那些有兴趣测试它们的公众发布里程碑版本�
         </item>
         <item>
         <title>使用Netty创建websocket服务</title>
-        <link>https://lyoshur.gitee.io/p/%E4%BD%BF%E7%94%A8netty%E5%88%9B%E5%BB%BAwebsocket%E6%9C%8D%E5%8A%A1/</link>
+        <link>https://lyoshur.github.io/stack/p/%E4%BD%BF%E7%94%A8netty%E5%88%9B%E5%BB%BAwebsocket%E6%9C%8D%E5%8A%A1/</link>
         <pubDate>Sun, 06 Mar 2022 00:00:00 +0000</pubDate>
         
-        <guid>https://lyoshur.gitee.io/p/%E4%BD%BF%E7%94%A8netty%E5%88%9B%E5%BB%BAwebsocket%E6%9C%8D%E5%8A%A1/</guid>
+        <guid>https://lyoshur.github.io/stack/p/%E4%BD%BF%E7%94%A8netty%E5%88%9B%E5%BB%BAwebsocket%E6%9C%8D%E5%8A%A1/</guid>
         <description>&lt;h2 id=&#34;创建websocket服务&#34;&gt;创建websocket服务&lt;/h2&gt;
 &lt;h2 id=&#34;依赖环境&#34;&gt;依赖环境&lt;/h2&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;

@@ -2,16 +2,16 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
     <channel>
         <title>Windows on 羡鱼先生的空间</title>
-        <link>https://lyoshur.gitee.io/tags/windows/</link>
+        <link>https://lyoshur.github.io/stack/tags/windows/</link>
         <description>Recent content in Windows on 羡鱼先生的空间</description>
         <generator>Hugo -- gohugo.io</generator>
         <language>zh-cn</language>
-        <lastBuildDate>Sun, 06 Mar 2022 00:00:00 +0000</lastBuildDate><atom:link href="https://lyoshur.gitee.io/tags/windows/index.xml" rel="self" type="application/rss+xml" /><item>
+        <lastBuildDate>Sun, 06 Mar 2022 00:00:00 +0000</lastBuildDate><atom:link href="https://lyoshur.github.io/stack/tags/windows/index.xml" rel="self" type="application/rss+xml" /><item>
         <title>CMD常用命令</title>
-        <link>https://lyoshur.gitee.io/p/cmd%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4/</link>
+        <link>https://lyoshur.github.io/stack/p/cmd%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4/</link>
         <pubDate>Sun, 06 Mar 2022 00:00:00 +0000</pubDate>
         
-        <guid>https://lyoshur.gitee.io/p/cmd%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4/</guid>
+        <guid>https://lyoshur.github.io/stack/p/cmd%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4/</guid>
         <description>&lt;h2 id=&#34;cmd常用命令&#34;&gt;cmd常用命令&lt;/h2&gt;
 &lt;h3 id=&#34;1判断某个文件是否存在&#34;&gt;1.判断某个文件是否存在&lt;/h3&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
@@ -161,10 +161,10 @@
         </item>
         <item>
         <title>windows关于端口被占用的解决办法</title>
-        <link>https://lyoshur.gitee.io/p/windows%E5%85%B3%E4%BA%8E%E7%AB%AF%E5%8F%A3%E8%A2%AB%E5%8D%A0%E7%94%A8%E7%9A%84%E8%A7%A3%E5%86%B3%E5%8A%9E%E6%B3%95/</link>
+        <link>https://lyoshur.github.io/stack/p/windows%E5%85%B3%E4%BA%8E%E7%AB%AF%E5%8F%A3%E8%A2%AB%E5%8D%A0%E7%94%A8%E7%9A%84%E8%A7%A3%E5%86%B3%E5%8A%9E%E6%B3%95/</link>
         <pubDate>Sun, 06 Mar 2022 00:00:00 +0000</pubDate>
         
-        <guid>https://lyoshur.gitee.io/p/windows%E5%85%B3%E4%BA%8E%E7%AB%AF%E5%8F%A3%E8%A2%AB%E5%8D%A0%E7%94%A8%E7%9A%84%E8%A7%A3%E5%86%B3%E5%8A%9E%E6%B3%95/</guid>
+        <guid>https://lyoshur.github.io/stack/p/windows%E5%85%B3%E4%BA%8E%E7%AB%AF%E5%8F%A3%E8%A2%AB%E5%8D%A0%E7%94%A8%E7%9A%84%E8%A7%A3%E5%86%B3%E5%8A%9E%E6%B3%95/</guid>
         <description>&lt;h4 id=&#34;关于端口被占用的解决办法&#34;&gt;关于端口被占用的解决办法&lt;/h4&gt;
 &lt;p&gt;使用命令： 
 netstat -aon|findstr &amp;ldquo;8080&amp;rdquo;&lt;/p&gt;

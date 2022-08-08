@@ -2,16 +2,16 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
     <channel>
         <title>java on 羡鱼先生的空间</title>
-        <link>https://lyoshur.gitee.io/tags/java/</link>
+        <link>https://lyoshur.github.io/stack/tags/java/</link>
         <description>Recent content in java on 羡鱼先生的空间</description>
         <generator>Hugo -- gohugo.io</generator>
         <language>zh-cn</language>
-        <lastBuildDate>Thu, 10 Mar 2022 00:00:00 +0000</lastBuildDate><atom:link href="https://lyoshur.gitee.io/tags/java/index.xml" rel="self" type="application/rss+xml" /><item>
+        <lastBuildDate>Thu, 10 Mar 2022 00:00:00 +0000</lastBuildDate><atom:link href="https://lyoshur.github.io/stack/tags/java/index.xml" rel="self" type="application/rss+xml" /><item>
         <title>stream流操作</title>
-        <link>https://lyoshur.gitee.io/p/stream%E6%B5%81%E6%93%8D%E4%BD%9C/</link>
+        <link>https://lyoshur.github.io/stack/p/stream%E6%B5%81%E6%93%8D%E4%BD%9C/</link>
         <pubDate>Thu, 10 Mar 2022 00:00:00 +0000</pubDate>
         
-        <guid>https://lyoshur.gitee.io/p/stream%E6%B5%81%E6%93%8D%E4%BD%9C/</guid>
+        <guid>https://lyoshur.github.io/stack/p/stream%E6%B5%81%E6%93%8D%E4%BD%9C/</guid>
         <description>&lt;h2 id=&#34;stream流操作&#34;&gt;stream流操作&lt;/h2&gt;
 &lt;p&gt;stream位于java.util包中，是java8中新增类。&lt;/p&gt;
 &lt;h3 id=&#34;1创建stream&#34;&gt;1.创建Stream&lt;/h3&gt;
@@ -534,10 +534,10 @@
         </item>
         <item>
         <title>java9 中的 Module, ModulePath 和 ClassPath</title>
-        <link>https://lyoshur.gitee.io/p/java9-%E4%B8%AD%E7%9A%84-module-modulepath-%E5%92%8C-classpath/</link>
+        <link>https://lyoshur.github.io/stack/p/java9-%E4%B8%AD%E7%9A%84-module-modulepath-%E5%92%8C-classpath/</link>
         <pubDate>Wed, 09 Mar 2022 00:00:00 +0000</pubDate>
         
-        <guid>https://lyoshur.gitee.io/p/java9-%E4%B8%AD%E7%9A%84-module-modulepath-%E5%92%8C-classpath/</guid>
+        <guid>https://lyoshur.github.io/stack/p/java9-%E4%B8%AD%E7%9A%84-module-modulepath-%E5%92%8C-classpath/</guid>
         <description>&lt;h1 id=&#34;java9-中的-module-modulepath-和-classpath&#34;&gt;java9 中的 Module, ModulePath 和 ClassPath&lt;/h1&gt;
 &lt;p&gt;我们都知道，从 Java9 开始，引入了模块系统，提供了对大型复杂系统很重要的隔离，依赖管理等特性。&lt;/p&gt;
 &lt;p&gt;首先是个吐槽。&lt;/p&gt;
@@ -604,10 +604,10 @@
         </item>
         <item>
         <title>java反编译</title>
-        <link>https://lyoshur.gitee.io/p/java%E5%8F%8D%E7%BC%96%E8%AF%91/</link>
+        <link>https://lyoshur.github.io/stack/p/java%E5%8F%8D%E7%BC%96%E8%AF%91/</link>
         <pubDate>Tue, 08 Mar 2022 00:00:00 +0000</pubDate>
         
-        <guid>https://lyoshur.gitee.io/p/java%E5%8F%8D%E7%BC%96%E8%AF%91/</guid>
+        <guid>https://lyoshur.github.io/stack/p/java%E5%8F%8D%E7%BC%96%E8%AF%91/</guid>
         <description>&lt;h2 id=&#34;java反编译&#34;&gt;java反编译&lt;/h2&gt;
 &lt;p&gt;在使用idea进行反编译class文件时，发现文件头会带有&lt;/p&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
@@ -671,10 +671,10 @@
         </item>
         <item>
         <title>doc2docx</title>
-        <link>https://lyoshur.gitee.io/p/doc2docx/</link>
+        <link>https://lyoshur.github.io/stack/p/doc2docx/</link>
         <pubDate>Sun, 06 Mar 2022 00:00:00 +0000</pubDate>
         
-        <guid>https://lyoshur.gitee.io/p/doc2docx/</guid>
+        <guid>https://lyoshur.github.io/stack/p/doc2docx/</guid>
         <description>&lt;h3 id=&#34;doc转docx&#34;&gt;doc转docx&lt;/h3&gt;
 &lt;p&gt;使用jacob.jar&lt;/p&gt;
 &lt;p&gt;示例代码：&lt;/p&gt;
@@ -814,10 +814,10 @@
         </item>
         <item>
         <title>java9中的module</title>
-        <link>https://lyoshur.gitee.io/p/java9%E4%B8%AD%E7%9A%84module/</link>
+        <link>https://lyoshur.github.io/stack/p/java9%E4%B8%AD%E7%9A%84module/</link>
         <pubDate>Sun, 06 Mar 2022 00:00:00 +0000</pubDate>
         
-        <guid>https://lyoshur.gitee.io/p/java9%E4%B8%AD%E7%9A%84module/</guid>
+        <guid>https://lyoshur.github.io/stack/p/java9%E4%B8%AD%E7%9A%84module/</guid>
         <description>&lt;h1 id=&#34;java9中的module&#34;&gt;java9中的module&lt;/h1&gt;
 &lt;p&gt;1.模块的声明文件module-info.java位于src目录下，对整个模块进行描述。否则会提示&lt;/p&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
@@ -893,10 +893,10 @@
         </item>
         <item>
         <title>JAVA核心技术 卷1学习笔记</title>
-        <link>https://lyoshur.gitee.io/p/java%E6%A0%B8%E5%BF%83%E6%8A%80%E6%9C%AF-%E5%8D%B71%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/</link>
+        <link>https://lyoshur.github.io/stack/p/java%E6%A0%B8%E5%BF%83%E6%8A%80%E6%9C%AF-%E5%8D%B71%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/</link>
         <pubDate>Sun, 06 Mar 2022 00:00:00 +0000</pubDate>
         
-        <guid>https://lyoshur.gitee.io/p/java%E6%A0%B8%E5%BF%83%E6%8A%80%E6%9C%AF-%E5%8D%B71%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/</guid>
+        <guid>https://lyoshur.github.io/stack/p/java%E6%A0%B8%E5%BF%83%E6%8A%80%E6%9C%AF-%E5%8D%B71%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/</guid>
         <description>&lt;h2 id=&#34;java核心技术-卷1&#34;&gt;JAVA核心技术 卷1&lt;/h2&gt;
 &lt;p&gt;jdk9 jshell&lt;/p&gt;
 &lt;p&gt;jdk10 var a = 12;&lt;/p&gt;
@@ -967,10 +967,10 @@
         </item>
         <item>
         <title>java日志基本知识</title>
-        <link>https://lyoshur.gitee.io/p/java%E6%97%A5%E5%BF%97%E5%9F%BA%E6%9C%AC%E7%9F%A5%E8%AF%86/</link>
+        <link>https://lyoshur.github.io/stack/p/java%E6%97%A5%E5%BF%97%E5%9F%BA%E6%9C%AC%E7%9F%A5%E8%AF%86/</link>
         <pubDate>Sun, 06 Mar 2022 00:00:00 +0000</pubDate>
         
-        <guid>https://lyoshur.gitee.io/p/java%E6%97%A5%E5%BF%97%E5%9F%BA%E6%9C%AC%E7%9F%A5%E8%AF%86/</guid>
+        <guid>https://lyoshur.github.io/stack/p/java%E6%97%A5%E5%BF%97%E5%9F%BA%E6%9C%AC%E7%9F%A5%E8%AF%86/</guid>
         <description>&lt;h2 id=&#34;java日志基本知识&#34;&gt;java日志基本知识&lt;/h2&gt;
 &lt;h3 id=&#34;1为什么要使用日志&#34;&gt;1.为什么要使用日志&lt;/h3&gt;
 &lt;ul&gt;

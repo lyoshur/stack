@@ -2,16 +2,16 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
     <channel>
         <title>Golang on 羡鱼先生的空间</title>
-        <link>https://lyoshur.gitee.io/categories/golang/</link>
+        <link>https://lyoshur.github.io/stack/categories/golang/</link>
         <description>Recent content in Golang on 羡鱼先生的空间</description>
         <generator>Hugo -- gohugo.io</generator>
         <language>zh-cn</language>
-        <lastBuildDate>Sun, 06 Mar 2022 00:00:00 +0000</lastBuildDate><atom:link href="https://lyoshur.gitee.io/categories/golang/index.xml" rel="self" type="application/rss+xml" /><item>
+        <lastBuildDate>Sun, 06 Mar 2022 00:00:00 +0000</lastBuildDate><atom:link href="https://lyoshur.github.io/stack/categories/golang/index.xml" rel="self" type="application/rss+xml" /><item>
         <title>GO反向代理要求</title>
-        <link>https://lyoshur.gitee.io/p/go%E5%8F%8D%E5%90%91%E4%BB%A3%E7%90%86%E8%A6%81%E6%B1%82/</link>
+        <link>https://lyoshur.github.io/stack/p/go%E5%8F%8D%E5%90%91%E4%BB%A3%E7%90%86%E8%A6%81%E6%B1%82/</link>
         <pubDate>Sun, 06 Mar 2022 00:00:00 +0000</pubDate>
         
-        <guid>https://lyoshur.gitee.io/p/go%E5%8F%8D%E5%90%91%E4%BB%A3%E7%90%86%E8%A6%81%E6%B1%82/</guid>
+        <guid>https://lyoshur.github.io/stack/p/go%E5%8F%8D%E5%90%91%E4%BB%A3%E7%90%86%E8%A6%81%E6%B1%82/</guid>
         <description>&lt;p&gt;0 概述&lt;/p&gt;
 &lt;p&gt;使用golang开发tcp反向代理程序 实现ha(热备)/lb(负载均衡)的效果
 console app即可，无需gui界面
@@ -56,10 +56,10 @@ group-close.do?group=&amp;lt;监听端口&amp;gt; 关闭端口监听
         </item>
         <item>
         <title>go中的module和GOPATH</title>
-        <link>https://lyoshur.gitee.io/p/go%E4%B8%AD%E7%9A%84module%E5%92%8Cgopath/</link>
+        <link>https://lyoshur.github.io/stack/p/go%E4%B8%AD%E7%9A%84module%E5%92%8Cgopath/</link>
         <pubDate>Sun, 06 Mar 2022 00:00:00 +0000</pubDate>
         
-        <guid>https://lyoshur.gitee.io/p/go%E4%B8%AD%E7%9A%84module%E5%92%8Cgopath/</guid>
+        <guid>https://lyoshur.github.io/stack/p/go%E4%B8%AD%E7%9A%84module%E5%92%8Cgopath/</guid>
         <description>&lt;h1 id=&#34;go中的module和gopath&#34;&gt;go中的module和GOPATH&lt;/h1&gt;
 &lt;p&gt;在GO 1.11 中，开始使用module组织项目依赖。&lt;/p&gt;
 &lt;p&gt;首先是差别，GOPATH要求项目按照工程名-src。全部的依赖会放置到 GOPATH/src中。这里类似于java最开始lib的方式。&lt;/p&gt;

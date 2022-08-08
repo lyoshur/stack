@@ -2,16 +2,16 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
     <channel>
         <title>MIME on 羡鱼先生的空间</title>
-        <link>https://lyoshur.gitee.io/tags/mime/</link>
+        <link>https://lyoshur.github.io/stack/tags/mime/</link>
         <description>Recent content in MIME on 羡鱼先生的空间</description>
         <generator>Hugo -- gohugo.io</generator>
         <language>zh-cn</language>
-        <lastBuildDate>Sun, 06 Mar 2022 00:00:00 +0000</lastBuildDate><atom:link href="https://lyoshur.gitee.io/tags/mime/index.xml" rel="self" type="application/rss+xml" /><item>
+        <lastBuildDate>Sun, 06 Mar 2022 00:00:00 +0000</lastBuildDate><atom:link href="https://lyoshur.github.io/stack/tags/mime/index.xml" rel="self" type="application/rss+xml" /><item>
         <title>officeMIME</title>
-        <link>https://lyoshur.gitee.io/p/officemime/</link>
+        <link>https://lyoshur.github.io/stack/p/officemime/</link>
         <pubDate>Sun, 06 Mar 2022 00:00:00 +0000</pubDate>
         
-        <guid>https://lyoshur.gitee.io/p/officemime/</guid>
+        <guid>https://lyoshur.github.io/stack/p/officemime/</guid>
         <description>&lt;p&gt;.doc  application/msword&lt;/p&gt;
 &lt;p&gt;.xls  application/vnd.ms-excel&lt;/p&gt;
 &lt;p&gt;.ppt  application/vnd.ms-powerpoint&lt;/p&gt;

@@ -2,16 +2,16 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
     <channel>
         <title>macos on 羡鱼先生的空间</title>
-        <link>https://lyoshur.gitee.io/tags/macos/</link>
+        <link>https://lyoshur.github.io/stack/tags/macos/</link>
         <description>Recent content in macos on 羡鱼先生的空间</description>
         <generator>Hugo -- gohugo.io</generator>
         <language>zh-cn</language>
-        <lastBuildDate>Sun, 06 Mar 2022 00:00:00 +0000</lastBuildDate><atom:link href="https://lyoshur.gitee.io/tags/macos/index.xml" rel="self" type="application/rss+xml" /><item>
+        <lastBuildDate>Sun, 06 Mar 2022 00:00:00 +0000</lastBuildDate><atom:link href="https://lyoshur.github.io/stack/tags/macos/index.xml" rel="self" type="application/rss+xml" /><item>
         <title>使用VM虚拟机安装黑苹果教程</title>
-        <link>https://lyoshur.gitee.io/p/%E4%BD%BF%E7%94%A8vm%E8%99%9A%E6%8B%9F%E6%9C%BA%E5%AE%89%E8%A3%85%E9%BB%91%E8%8B%B9%E6%9E%9C%E6%95%99%E7%A8%8B/</link>
+        <link>https://lyoshur.github.io/stack/p/%E4%BD%BF%E7%94%A8vm%E8%99%9A%E6%8B%9F%E6%9C%BA%E5%AE%89%E8%A3%85%E9%BB%91%E8%8B%B9%E6%9E%9C%E6%95%99%E7%A8%8B/</link>
         <pubDate>Sun, 06 Mar 2022 00:00:00 +0000</pubDate>
         
-        <guid>https://lyoshur.gitee.io/p/%E4%BD%BF%E7%94%A8vm%E8%99%9A%E6%8B%9F%E6%9C%BA%E5%AE%89%E8%A3%85%E9%BB%91%E8%8B%B9%E6%9E%9C%E6%95%99%E7%A8%8B/</guid>
+        <guid>https://lyoshur.github.io/stack/p/%E4%BD%BF%E7%94%A8vm%E8%99%9A%E6%8B%9F%E6%9C%BA%E5%AE%89%E8%A3%85%E9%BB%91%E8%8B%B9%E6%9E%9C%E6%95%99%E7%A8%8B/</guid>
         <description>&lt;h2 id=&#34;黑苹果安装&#34;&gt;黑苹果安装&lt;/h2&gt;
 &lt;p&gt;下载镜像以及破解补丁&lt;/p&gt;
 &lt;h3 id=&#34;1复制破解补丁到vm安装目录&#34;&gt;1.复制破解补丁到VM安装目录&lt;/h3&gt;

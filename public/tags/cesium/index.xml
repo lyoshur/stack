@@ -2,16 +2,16 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
     <channel>
         <title>Cesium on 羡鱼先生的空间</title>
-        <link>https://lyoshur.gitee.io/tags/cesium/</link>
+        <link>https://lyoshur.github.io/stack/tags/cesium/</link>
         <description>Recent content in Cesium on 羡鱼先生的空间</description>
         <generator>Hugo -- gohugo.io</generator>
         <language>zh-cn</language>
-        <lastBuildDate>Sun, 06 Mar 2022 00:00:00 +0000</lastBuildDate><atom:link href="https://lyoshur.gitee.io/tags/cesium/index.xml" rel="self" type="application/rss+xml" /><item>
+        <lastBuildDate>Sun, 06 Mar 2022 00:00:00 +0000</lastBuildDate><atom:link href="https://lyoshur.github.io/stack/tags/cesium/index.xml" rel="self" type="application/rss+xml" /><item>
         <title>Cesium加载图层</title>
-        <link>https://lyoshur.gitee.io/p/cesium%E5%8A%A0%E8%BD%BD%E5%9B%BE%E5%B1%82/</link>
+        <link>https://lyoshur.github.io/stack/p/cesium%E5%8A%A0%E8%BD%BD%E5%9B%BE%E5%B1%82/</link>
         <pubDate>Sun, 06 Mar 2022 00:00:00 +0000</pubDate>
         
-        <guid>https://lyoshur.gitee.io/p/cesium%E5%8A%A0%E8%BD%BD%E5%9B%BE%E5%B1%82/</guid>
+        <guid>https://lyoshur.github.io/stack/p/cesium%E5%8A%A0%E8%BD%BD%E5%9B%BE%E5%B1%82/</guid>
         <description>&lt;h2 id=&#34;cesium加载图层&#34;&gt;Cesium加载图层&lt;/h2&gt;
 &lt;h2 id=&#34;1协议介绍&#34;&gt;1.协议介绍&lt;/h2&gt;
 &lt;ul&gt;

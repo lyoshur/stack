@@ -2,16 +2,16 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
     <channel>
         <title>Posts on 羡鱼先生的空间</title>
-        <link>https://lyoshur.gitee.io/post/</link>
+        <link>https://lyoshur.github.io/stack/post/</link>
         <description>Recent content in Posts on 羡鱼先生的空间</description>
         <generator>Hugo -- gohugo.io</generator>
         <language>zh-cn</language>
-        <lastBuildDate>Sun, 13 Mar 2022 00:00:00 +0000</lastBuildDate><atom:link href="https://lyoshur.gitee.io/post/index.xml" rel="self" type="application/rss+xml" /><item>
+        <lastBuildDate>Sun, 13 Mar 2022 00:00:00 +0000</lastBuildDate><atom:link href="https://lyoshur.github.io/stack/post/index.xml" rel="self" type="application/rss+xml" /><item>
         <title>python-orm数据库查询框架使用教程</title>
-        <link>https://lyoshur.gitee.io/p/python-orm%E6%95%B0%E6%8D%AE%E5%BA%93%E6%9F%A5%E8%AF%A2%E6%A1%86%E6%9E%B6%E4%BD%BF%E7%94%A8%E6%95%99%E7%A8%8B/</link>
+        <link>https://lyoshur.github.io/stack/p/python-orm%E6%95%B0%E6%8D%AE%E5%BA%93%E6%9F%A5%E8%AF%A2%E6%A1%86%E6%9E%B6%E4%BD%BF%E7%94%A8%E6%95%99%E7%A8%8B/</link>
         <pubDate>Sun, 13 Mar 2022 00:00:00 +0000</pubDate>
         
-        <guid>https://lyoshur.gitee.io/p/python-orm%E6%95%B0%E6%8D%AE%E5%BA%93%E6%9F%A5%E8%AF%A2%E6%A1%86%E6%9E%B6%E4%BD%BF%E7%94%A8%E6%95%99%E7%A8%8B/</guid>
+        <guid>https://lyoshur.github.io/stack/p/python-orm%E6%95%B0%E6%8D%AE%E5%BA%93%E6%9F%A5%E8%AF%A2%E6%A1%86%E6%9E%B6%E4%BD%BF%E7%94%A8%E6%95%99%E7%A8%8B/</guid>
         <description>&lt;h2 id=&#34;3-进行简单数据查询&#34;&gt;3 进行简单数据查询&lt;/h2&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
 &lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
@@ -485,10 +485,10 @@ sql为条sql节点，包含一个key，来作为这条sql的标识，value为sql
         </item>
         <item>
         <title>使用myorm连接到mysql</title>
-        <link>https://lyoshur.gitee.io/p/%E4%BD%BF%E7%94%A8myorm%E8%BF%9E%E6%8E%A5%E5%88%B0mysql/</link>
+        <link>https://lyoshur.github.io/stack/p/%E4%BD%BF%E7%94%A8myorm%E8%BF%9E%E6%8E%A5%E5%88%B0mysql/</link>
         <pubDate>Sat, 12 Mar 2022 00:00:00 +0000</pubDate>
         
-        <guid>https://lyoshur.gitee.io/p/%E4%BD%BF%E7%94%A8myorm%E8%BF%9E%E6%8E%A5%E5%88%B0mysql/</guid>
+        <guid>https://lyoshur.github.io/stack/p/%E4%BD%BF%E7%94%A8myorm%E8%BF%9E%E6%8E%A5%E5%88%B0mysql/</guid>
         <description>&lt;h1 id=&#34;myorm-mysql数据库查询框架&#34;&gt;myorm mysql数据库查询框架&lt;/h1&gt;
 &lt;h2 id=&#34;1-依赖安装&#34;&gt;1 依赖安装&lt;/h2&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
@@ -542,10 +542,10 @@ sql为条sql节点，包含一个key，来作为这条sql的标识，value为sql
         </item>
         <item>
         <title>使用liteorm连接到sqlite3</title>
-        <link>https://lyoshur.gitee.io/p/%E4%BD%BF%E7%94%A8liteorm%E8%BF%9E%E6%8E%A5%E5%88%B0sqlite3/</link>
+        <link>https://lyoshur.github.io/stack/p/%E4%BD%BF%E7%94%A8liteorm%E8%BF%9E%E6%8E%A5%E5%88%B0sqlite3/</link>
         <pubDate>Fri, 11 Mar 2022 00:00:00 +0000</pubDate>
         
-        <guid>https://lyoshur.gitee.io/p/%E4%BD%BF%E7%94%A8liteorm%E8%BF%9E%E6%8E%A5%E5%88%B0sqlite3/</guid>
+        <guid>https://lyoshur.github.io/stack/p/%E4%BD%BF%E7%94%A8liteorm%E8%BF%9E%E6%8E%A5%E5%88%B0sqlite3/</guid>
         <description>&lt;h1 id=&#34;liteorm-sqlite3数据库查询框架&#34;&gt;liteorm sqlite3数据库查询框架&lt;/h1&gt;
 &lt;h2 id=&#34;1-依赖安装&#34;&gt;1 依赖安装&lt;/h2&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
@@ -575,10 +575,10 @@ sql为条sql节点，包含一个key，来作为这条sql的标识，value为sql
         </item>
         <item>
         <title>stream流操作</title>
-        <link>https://lyoshur.gitee.io/p/stream%E6%B5%81%E6%93%8D%E4%BD%9C/</link>
+        <link>https://lyoshur.github.io/stack/p/stream%E6%B5%81%E6%93%8D%E4%BD%9C/</link>
         <pubDate>Thu, 10 Mar 2022 00:00:00 +0000</pubDate>
         
-        <guid>https://lyoshur.gitee.io/p/stream%E6%B5%81%E6%93%8D%E4%BD%9C/</guid>
+        <guid>https://lyoshur.github.io/stack/p/stream%E6%B5%81%E6%93%8D%E4%BD%9C/</guid>
         <description>&lt;h2 id=&#34;stream流操作&#34;&gt;stream流操作&lt;/h2&gt;
 &lt;p&gt;stream位于java.util包中，是java8中新增类。&lt;/p&gt;
 &lt;h3 id=&#34;1创建stream&#34;&gt;1.创建Stream&lt;/h3&gt;
@@ -1101,10 +1101,10 @@ sql为条sql节点，包含一个key，来作为这条sql的标识，value为sql
         </item>
         <item>
         <title>java9 中的 Module, ModulePath 和 ClassPath</title>
-        <link>https://lyoshur.gitee.io/p/java9-%E4%B8%AD%E7%9A%84-module-modulepath-%E5%92%8C-classpath/</link>
+        <link>https://lyoshur.github.io/stack/p/java9-%E4%B8%AD%E7%9A%84-module-modulepath-%E5%92%8C-classpath/</link>
         <pubDate>Wed, 09 Mar 2022 00:00:00 +0000</pubDate>
         
-        <guid>https://lyoshur.gitee.io/p/java9-%E4%B8%AD%E7%9A%84-module-modulepath-%E5%92%8C-classpath/</guid>
+        <guid>https://lyoshur.github.io/stack/p/java9-%E4%B8%AD%E7%9A%84-module-modulepath-%E5%92%8C-classpath/</guid>
         <description>&lt;h1 id=&#34;java9-中的-module-modulepath-和-classpath&#34;&gt;java9 中的 Module, ModulePath 和 ClassPath&lt;/h1&gt;
 &lt;p&gt;我们都知道，从 Java9 开始，引入了模块系统，提供了对大型复杂系统很重要的隔离，依赖管理等特性。&lt;/p&gt;
 &lt;p&gt;首先是个吐槽。&lt;/p&gt;
@@ -1171,10 +1171,10 @@ sql为条sql节点，包含一个key，来作为这条sql的标识，value为sql
         </item>
         <item>
         <title>java反编译</title>
-        <link>https://lyoshur.gitee.io/p/java%E5%8F%8D%E7%BC%96%E8%AF%91/</link>
+        <link>https://lyoshur.github.io/stack/p/java%E5%8F%8D%E7%BC%96%E8%AF%91/</link>
         <pubDate>Tue, 08 Mar 2022 00:00:00 +0000</pubDate>
         
-        <guid>https://lyoshur.gitee.io/p/java%E5%8F%8D%E7%BC%96%E8%AF%91/</guid>
+        <guid>https://lyoshur.github.io/stack/p/java%E5%8F%8D%E7%BC%96%E8%AF%91/</guid>
         <description>&lt;h2 id=&#34;java反编译&#34;&gt;java反编译&lt;/h2&gt;
 &lt;p&gt;在使用idea进行反编译class文件时，发现文件头会带有&lt;/p&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
@@ -1238,10 +1238,10 @@ sql为条sql节点，包含一个key，来作为这条sql的标识，value为sql
         </item>
         <item>
         <title>3DMAX激活操作</title>
-        <link>https://lyoshur.gitee.io/p/3dmax%E6%BF%80%E6%B4%BB%E6%93%8D%E4%BD%9C/</link>
+        <link>https://lyoshur.github.io/stack/p/3dmax%E6%BF%80%E6%B4%BB%E6%93%8D%E4%BD%9C/</link>
         <pubDate>Mon, 07 Mar 2022 00:00:00 +0000</pubDate>
         
-        <guid>https://lyoshur.gitee.io/p/3dmax%E6%BF%80%E6%B4%BB%E6%93%8D%E4%BD%9C/</guid>
+        <guid>https://lyoshur.github.io/stack/p/3dmax%E6%BF%80%E6%B4%BB%E6%93%8D%E4%BD%9C/</guid>
         <description>&lt;h1 id=&#34;3dmax激活操作&#34;&gt;3dmax激活操作&lt;/h1&gt;
 &lt;h2 id=&#34;1-需要的软件&#34;&gt;1 需要的软件&lt;/h2&gt;
 &lt;p&gt;所需要的软件已经整理到文件夹 3DMAX安装包-20220706 中，共包含以下内容：&lt;/p&gt;
@@ -1312,10 +1312,10 @@ sql为条sql节点，包含一个key，来作为这条sql的标识，value为sql
         </item>
         <item>
         <title>0.说明-spring-boot(2.0.3.RELEASE)&#43;spring-cloud(Finchley.RELEASE)</title>
-        <link>https://lyoshur.gitee.io/p/0.%E8%AF%B4%E6%98%8E-spring-boot2.0.3.release-spring-cloudfinchley.release/</link>
+        <link>https://lyoshur.github.io/stack/p/0.%E8%AF%B4%E6%98%8E-spring-boot2.0.3.release-spring-cloudfinchley.release/</link>
         <pubDate>Sun, 06 Mar 2022 00:00:00 +0000</pubDate>
         
-        <guid>https://lyoshur.gitee.io/p/0.%E8%AF%B4%E6%98%8E-spring-boot2.0.3.release-spring-cloudfinchley.release/</guid>
+        <guid>https://lyoshur.github.io/stack/p/0.%E8%AF%B4%E6%98%8E-spring-boot2.0.3.release-spring-cloudfinchley.release/</guid>
         <description>&lt;p&gt;文中内容需要java、spring、maven等基础知识。&lt;/p&gt;
 &lt;p&gt;使用的spring boot版本为 2.0.3.RELEASE&lt;br&gt;
 使用的spring cloud版本为 Finchley.RELEASE&lt;/p&gt;
@@ -1332,10 +1332,10 @@ sql为条sql节点，包含一个key，来作为这条sql的标识，value为sql
         </item>
         <item>
         <title>0.说明-spring-boot(2.1.8.RELEASE)&#43;spring-cloud(Greenwich.SR3)</title>
-        <link>https://lyoshur.gitee.io/p/0.%E8%AF%B4%E6%98%8E-spring-boot2.1.8.release-spring-cloudgreenwich.sr3/</link>
+        <link>https://lyoshur.github.io/stack/p/0.%E8%AF%B4%E6%98%8E-spring-boot2.1.8.release-spring-cloudgreenwich.sr3/</link>
         <pubDate>Sun, 06 Mar 2022 00:00:00 +0000</pubDate>
         
-        <guid>https://lyoshur.gitee.io/p/0.%E8%AF%B4%E6%98%8E-spring-boot2.1.8.release-spring-cloudgreenwich.sr3/</guid>
+        <guid>https://lyoshur.github.io/stack/p/0.%E8%AF%B4%E6%98%8E-spring-boot2.1.8.release-spring-cloudgreenwich.sr3/</guid>
         <description>&lt;p&gt;文中内容需要java、spring、maven等基础知识。&lt;/p&gt;
 &lt;p&gt;使用的spring boot版本为 2.1.8.RELEASE&lt;br&gt;
 使用的spring cloud版本为 Greenwich.SR3&lt;/p&gt;
@@ -1352,10 +1352,10 @@ sql为条sql节点，包含一个key，来作为这条sql的标识，value为sql
         </item>
         <item>
         <title>1.Eureka-spring-boot(2.0.3.RELEASE)&#43;spring-cloud(Finchley.RELEASE)</title>
-        <link>https://lyoshur.gitee.io/p/1.eureka-spring-boot2.0.3.release-spring-cloudfinchley.release/</link>
+        <link>https://lyoshur.github.io/stack/p/1.eureka-spring-boot2.0.3.release-spring-cloudfinchley.release/</link>
         <pubDate>Sun, 06 Mar 2022 00:00:00 +0000</pubDate>
         
-        <guid>https://lyoshur.gitee.io/p/1.eureka-spring-boot2.0.3.release-spring-cloudfinchley.release/</guid>
+        <guid>https://lyoshur.github.io/stack/p/1.eureka-spring-boot2.0.3.release-spring-cloudfinchley.release/</guid>
         <description>&lt;p&gt;本文非完全原创，仅仅是整理自网上博客加上一部分自己的理解。参考文章：&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;方志朋&lt;br&gt;
@@ -2125,10 +2125,10 @@ Eureka，服务注册和发现，它提供了一个服务注册中心、服务�
         </item>
         <item>
         <title>1.Eureka-spring-boot(2.1.8.RELEASE)&#43;spring-cloud(Greenwich.SR3)</title>
-        <link>https://lyoshur.gitee.io/p/1.eureka-spring-boot2.1.8.release-spring-cloudgreenwich.sr3/</link>
+        <link>https://lyoshur.github.io/stack/p/1.eureka-spring-boot2.1.8.release-spring-cloudgreenwich.sr3/</link>
         <pubDate>Sun, 06 Mar 2022 00:00:00 +0000</pubDate>
         
-        <guid>https://lyoshur.gitee.io/p/1.eureka-spring-boot2.1.8.release-spring-cloudgreenwich.sr3/</guid>
+        <guid>https://lyoshur.github.io/stack/p/1.eureka-spring-boot2.1.8.release-spring-cloudgreenwich.sr3/</guid>
         <description>&lt;p&gt;本文非完全原创，仅仅是整理自网上博客加上一部分自己的理解。参考文章：&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;方志朋&lt;br&gt;
@@ -2898,10 +2898,10 @@ Eureka，服务注册和发现，它提供了一个服务注册中心、服务�
         </item>
         <item>
         <title>1.Hadoop安装常见错误</title>
-        <link>https://lyoshur.gitee.io/p/1.hadoop%E5%AE%89%E8%A3%85%E5%B8%B8%E8%A7%81%E9%94%99%E8%AF%AF/</link>
+        <link>https://lyoshur.github.io/stack/p/1.hadoop%E5%AE%89%E8%A3%85%E5%B8%B8%E8%A7%81%E9%94%99%E8%AF%AF/</link>
         <pubDate>Sun, 06 Mar 2022 00:00:00 +0000</pubDate>
         
-        <guid>https://lyoshur.gitee.io/p/1.hadoop%E5%AE%89%E8%A3%85%E5%B8%B8%E8%A7%81%E9%94%99%E8%AF%AF/</guid>
+        <guid>https://lyoshur.github.io/stack/p/1.hadoop%E5%AE%89%E8%A3%85%E5%B8%B8%E8%A7%81%E9%94%99%E8%AF%AF/</guid>
         <description>&lt;h4 id=&#34;1伪分布式节点启动报错&#34;&gt;1.伪分布式节点启动报错&lt;/h4&gt;
 &lt;p&gt;执行命令 ./start-dfs.sh&lt;/p&gt;
 &lt;p&gt;错误信息：&lt;/p&gt;
@@ -3058,10 +3058,10 @@ Eureka，服务注册和发现，它提供了一个服务注册中心、服务�
         </item>
         <item>
         <title>1.Linux安装chromium</title>
-        <link>https://lyoshur.gitee.io/p/1.linux%E5%AE%89%E8%A3%85chromium/</link>
+        <link>https://lyoshur.github.io/stack/p/1.linux%E5%AE%89%E8%A3%85chromium/</link>
         <pubDate>Sun, 06 Mar 2022 00:00:00 +0000</pubDate>
         
-        <guid>https://lyoshur.gitee.io/p/1.linux%E5%AE%89%E8%A3%85chromium/</guid>
+        <guid>https://lyoshur.github.io/stack/p/1.linux%E5%AE%89%E8%A3%85chromium/</guid>
         <description>&lt;h3 id=&#34;安装chromeium&#34;&gt;安装chromeium&lt;/h3&gt;
 &lt;p&gt;环境为ubuntu bionic。armhf架构。&lt;/p&gt;
 &lt;h4 id=&#34;安装步骤&#34;&gt;安装步骤&lt;/h4&gt;
@@ -3070,10 +3070,10 @@ Eureka，服务注册和发现，它提供了一个服务注册中心、服务�
         </item>
         <item>
         <title>1.工厂模式</title>
-        <link>https://lyoshur.gitee.io/p/1.%E5%B7%A5%E5%8E%82%E6%A8%A1%E5%BC%8F/</link>
+        <link>https://lyoshur.github.io/stack/p/1.%E5%B7%A5%E5%8E%82%E6%A8%A1%E5%BC%8F/</link>
         <pubDate>Sun, 06 Mar 2022 00:00:00 +0000</pubDate>
         
-        <guid>https://lyoshur.gitee.io/p/1.%E5%B7%A5%E5%8E%82%E6%A8%A1%E5%BC%8F/</guid>
+        <guid>https://lyoshur.github.io/stack/p/1.%E5%B7%A5%E5%8E%82%E6%A8%A1%E5%BC%8F/</guid>
         <description>&lt;h2 id=&#34;工厂模式学习笔记java&#34;&gt;工厂模式学习笔记（JAVA）&lt;/h2&gt;
 &lt;p&gt;首先在开始声明，文中内容部分取自菜鸟教程。特此附上链接&lt;/p&gt;
 &lt;blockquote&gt;
@@ -3412,10 +3412,10 @@ Eureka，服务注册和发现，它提供了一个服务注册中心、服务�
         </item>
         <item>
         <title>1.关于maven中的Group、Artifact、Version</title>
-        <link>https://lyoshur.gitee.io/p/1.%E5%85%B3%E4%BA%8Emaven%E4%B8%AD%E7%9A%84groupartifactversion/</link>
+        <link>https://lyoshur.github.io/stack/p/1.%E5%85%B3%E4%BA%8Emaven%E4%B8%AD%E7%9A%84groupartifactversion/</link>
         <pubDate>Sun, 06 Mar 2022 00:00:00 +0000</pubDate>
         
-        <guid>https://lyoshur.gitee.io/p/1.%E5%85%B3%E4%BA%8Emaven%E4%B8%AD%E7%9A%84groupartifactversion/</guid>
+        <guid>https://lyoshur.github.io/stack/p/1.%E5%85%B3%E4%BA%8Emaven%E4%B8%AD%E7%9A%84groupartifactversion/</guid>
         <description>&lt;p&gt;本文非完全原创，仅仅是整理自网上博客加上一部分自己的理解。参考文章：&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;aigoV &lt;a class=&#34;link&#34; href=&#34;https://blog.csdn.net/aigoV/article/details/89884501&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
@@ -3439,10 +3439,10 @@ ArtifactID定义了一个maven项目在组中的唯一id。&lt;/p&gt;
         </item>
         <item>
         <title>2.Ribbon-spring-boot(2.0.3.RELEASE)&#43;spring-cloud(Finchley.RELEASE)</title>
-        <link>https://lyoshur.gitee.io/p/2.ribbon-spring-boot2.0.3.release-spring-cloudfinchley.release/</link>
+        <link>https://lyoshur.github.io/stack/p/2.ribbon-spring-boot2.0.3.release-spring-cloudfinchley.release/</link>
         <pubDate>Sun, 06 Mar 2022 00:00:00 +0000</pubDate>
         
-        <guid>https://lyoshur.gitee.io/p/2.ribbon-spring-boot2.0.3.release-spring-cloudfinchley.release/</guid>
+        <guid>https://lyoshur.github.io/stack/p/2.ribbon-spring-boot2.0.3.release-spring-cloudfinchley.release/</guid>
         <description>&lt;p&gt;本文非完全原创，仅仅是整理自网上博客加上一部分自己的理解。参考文章：&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;方志朋&lt;br&gt;
@@ -3818,10 +3818,10 @@ ArtifactID定义了一个maven项目在组中的唯一id。&lt;/p&gt;
         </item>
         <item>
         <title>2.Ribbon-spring-boot(2.1.8.RELEASE)&#43;spring-cloud(Greenwich.SR3)</title>
-        <link>https://lyoshur.gitee.io/p/2.ribbon-spring-boot2.1.8.release-spring-cloudgreenwich.sr3/</link>
+        <link>https://lyoshur.github.io/stack/p/2.ribbon-spring-boot2.1.8.release-spring-cloudgreenwich.sr3/</link>
         <pubDate>Sun, 06 Mar 2022 00:00:00 +0000</pubDate>
         
-        <guid>https://lyoshur.gitee.io/p/2.ribbon-spring-boot2.1.8.release-spring-cloudgreenwich.sr3/</guid>
+        <guid>https://lyoshur.github.io/stack/p/2.ribbon-spring-boot2.1.8.release-spring-cloudgreenwich.sr3/</guid>
         <description>&lt;p&gt;本文非完全原创，仅仅是整理自网上博客加上一部分自己的理解。参考文章：&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;方志朋&lt;br&gt;
@@ -4197,10 +4197,10 @@ ArtifactID定义了一个maven项目在组中的唯一id。&lt;/p&gt;
         </item>
         <item>
         <title>2.关于linux中文显示为口的解决办法</title>
-        <link>https://lyoshur.gitee.io/p/2.%E5%85%B3%E4%BA%8Elinux%E4%B8%AD%E6%96%87%E6%98%BE%E7%A4%BA%E4%B8%BA%E5%8F%A3%E7%9A%84%E8%A7%A3%E5%86%B3%E5%8A%9E%E6%B3%95/</link>
+        <link>https://lyoshur.github.io/stack/p/2.%E5%85%B3%E4%BA%8Elinux%E4%B8%AD%E6%96%87%E6%98%BE%E7%A4%BA%E4%B8%BA%E5%8F%A3%E7%9A%84%E8%A7%A3%E5%86%B3%E5%8A%9E%E6%B3%95/</link>
         <pubDate>Sun, 06 Mar 2022 00:00:00 +0000</pubDate>
         
-        <guid>https://lyoshur.gitee.io/p/2.%E5%85%B3%E4%BA%8Elinux%E4%B8%AD%E6%96%87%E6%98%BE%E7%A4%BA%E4%B8%BA%E5%8F%A3%E7%9A%84%E8%A7%A3%E5%86%B3%E5%8A%9E%E6%B3%95/</guid>
+        <guid>https://lyoshur.github.io/stack/p/2.%E5%85%B3%E4%BA%8Elinux%E4%B8%AD%E6%96%87%E6%98%BE%E7%A4%BA%E4%B8%BA%E5%8F%A3%E7%9A%84%E8%A7%A3%E5%86%B3%E5%8A%9E%E6%B3%95/</guid>
         <description>&lt;p&gt;原文地址：https://www.cnblogs.com/qinlangsky/p/11445296.html&lt;/p&gt;
 &lt;h3 id=&#34;关于linux中文显示为口的解决办法&#34;&gt;关于linux中文显示为口的解决办法&lt;/h3&gt;
 &lt;p&gt;环境为ubuntu bionic。armhf架构。&lt;/p&gt;
@@ -4220,10 +4220,10 @@ mkdir fontpackages&lt;/p&gt;
         </item>
         <item>
         <title>2.关于maven中的relativePath</title>
-        <link>https://lyoshur.gitee.io/p/2.%E5%85%B3%E4%BA%8Emaven%E4%B8%AD%E7%9A%84relativepath/</link>
+        <link>https://lyoshur.github.io/stack/p/2.%E5%85%B3%E4%BA%8Emaven%E4%B8%AD%E7%9A%84relativepath/</link>
         <pubDate>Sun, 06 Mar 2022 00:00:00 +0000</pubDate>
         
-        <guid>https://lyoshur.gitee.io/p/2.%E5%85%B3%E4%BA%8Emaven%E4%B8%AD%E7%9A%84relativepath/</guid>
+        <guid>https://lyoshur.github.io/stack/p/2.%E5%85%B3%E4%BA%8Emaven%E4%B8%AD%E7%9A%84relativepath/</guid>
         <description>&lt;p&gt;本文非完全原创，仅仅是整理自网上博客加上一部分自己的理解。参考文章：&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;xinwendewen &lt;a class=&#34;link&#34; href=&#34;https://blog.csdn.net/zwt0909/article/details/52218222&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
@@ -4259,10 +4259,10 @@ mkdir fontpackages&lt;/p&gt;
         </item>
         <item>
         <title>2.建造者模式</title>
-        <link>https://lyoshur.gitee.io/p/2.%E5%BB%BA%E9%80%A0%E8%80%85%E6%A8%A1%E5%BC%8F/</link>
+        <link>https://lyoshur.github.io/stack/p/2.%E5%BB%BA%E9%80%A0%E8%80%85%E6%A8%A1%E5%BC%8F/</link>
         <pubDate>Sun, 06 Mar 2022 00:00:00 +0000</pubDate>
         
-        <guid>https://lyoshur.gitee.io/p/2.%E5%BB%BA%E9%80%A0%E8%80%85%E6%A8%A1%E5%BC%8F/</guid>
+        <guid>https://lyoshur.github.io/stack/p/2.%E5%BB%BA%E9%80%A0%E8%80%85%E6%A8%A1%E5%BC%8F/</guid>
         <description>&lt;h2 id=&#34;建造者模式学习笔记java&#34;&gt;建造者模式学习笔记（JAVA）&lt;/h2&gt;
 &lt;p&gt;关于文章声明部分，上章博客写了，不再赘述。&lt;/p&gt;
 &lt;h3 id=&#34;建造者模式&#34;&gt;建造者模式&lt;/h3&gt;
@@ -4744,10 +4744,10 @@ mkdir fontpackages&lt;/p&gt;
         </item>
         <item>
         <title>3.Feign-spring-boot(2.0.3.RELEASE)&#43;spring-cloud(Finchley.RELEASE)</title>
-        <link>https://lyoshur.gitee.io/p/3.feign-spring-boot2.0.3.release-spring-cloudfinchley.release/</link>
+        <link>https://lyoshur.github.io/stack/p/3.feign-spring-boot2.0.3.release-spring-cloudfinchley.release/</link>
         <pubDate>Sun, 06 Mar 2022 00:00:00 +0000</pubDate>
         
-        <guid>https://lyoshur.gitee.io/p/3.feign-spring-boot2.0.3.release-spring-cloudfinchley.release/</guid>
+        <guid>https://lyoshur.github.io/stack/p/3.feign-spring-boot2.0.3.release-spring-cloudfinchley.release/</guid>
         <description>&lt;p&gt;本文非完全原创，仅仅是整理自网上博客加上一部分自己的理解。参考文章：&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;方志朋&lt;br&gt;
@@ -5029,10 +5029,10 @@ mkdir fontpackages&lt;/p&gt;
         </item>
         <item>
         <title>3.Feign-spring-boot(2.1.8.RELEASE)&#43;spring-cloud(Greenwich.SR3)</title>
-        <link>https://lyoshur.gitee.io/p/3.feign-spring-boot2.1.8.release-spring-cloudgreenwich.sr3/</link>
+        <link>https://lyoshur.github.io/stack/p/3.feign-spring-boot2.1.8.release-spring-cloudgreenwich.sr3/</link>
         <pubDate>Sun, 06 Mar 2022 00:00:00 +0000</pubDate>
         
-        <guid>https://lyoshur.gitee.io/p/3.feign-spring-boot2.1.8.release-spring-cloudgreenwich.sr3/</guid>
+        <guid>https://lyoshur.github.io/stack/p/3.feign-spring-boot2.1.8.release-spring-cloudgreenwich.sr3/</guid>
         <description>&lt;p&gt;本文非完全原创，仅仅是整理自网上博客加上一部分自己的理解。参考文章：&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;方志朋&lt;br&gt;
@@ -5314,10 +5314,10 @@ mkdir fontpackages&lt;/p&gt;
         </item>
         <item>
         <title>3.Linux安装中文输入法</title>
-        <link>https://lyoshur.gitee.io/p/3.linux%E5%AE%89%E8%A3%85%E4%B8%AD%E6%96%87%E8%BE%93%E5%85%A5%E6%B3%95/</link>
+        <link>https://lyoshur.github.io/stack/p/3.linux%E5%AE%89%E8%A3%85%E4%B8%AD%E6%96%87%E8%BE%93%E5%85%A5%E6%B3%95/</link>
         <pubDate>Sun, 06 Mar 2022 00:00:00 +0000</pubDate>
         
-        <guid>https://lyoshur.gitee.io/p/3.linux%E5%AE%89%E8%A3%85%E4%B8%AD%E6%96%87%E8%BE%93%E5%85%A5%E6%B3%95/</guid>
+        <guid>https://lyoshur.github.io/stack/p/3.linux%E5%AE%89%E8%A3%85%E4%B8%AD%E6%96%87%E8%BE%93%E5%85%A5%E6%B3%95/</guid>
         <description>&lt;p&gt;原文地址：https://blog.csdn.net/Chamico/article/details/89788324&lt;/p&gt;
 &lt;h3 id=&#34;安装中文输入法&#34;&gt;安装中文输入法&lt;/h3&gt;
 &lt;h4 id=&#34;安装步骤&#34;&gt;安装步骤&lt;/h4&gt;
@@ -5332,10 +5332,10 @@ mkdir fontpackages&lt;/p&gt;
         </item>
         <item>
         <title>3.单例模式</title>
-        <link>https://lyoshur.gitee.io/p/3.%E5%8D%95%E4%BE%8B%E6%A8%A1%E5%BC%8F/</link>
+        <link>https://lyoshur.github.io/stack/p/3.%E5%8D%95%E4%BE%8B%E6%A8%A1%E5%BC%8F/</link>
         <pubDate>Sun, 06 Mar 2022 00:00:00 +0000</pubDate>
         
-        <guid>https://lyoshur.gitee.io/p/3.%E5%8D%95%E4%BE%8B%E6%A8%A1%E5%BC%8F/</guid>
+        <guid>https://lyoshur.github.io/stack/p/3.%E5%8D%95%E4%BE%8B%E6%A8%A1%E5%BC%8F/</guid>
         <description>&lt;h2 id=&#34;单例模式学习笔记java&#34;&gt;单例模式学习笔记（JAVA）&lt;/h2&gt;
 &lt;p&gt;关于文章声明部分，上章博客写了，不再赘述。&lt;/p&gt;
 &lt;p&gt;ps:本文中的代码，仅仅是为了说明问题，并不保证生产中可用，大家看看就好。&lt;/p&gt;
@@ -5571,10 +5571,10 @@ mkdir fontpackages&lt;/p&gt;
         </item>
         <item>
         <title>3dmax使用Babylon插件导出gltf模型</title>
-        <link>https://lyoshur.gitee.io/p/3dmax%E4%BD%BF%E7%94%A8babylon%E6%8F%92%E4%BB%B6%E5%AF%BC%E5%87%BAgltf%E6%A8%A1%E5%9E%8B/</link>
+        <link>https://lyoshur.github.io/stack/p/3dmax%E4%BD%BF%E7%94%A8babylon%E6%8F%92%E4%BB%B6%E5%AF%BC%E5%87%BAgltf%E6%A8%A1%E5%9E%8B/</link>
         <pubDate>Sun, 06 Mar 2022 00:00:00 +0000</pubDate>
         
-        <guid>https://lyoshur.gitee.io/p/3dmax%E4%BD%BF%E7%94%A8babylon%E6%8F%92%E4%BB%B6%E5%AF%BC%E5%87%BAgltf%E6%A8%A1%E5%9E%8B/</guid>
+        <guid>https://lyoshur.github.io/stack/p/3dmax%E4%BD%BF%E7%94%A8babylon%E6%8F%92%E4%BB%B6%E5%AF%BC%E5%87%BAgltf%E6%A8%A1%E5%9E%8B/</guid>
         <description>&lt;h1 id=&#34;3dmax使用babylon插件导出gltf模型&#34;&gt;3dmax使用Babylon插件导出gltf模型&lt;/h1&gt;
 &lt;h2 id=&#34;1-需求资源&#34;&gt;1 需求资源&lt;/h2&gt;
 &lt;p&gt;相关资源整理收集在 3DMAX升级包以及插件-20220708 文件夹中，主要文件包含&lt;/p&gt;
@@ -5591,10 +5591,10 @@ mkdir fontpackages&lt;/p&gt;
         </item>
         <item>
         <title>4.Hystrix-spring-boot(2.0.3.RELEASE)&#43;spring-cloud(Finchley.RELEASE)</title>
-        <link>https://lyoshur.gitee.io/p/4.hystrix-spring-boot2.0.3.release-spring-cloudfinchley.release/</link>
+        <link>https://lyoshur.github.io/stack/p/4.hystrix-spring-boot2.0.3.release-spring-cloudfinchley.release/</link>
         <pubDate>Sun, 06 Mar 2022 00:00:00 +0000</pubDate>
         
-        <guid>https://lyoshur.gitee.io/p/4.hystrix-spring-boot2.0.3.release-spring-cloudfinchley.release/</guid>
+        <guid>https://lyoshur.github.io/stack/p/4.hystrix-spring-boot2.0.3.release-spring-cloudfinchley.release/</guid>
         <description>&lt;p&gt;本文非完全原创，仅仅是整理自网上博客加上一部分自己的理解。参考文章：&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;方志朋&lt;br&gt;
@@ -5716,10 +5716,10 @@ mkdir fontpackages&lt;/p&gt;
         </item>
         <item>
         <title>4.Hystrix-spring-boot(2.1.8.RELEASE)&#43;spring-cloud(Greenwich.SR3)</title>
-        <link>https://lyoshur.gitee.io/p/4.hystrix-spring-boot2.1.8.release-spring-cloudgreenwich.sr3/</link>
+        <link>https://lyoshur.github.io/stack/p/4.hystrix-spring-boot2.1.8.release-spring-cloudgreenwich.sr3/</link>
         <pubDate>Sun, 06 Mar 2022 00:00:00 +0000</pubDate>
         
-        <guid>https://lyoshur.gitee.io/p/4.hystrix-spring-boot2.1.8.release-spring-cloudgreenwich.sr3/</guid>
+        <guid>https://lyoshur.github.io/stack/p/4.hystrix-spring-boot2.1.8.release-spring-cloudgreenwich.sr3/</guid>
         <description>&lt;p&gt;本文非完全原创，仅仅是整理自网上博客加上一部分自己的理解。参考文章：&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;方志朋&lt;br&gt;
@@ -5841,10 +5841,10 @@ mkdir fontpackages&lt;/p&gt;
         </item>
         <item>
         <title>4.Linux进入root失败</title>
-        <link>https://lyoshur.gitee.io/p/4.linux%E8%BF%9B%E5%85%A5root%E5%A4%B1%E8%B4%A5/</link>
+        <link>https://lyoshur.github.io/stack/p/4.linux%E8%BF%9B%E5%85%A5root%E5%A4%B1%E8%B4%A5/</link>
         <pubDate>Sun, 06 Mar 2022 00:00:00 +0000</pubDate>
         
-        <guid>https://lyoshur.gitee.io/p/4.linux%E8%BF%9B%E5%85%A5root%E5%A4%B1%E8%B4%A5/</guid>
+        <guid>https://lyoshur.github.io/stack/p/4.linux%E8%BF%9B%E5%85%A5root%E5%A4%B1%E8%B4%A5/</guid>
         <description>&lt;p&gt;原文地址：https://jingyan.baidu.com/article/fd8044fa1e74035031137ae0.html&lt;/p&gt;
 &lt;h3 id=&#34;进入root失败&#34;&gt;进入ROOT失败&lt;/h3&gt;
 &lt;p&gt;ubuntu怎么切换到root用户，我们都知道使用su root命令，去切换到root权限，此时会提示输入密码，可是怎么也输不对，提示“Authentication failure”，&lt;/p&gt;
@@ -5855,10 +5855,10 @@ mkdir fontpackages&lt;/p&gt;
         </item>
         <item>
         <title>5.Linux安装go语言环境</title>
-        <link>https://lyoshur.gitee.io/p/5.linux%E5%AE%89%E8%A3%85go%E8%AF%AD%E8%A8%80%E7%8E%AF%E5%A2%83/</link>
+        <link>https://lyoshur.github.io/stack/p/5.linux%E5%AE%89%E8%A3%85go%E8%AF%AD%E8%A8%80%E7%8E%AF%E5%A2%83/</link>
         <pubDate>Sun, 06 Mar 2022 00:00:00 +0000</pubDate>
         
-        <guid>https://lyoshur.gitee.io/p/5.linux%E5%AE%89%E8%A3%85go%E8%AF%AD%E8%A8%80%E7%8E%AF%E5%A2%83/</guid>
+        <guid>https://lyoshur.github.io/stack/p/5.linux%E5%AE%89%E8%A3%85go%E8%AF%AD%E8%A8%80%E7%8E%AF%E5%A2%83/</guid>
         <description>&lt;h3 id=&#34;安装go语言环境&#34;&gt;安装GO语言环境&lt;/h3&gt;
 &lt;p&gt;环境为ubuntu bionic。armhf架构。&lt;/p&gt;
 &lt;h4 id=&#34;下载二进制文件&#34;&gt;下载二进制文件&lt;/h4&gt;
@@ -5872,10 +5872,10 @@ mkdir fontpackages&lt;/p&gt;
         </item>
         <item>
         <title>5.Zuul-spring-boot(2.0.3.RELEASE)&#43;spring-cloud(Finchley.RELEASE)</title>
-        <link>https://lyoshur.gitee.io/p/5.zuul-spring-boot2.0.3.release-spring-cloudfinchley.release/</link>
+        <link>https://lyoshur.github.io/stack/p/5.zuul-spring-boot2.0.3.release-spring-cloudfinchley.release/</link>
         <pubDate>Sun, 06 Mar 2022 00:00:00 +0000</pubDate>
         
-        <guid>https://lyoshur.gitee.io/p/5.zuul-spring-boot2.0.3.release-spring-cloudfinchley.release/</guid>
+        <guid>https://lyoshur.github.io/stack/p/5.zuul-spring-boot2.0.3.release-spring-cloudfinchley.release/</guid>
         <description>&lt;p&gt;本文非完全原创，仅仅是整理自网上博客加上一部分自己的理解。参考文章：&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;方志朋&lt;br&gt;
@@ -6247,10 +6247,10 @@ mkdir fontpackages&lt;/p&gt;
         </item>
         <item>
         <title>5.Zuul-spring-boot(2.1.8.RELEASE)&#43;spring-cloud(Greenwich.SR3)</title>
-        <link>https://lyoshur.gitee.io/p/5.zuul-spring-boot2.1.8.release-spring-cloudgreenwich.sr3/</link>
+        <link>https://lyoshur.github.io/stack/p/5.zuul-spring-boot2.1.8.release-spring-cloudgreenwich.sr3/</link>
         <pubDate>Sun, 06 Mar 2022 00:00:00 +0000</pubDate>
         
-        <guid>https://lyoshur.gitee.io/p/5.zuul-spring-boot2.1.8.release-spring-cloudgreenwich.sr3/</guid>
+        <guid>https://lyoshur.github.io/stack/p/5.zuul-spring-boot2.1.8.release-spring-cloudgreenwich.sr3/</guid>
         <description>&lt;p&gt;本文非完全原创，仅仅是整理自网上博客加上一部分自己的理解。参考文章：&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;方志朋&lt;br&gt;
@@ -6622,10 +6622,10 @@ mkdir fontpackages&lt;/p&gt;
         </item>
         <item>
         <title>6.Config-spring-boot(2.0.3.RELEASE)&#43;spring-cloud(Finchley.RELEASE)</title>
-        <link>https://lyoshur.gitee.io/p/6.config-spring-boot2.0.3.release-spring-cloudfinchley.release/</link>
+        <link>https://lyoshur.github.io/stack/p/6.config-spring-boot2.0.3.release-spring-cloudfinchley.release/</link>
         <pubDate>Sun, 06 Mar 2022 00:00:00 +0000</pubDate>
         
-        <guid>https://lyoshur.gitee.io/p/6.config-spring-boot2.0.3.release-spring-cloudfinchley.release/</guid>
+        <guid>https://lyoshur.github.io/stack/p/6.config-spring-boot2.0.3.release-spring-cloudfinchley.release/</guid>
         <description>&lt;p&gt;本文非完全原创，仅仅是整理自网上博客加上一部分自己的理解。参考文章：&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;方志朋&lt;br&gt;
@@ -6940,10 +6940,10 @@ mkdir fontpackages&lt;/p&gt;
         </item>
         <item>
         <title>6.Config-spring-boot(2.1.8.RELEASE)&#43;spring-cloud(Greenwich.SR3)</title>
-        <link>https://lyoshur.gitee.io/p/6.config-spring-boot2.1.8.release-spring-cloudgreenwich.sr3/</link>
+        <link>https://lyoshur.github.io/stack/p/6.config-spring-boot2.1.8.release-spring-cloudgreenwich.sr3/</link>
         <pubDate>Sun, 06 Mar 2022 00:00:00 +0000</pubDate>
         
-        <guid>https://lyoshur.gitee.io/p/6.config-spring-boot2.1.8.release-spring-cloudgreenwich.sr3/</guid>
+        <guid>https://lyoshur.github.io/stack/p/6.config-spring-boot2.1.8.release-spring-cloudgreenwich.sr3/</guid>
         <description>&lt;p&gt;本文非完全原创，仅仅是整理自网上博客加上一部分自己的理解。参考文章：&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;方志朋&lt;br&gt;
@@ -7258,10 +7258,10 @@ mkdir fontpackages&lt;/p&gt;
         </item>
         <item>
         <title>6.Linux修改环境变量</title>
-        <link>https://lyoshur.gitee.io/p/6.linux%E4%BF%AE%E6%94%B9%E7%8E%AF%E5%A2%83%E5%8F%98%E9%87%8F/</link>
+        <link>https://lyoshur.github.io/stack/p/6.linux%E4%BF%AE%E6%94%B9%E7%8E%AF%E5%A2%83%E5%8F%98%E9%87%8F/</link>
         <pubDate>Sun, 06 Mar 2022 00:00:00 +0000</pubDate>
         
-        <guid>https://lyoshur.gitee.io/p/6.linux%E4%BF%AE%E6%94%B9%E7%8E%AF%E5%A2%83%E5%8F%98%E9%87%8F/</guid>
+        <guid>https://lyoshur.github.io/stack/p/6.linux%E4%BF%AE%E6%94%B9%E7%8E%AF%E5%A2%83%E5%8F%98%E9%87%8F/</guid>
         <description>&lt;h3 id=&#34;修改环境变量&#34;&gt;修改环境变量&lt;/h3&gt;
 &lt;p&gt;环境为ubuntu bionic。armhf架构。&lt;/p&gt;
 &lt;h4 id=&#34;修改-etcprofile-文件&#34;&gt;修改 /etc/profile 文件&lt;/h4&gt;
@@ -7273,10 +7273,10 @@ source /etc/profile&lt;/p&gt;
         </item>
         <item>
         <title>7.Config高可用改造-spring-boot(2.0.3.RELEASE)&#43;spring-cloud(Finchley.RELEASE)</title>
-        <link>https://lyoshur.gitee.io/p/7.config%E9%AB%98%E5%8F%AF%E7%94%A8%E6%94%B9%E9%80%A0-spring-boot2.0.3.release-spring-cloudfinchley.release/</link>
+        <link>https://lyoshur.github.io/stack/p/7.config%E9%AB%98%E5%8F%AF%E7%94%A8%E6%94%B9%E9%80%A0-spring-boot2.0.3.release-spring-cloudfinchley.release/</link>
         <pubDate>Sun, 06 Mar 2022 00:00:00 +0000</pubDate>
         
-        <guid>https://lyoshur.gitee.io/p/7.config%E9%AB%98%E5%8F%AF%E7%94%A8%E6%94%B9%E9%80%A0-spring-boot2.0.3.release-spring-cloudfinchley.release/</guid>
+        <guid>https://lyoshur.github.io/stack/p/7.config%E9%AB%98%E5%8F%AF%E7%94%A8%E6%94%B9%E9%80%A0-spring-boot2.0.3.release-spring-cloudfinchley.release/</guid>
         <description>&lt;p&gt;本文非完全原创，仅仅是整理自网上博客加上一部分自己的理解。参考文章：&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;方志朋&lt;br&gt;
@@ -7417,10 +7417,10 @@ source /etc/profile&lt;/p&gt;
         </item>
         <item>
         <title>7.Config高可用改造-spring-boot(2.1.8.RELEASE)&#43;spring-cloud(Greenwich.SR3)</title>
-        <link>https://lyoshur.gitee.io/p/7.config%E9%AB%98%E5%8F%AF%E7%94%A8%E6%94%B9%E9%80%A0-spring-boot2.1.8.release-spring-cloudgreenwich.sr3/</link>
+        <link>https://lyoshur.github.io/stack/p/7.config%E9%AB%98%E5%8F%AF%E7%94%A8%E6%94%B9%E9%80%A0-spring-boot2.1.8.release-spring-cloudgreenwich.sr3/</link>
         <pubDate>Sun, 06 Mar 2022 00:00:00 +0000</pubDate>
         
-        <guid>https://lyoshur.gitee.io/p/7.config%E9%AB%98%E5%8F%AF%E7%94%A8%E6%94%B9%E9%80%A0-spring-boot2.1.8.release-spring-cloudgreenwich.sr3/</guid>
+        <guid>https://lyoshur.github.io/stack/p/7.config%E9%AB%98%E5%8F%AF%E7%94%A8%E6%94%B9%E9%80%A0-spring-boot2.1.8.release-spring-cloudgreenwich.sr3/</guid>
         <description>&lt;p&gt;本文非完全原创，仅仅是整理自网上博客加上一部分自己的理解。参考文章：&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;方志朋&lt;br&gt;
@@ -7561,10 +7561,10 @@ source /etc/profile&lt;/p&gt;
         </item>
         <item>
         <title>8.Actuator-spring-boot(2.0.3.RELEASE)&#43;spring-cloud(Finchley.RELEASE)</title>
-        <link>https://lyoshur.gitee.io/p/8.actuator-spring-boot2.0.3.release-spring-cloudfinchley.release/</link>
+        <link>https://lyoshur.github.io/stack/p/8.actuator-spring-boot2.0.3.release-spring-cloudfinchley.release/</link>
         <pubDate>Sun, 06 Mar 2022 00:00:00 +0000</pubDate>
         
-        <guid>https://lyoshur.gitee.io/p/8.actuator-spring-boot2.0.3.release-spring-cloudfinchley.release/</guid>
+        <guid>https://lyoshur.github.io/stack/p/8.actuator-spring-boot2.0.3.release-spring-cloudfinchley.release/</guid>
         <description>&lt;p&gt;本文非完全原创，仅仅是整理自网上博客加上一部分自己的理解。参考文章：&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;风的姿态&lt;br&gt;
@@ -7605,10 +7605,10 @@ source /etc/profile&lt;/p&gt;
         </item>
         <item>
         <title>Cesium加载图层</title>
-        <link>https://lyoshur.gitee.io/p/cesium%E5%8A%A0%E8%BD%BD%E5%9B%BE%E5%B1%82/</link>
+        <link>https://lyoshur.github.io/stack/p/cesium%E5%8A%A0%E8%BD%BD%E5%9B%BE%E5%B1%82/</link>
         <pubDate>Sun, 06 Mar 2022 00:00:00 +0000</pubDate>
         
-        <guid>https://lyoshur.gitee.io/p/cesium%E5%8A%A0%E8%BD%BD%E5%9B%BE%E5%B1%82/</guid>
+        <guid>https://lyoshur.github.io/stack/p/cesium%E5%8A%A0%E8%BD%BD%E5%9B%BE%E5%B1%82/</guid>
         <description>&lt;h2 id=&#34;cesium加载图层&#34;&gt;Cesium加载图层&lt;/h2&gt;
 &lt;h2 id=&#34;1协议介绍&#34;&gt;1.协议介绍&lt;/h2&gt;
 &lt;ul&gt;
@@ -7978,10 +7978,10 @@ source /etc/profile&lt;/p&gt;
         </item>
         <item>
         <title>Chrome开启多线程下载</title>
-        <link>https://lyoshur.gitee.io/p/chrome%E5%BC%80%E5%90%AF%E5%A4%9A%E7%BA%BF%E7%A8%8B%E4%B8%8B%E8%BD%BD/</link>
+        <link>https://lyoshur.github.io/stack/p/chrome%E5%BC%80%E5%90%AF%E5%A4%9A%E7%BA%BF%E7%A8%8B%E4%B8%8B%E8%BD%BD/</link>
         <pubDate>Sun, 06 Mar 2022 00:00:00 +0000</pubDate>
         
-        <guid>https://lyoshur.gitee.io/p/chrome%E5%BC%80%E5%90%AF%E5%A4%9A%E7%BA%BF%E7%A8%8B%E4%B8%8B%E8%BD%BD/</guid>
+        <guid>https://lyoshur.github.io/stack/p/chrome%E5%BC%80%E5%90%AF%E5%A4%9A%E7%BA%BF%E7%A8%8B%E4%B8%8B%E8%BD%BD/</guid>
         <description>&lt;h2 id=&#34;多线程下载&#34;&gt;多线程下载&lt;/h2&gt;
 &lt;p&gt;在地址栏输入&lt;/p&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
@@ -8006,10 +8006,10 @@ source /etc/profile&lt;/p&gt;
         </item>
         <item>
         <title>CMD常用命令</title>
-        <link>https://lyoshur.gitee.io/p/cmd%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4/</link>
+        <link>https://lyoshur.github.io/stack/p/cmd%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4/</link>
         <pubDate>Sun, 06 Mar 2022 00:00:00 +0000</pubDate>
         
-        <guid>https://lyoshur.gitee.io/p/cmd%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4/</guid>
+        <guid>https://lyoshur.github.io/stack/p/cmd%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4/</guid>
         <description>&lt;h2 id=&#34;cmd常用命令&#34;&gt;cmd常用命令&lt;/h2&gt;
 &lt;h3 id=&#34;1判断某个文件是否存在&#34;&gt;1.判断某个文件是否存在&lt;/h3&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
@@ -8159,10 +8159,10 @@ source /etc/profile&lt;/p&gt;
         </item>
         <item>
         <title>doc2docx</title>
-        <link>https://lyoshur.gitee.io/p/doc2docx/</link>
+        <link>https://lyoshur.github.io/stack/p/doc2docx/</link>
         <pubDate>Sun, 06 Mar 2022 00:00:00 +0000</pubDate>
         
-        <guid>https://lyoshur.gitee.io/p/doc2docx/</guid>
+        <guid>https://lyoshur.github.io/stack/p/doc2docx/</guid>
         <description>&lt;h3 id=&#34;doc转docx&#34;&gt;doc转docx&lt;/h3&gt;
 &lt;p&gt;使用jacob.jar&lt;/p&gt;
 &lt;p&gt;示例代码：&lt;/p&gt;
@@ -8302,10 +8302,10 @@ source /etc/profile&lt;/p&gt;
         </item>
         <item>
         <title>docker仓库管理</title>
-        <link>https://lyoshur.gitee.io/p/docker%E4%BB%93%E5%BA%93%E7%AE%A1%E7%90%86/</link>
+        <link>https://lyoshur.github.io/stack/p/docker%E4%BB%93%E5%BA%93%E7%AE%A1%E7%90%86/</link>
         <pubDate>Sun, 06 Mar 2022 00:00:00 +0000</pubDate>
         
-        <guid>https://lyoshur.gitee.io/p/docker%E4%BB%93%E5%BA%93%E7%AE%A1%E7%90%86/</guid>
+        <guid>https://lyoshur.github.io/stack/p/docker%E4%BB%93%E5%BA%93%E7%AE%A1%E7%90%86/</guid>
         <description>&lt;h2 id=&#34;docker仓库管理&#34;&gt;docker仓库管理&lt;/h2&gt;
 &lt;h3 id=&#34;1登录远程仓库&#34;&gt;1.登录远程仓库&lt;/h3&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
@@ -8356,10 +8356,10 @@ source /etc/profile&lt;/p&gt;
         </item>
         <item>
         <title>docker常用命令</title>
-        <link>https://lyoshur.gitee.io/p/docker%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4/</link>
+        <link>https://lyoshur.github.io/stack/p/docker%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4/</link>
         <pubDate>Sun, 06 Mar 2022 00:00:00 +0000</pubDate>
         
-        <guid>https://lyoshur.gitee.io/p/docker%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4/</guid>
+        <guid>https://lyoshur.github.io/stack/p/docker%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4/</guid>
         <description>&lt;h2 id=&#34;docker常用命令&#34;&gt;docker常用命令&lt;/h2&gt;
 &lt;h3 id=&#34;1获取本地镜像列表&#34;&gt;1.获取本地镜像列表&lt;/h3&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
@@ -8576,10 +8576,10 @@ source /etc/profile&lt;/p&gt;
         </item>
         <item>
         <title>Docker网络</title>
-        <link>https://lyoshur.gitee.io/p/docker%E7%BD%91%E7%BB%9C/</link>
+        <link>https://lyoshur.github.io/stack/p/docker%E7%BD%91%E7%BB%9C/</link>
         <pubDate>Sun, 06 Mar 2022 00:00:00 +0000</pubDate>
         
-        <guid>https://lyoshur.gitee.io/p/docker%E7%BD%91%E7%BB%9C/</guid>
+        <guid>https://lyoshur.github.io/stack/p/docker%E7%BD%91%E7%BB%9C/</guid>
         <description>&lt;h2 id=&#34;docker网络&#34;&gt;Docker网络&lt;/h2&gt;
 &lt;h3 id=&#34;1新建docker网络&#34;&gt;1.新建Docker网络&lt;/h3&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
@@ -8656,10 +8656,10 @@ source /etc/profile&lt;/p&gt;
         </item>
         <item>
         <title>git分支管理</title>
-        <link>https://lyoshur.gitee.io/p/git%E5%88%86%E6%94%AF%E7%AE%A1%E7%90%86/</link>
+        <link>https://lyoshur.github.io/stack/p/git%E5%88%86%E6%94%AF%E7%AE%A1%E7%90%86/</link>
         <pubDate>Sun, 06 Mar 2022 00:00:00 +0000</pubDate>
         
-        <guid>https://lyoshur.gitee.io/p/git%E5%88%86%E6%94%AF%E7%AE%A1%E7%90%86/</guid>
+        <guid>https://lyoshur.github.io/stack/p/git%E5%88%86%E6%94%AF%E7%AE%A1%E7%90%86/</guid>
         <description>&lt;h2 id=&#34;git分支管理&#34;&gt;git分支管理&lt;/h2&gt;
 &lt;h3 id=&#34;1查看全部分支&#34;&gt;1.查看全部分支&lt;/h3&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
@@ -8747,10 +8747,10 @@ source /etc/profile&lt;/p&gt;
         </item>
         <item>
         <title>git基础命令</title>
-        <link>https://lyoshur.gitee.io/p/git%E5%9F%BA%E7%A1%80%E5%91%BD%E4%BB%A4/</link>
+        <link>https://lyoshur.github.io/stack/p/git%E5%9F%BA%E7%A1%80%E5%91%BD%E4%BB%A4/</link>
         <pubDate>Sun, 06 Mar 2022 00:00:00 +0000</pubDate>
         
-        <guid>https://lyoshur.gitee.io/p/git%E5%9F%BA%E7%A1%80%E5%91%BD%E4%BB%A4/</guid>
+        <guid>https://lyoshur.github.io/stack/p/git%E5%9F%BA%E7%A1%80%E5%91%BD%E4%BB%A4/</guid>
         <description>&lt;h2 id=&#34;git基础命令&#34;&gt;git基础命令&lt;/h2&gt;
 &lt;h3 id=&#34;1创建一个空仓库&#34;&gt;1.创建一个空仓库&lt;/h3&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
@@ -8870,10 +8870,10 @@ source /etc/profile&lt;/p&gt;
         </item>
         <item>
         <title>git远程命令</title>
-        <link>https://lyoshur.gitee.io/p/git%E8%BF%9C%E7%A8%8B%E5%91%BD%E4%BB%A4/</link>
+        <link>https://lyoshur.github.io/stack/p/git%E8%BF%9C%E7%A8%8B%E5%91%BD%E4%BB%A4/</link>
         <pubDate>Sun, 06 Mar 2022 00:00:00 +0000</pubDate>
         
-        <guid>https://lyoshur.gitee.io/p/git%E8%BF%9C%E7%A8%8B%E5%91%BD%E4%BB%A4/</guid>
+        <guid>https://lyoshur.github.io/stack/p/git%E8%BF%9C%E7%A8%8B%E5%91%BD%E4%BB%A4/</guid>
         <description>&lt;h2 id=&#34;git远程命令&#34;&gt;git远程命令&lt;/h2&gt;
 &lt;h3 id=&#34;1显示所有远程仓库&#34;&gt;1.显示所有远程仓库&lt;/h3&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
@@ -8944,10 +8944,10 @@ source /etc/profile&lt;/p&gt;
         </item>
         <item>
         <title>GO反向代理要求</title>
-        <link>https://lyoshur.gitee.io/p/go%E5%8F%8D%E5%90%91%E4%BB%A3%E7%90%86%E8%A6%81%E6%B1%82/</link>
+        <link>https://lyoshur.github.io/stack/p/go%E5%8F%8D%E5%90%91%E4%BB%A3%E7%90%86%E8%A6%81%E6%B1%82/</link>
         <pubDate>Sun, 06 Mar 2022 00:00:00 +0000</pubDate>
         
-        <guid>https://lyoshur.gitee.io/p/go%E5%8F%8D%E5%90%91%E4%BB%A3%E7%90%86%E8%A6%81%E6%B1%82/</guid>
+        <guid>https://lyoshur.github.io/stack/p/go%E5%8F%8D%E5%90%91%E4%BB%A3%E7%90%86%E8%A6%81%E6%B1%82/</guid>
         <description>&lt;p&gt;0 概述&lt;/p&gt;
 &lt;p&gt;使用golang开发tcp反向代理程序 实现ha(热备)/lb(负载均衡)的效果
 console app即可，无需gui界面
@@ -8992,10 +8992,10 @@ group-close.do?group=&amp;lt;监听端口&amp;gt; 关闭端口监听
         </item>
         <item>
         <title>go中的module和GOPATH</title>
-        <link>https://lyoshur.gitee.io/p/go%E4%B8%AD%E7%9A%84module%E5%92%8Cgopath/</link>
+        <link>https://lyoshur.github.io/stack/p/go%E4%B8%AD%E7%9A%84module%E5%92%8Cgopath/</link>
         <pubDate>Sun, 06 Mar 2022 00:00:00 +0000</pubDate>
         
-        <guid>https://lyoshur.gitee.io/p/go%E4%B8%AD%E7%9A%84module%E5%92%8Cgopath/</guid>
+        <guid>https://lyoshur.github.io/stack/p/go%E4%B8%AD%E7%9A%84module%E5%92%8Cgopath/</guid>
         <description>&lt;h1 id=&#34;go中的module和gopath&#34;&gt;go中的module和GOPATH&lt;/h1&gt;
 &lt;p&gt;在GO 1.11 中，开始使用module组织项目依赖。&lt;/p&gt;
 &lt;p&gt;首先是差别，GOPATH要求项目按照工程名-src。全部的依赖会放置到 GOPATH/src中。这里类似于java最开始lib的方式。&lt;/p&gt;
@@ -9016,10 +9016,10 @@ group-close.do?group=&amp;lt;监听端口&amp;gt; 关闭端口监听
         </item>
         <item>
         <title>java9中的module</title>
-        <link>https://lyoshur.gitee.io/p/java9%E4%B8%AD%E7%9A%84module/</link>
+        <link>https://lyoshur.github.io/stack/p/java9%E4%B8%AD%E7%9A%84module/</link>
         <pubDate>Sun, 06 Mar 2022 00:00:00 +0000</pubDate>
         
-        <guid>https://lyoshur.gitee.io/p/java9%E4%B8%AD%E7%9A%84module/</guid>
+        <guid>https://lyoshur.github.io/stack/p/java9%E4%B8%AD%E7%9A%84module/</guid>
         <description>&lt;h1 id=&#34;java9中的module&#34;&gt;java9中的module&lt;/h1&gt;
 &lt;p&gt;1.模块的声明文件module-info.java位于src目录下，对整个模块进行描述。否则会提示&lt;/p&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
@@ -9095,10 +9095,10 @@ group-close.do?group=&amp;lt;监听端口&amp;gt; 关闭端口监听
         </item>
         <item>
         <title>JAVA核心技术 卷1学习笔记</title>
-        <link>https://lyoshur.gitee.io/p/java%E6%A0%B8%E5%BF%83%E6%8A%80%E6%9C%AF-%E5%8D%B71%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/</link>
+        <link>https://lyoshur.github.io/stack/p/java%E6%A0%B8%E5%BF%83%E6%8A%80%E6%9C%AF-%E5%8D%B71%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/</link>
         <pubDate>Sun, 06 Mar 2022 00:00:00 +0000</pubDate>
         
-        <guid>https://lyoshur.gitee.io/p/java%E6%A0%B8%E5%BF%83%E6%8A%80%E6%9C%AF-%E5%8D%B71%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/</guid>
+        <guid>https://lyoshur.github.io/stack/p/java%E6%A0%B8%E5%BF%83%E6%8A%80%E6%9C%AF-%E5%8D%B71%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/</guid>
         <description>&lt;h2 id=&#34;java核心技术-卷1&#34;&gt;JAVA核心技术 卷1&lt;/h2&gt;
 &lt;p&gt;jdk9 jshell&lt;/p&gt;
 &lt;p&gt;jdk10 var a = 12;&lt;/p&gt;
@@ -9169,10 +9169,10 @@ group-close.do?group=&amp;lt;监听端口&amp;gt; 关闭端口监听
         </item>
         <item>
         <title>java日志基本知识</title>
-        <link>https://lyoshur.gitee.io/p/java%E6%97%A5%E5%BF%97%E5%9F%BA%E6%9C%AC%E7%9F%A5%E8%AF%86/</link>
+        <link>https://lyoshur.github.io/stack/p/java%E6%97%A5%E5%BF%97%E5%9F%BA%E6%9C%AC%E7%9F%A5%E8%AF%86/</link>
         <pubDate>Sun, 06 Mar 2022 00:00:00 +0000</pubDate>
         
-        <guid>https://lyoshur.gitee.io/p/java%E6%97%A5%E5%BF%97%E5%9F%BA%E6%9C%AC%E7%9F%A5%E8%AF%86/</guid>
+        <guid>https://lyoshur.github.io/stack/p/java%E6%97%A5%E5%BF%97%E5%9F%BA%E6%9C%AC%E7%9F%A5%E8%AF%86/</guid>
         <description>&lt;h2 id=&#34;java日志基本知识&#34;&gt;java日志基本知识&lt;/h2&gt;
 &lt;h3 id=&#34;1为什么要使用日志&#34;&gt;1.为什么要使用日志&lt;/h3&gt;
 &lt;ul&gt;
@@ -9304,10 +9304,10 @@ group-close.do?group=&amp;lt;监听端口&amp;gt; 关闭端口监听
         </item>
         <item>
         <title>Linux关于curl安装软件时报错</title>
-        <link>https://lyoshur.gitee.io/p/linux%E5%85%B3%E4%BA%8Ecurl%E5%AE%89%E8%A3%85%E8%BD%AF%E4%BB%B6%E6%97%B6%E6%8A%A5%E9%94%99/</link>
+        <link>https://lyoshur.github.io/stack/p/linux%E5%85%B3%E4%BA%8Ecurl%E5%AE%89%E8%A3%85%E8%BD%AF%E4%BB%B6%E6%97%B6%E6%8A%A5%E9%94%99/</link>
         <pubDate>Sun, 06 Mar 2022 00:00:00 +0000</pubDate>
         
-        <guid>https://lyoshur.gitee.io/p/linux%E5%85%B3%E4%BA%8Ecurl%E5%AE%89%E8%A3%85%E8%BD%AF%E4%BB%B6%E6%97%B6%E6%8A%A5%E9%94%99/</guid>
+        <guid>https://lyoshur.github.io/stack/p/linux%E5%85%B3%E4%BA%8Ecurl%E5%AE%89%E8%A3%85%E8%BD%AF%E4%BB%B6%E6%97%B6%E6%8A%A5%E9%94%99/</guid>
         <description>&lt;h2 id=&#34;关于curl安装软件时报错&#34;&gt;关于curl安装软件时报错&lt;/h2&gt;
 &lt;p&gt;执行命令&lt;/p&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
@@ -9341,10 +9341,10 @@ group-close.do?group=&amp;lt;监听端口&amp;gt; 关闭端口监听
         </item>
         <item>
         <title>linux使用tar.gz安装mysql</title>
-        <link>https://lyoshur.gitee.io/p/linux%E4%BD%BF%E7%94%A8tar.gz%E5%AE%89%E8%A3%85mysql/</link>
+        <link>https://lyoshur.github.io/stack/p/linux%E4%BD%BF%E7%94%A8tar.gz%E5%AE%89%E8%A3%85mysql/</link>
         <pubDate>Sun, 06 Mar 2022 00:00:00 +0000</pubDate>
         
-        <guid>https://lyoshur.gitee.io/p/linux%E4%BD%BF%E7%94%A8tar.gz%E5%AE%89%E8%A3%85mysql/</guid>
+        <guid>https://lyoshur.github.io/stack/p/linux%E4%BD%BF%E7%94%A8tar.gz%E5%AE%89%E8%A3%85mysql/</guid>
         <description>&lt;ul&gt;
 &lt;li&gt;使用压缩包安装mysql&lt;/li&gt;
 &lt;/ul&gt;
@@ -9394,10 +9394,10 @@ flush privileges;&lt;/p&gt;
         </item>
         <item>
         <title>MySQL查询优化</title>
-        <link>https://lyoshur.gitee.io/p/mysql%E6%9F%A5%E8%AF%A2%E4%BC%98%E5%8C%96/</link>
+        <link>https://lyoshur.github.io/stack/p/mysql%E6%9F%A5%E8%AF%A2%E4%BC%98%E5%8C%96/</link>
         <pubDate>Sun, 06 Mar 2022 00:00:00 +0000</pubDate>
         
-        <guid>https://lyoshur.gitee.io/p/mysql%E6%9F%A5%E8%AF%A2%E4%BC%98%E5%8C%96/</guid>
+        <guid>https://lyoshur.github.io/stack/p/mysql%E6%9F%A5%E8%AF%A2%E4%BC%98%E5%8C%96/</guid>
         <description>&lt;h2 id=&#34;mysql查询优化&#34;&gt;mysql查询优化&lt;/h2&gt;
 &lt;ol&gt;
 &lt;li&gt;为列选择合适的数据类型&lt;/li&gt;
@@ -9412,10 +9412,10 @@ flush privileges;&lt;/p&gt;
         </item>
         <item>
         <title>MySQL获取数据库结构</title>
-        <link>https://lyoshur.gitee.io/p/mysql%E8%8E%B7%E5%8F%96%E6%95%B0%E6%8D%AE%E5%BA%93%E7%BB%93%E6%9E%84/</link>
+        <link>https://lyoshur.github.io/stack/p/mysql%E8%8E%B7%E5%8F%96%E6%95%B0%E6%8D%AE%E5%BA%93%E7%BB%93%E6%9E%84/</link>
         <pubDate>Sun, 06 Mar 2022 00:00:00 +0000</pubDate>
         
-        <guid>https://lyoshur.gitee.io/p/mysql%E8%8E%B7%E5%8F%96%E6%95%B0%E6%8D%AE%E5%BA%93%E7%BB%93%E6%9E%84/</guid>
+        <guid>https://lyoshur.github.io/stack/p/mysql%E8%8E%B7%E5%8F%96%E6%95%B0%E6%8D%AE%E5%BA%93%E7%BB%93%E6%9E%84/</guid>
         <description>&lt;h2 id=&#34;mysql获取数据库结构&#34;&gt;mysql获取数据库结构&lt;/h2&gt;
 &lt;h3 id=&#34;1获取表信息&#34;&gt;1.获取表信息&lt;/h3&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
@@ -9602,10 +9602,10 @@ flush privileges;&lt;/p&gt;
         </item>
         <item>
         <title>MySQL语句优化</title>
-        <link>https://lyoshur.gitee.io/p/mysql%E8%AF%AD%E5%8F%A5%E4%BC%98%E5%8C%96/</link>
+        <link>https://lyoshur.github.io/stack/p/mysql%E8%AF%AD%E5%8F%A5%E4%BC%98%E5%8C%96/</link>
         <pubDate>Sun, 06 Mar 2022 00:00:00 +0000</pubDate>
         
-        <guid>https://lyoshur.gitee.io/p/mysql%E8%AF%AD%E5%8F%A5%E4%BC%98%E5%8C%96/</guid>
+        <guid>https://lyoshur.github.io/stack/p/mysql%E8%AF%AD%E5%8F%A5%E4%BC%98%E5%8C%96/</guid>
         <description>&lt;h2 id=&#34;mysql语句优化&#34;&gt;mysql语句优化&lt;/h2&gt;
 &lt;ol&gt;
 &lt;li&gt;比较运算符能用 = 就不用 &amp;lt;&amp;gt;&lt;/li&gt;
@@ -9626,10 +9626,10 @@ flush privileges;&lt;/p&gt;
         </item>
         <item>
         <title>officeMIME</title>
-        <link>https://lyoshur.gitee.io/p/officemime/</link>
+        <link>https://lyoshur.github.io/stack/p/officemime/</link>
         <pubDate>Sun, 06 Mar 2022 00:00:00 +0000</pubDate>
         
-        <guid>https://lyoshur.gitee.io/p/officemime/</guid>
+        <guid>https://lyoshur.github.io/stack/p/officemime/</guid>
         <description>&lt;p&gt;.doc  application/msword&lt;/p&gt;
 &lt;p&gt;.xls  application/vnd.ms-excel&lt;/p&gt;
 &lt;p&gt;.ppt  application/vnd.ms-powerpoint&lt;/p&gt;
@@ -9640,10 +9640,10 @@ flush privileges;&lt;/p&gt;
         </item>
         <item>
         <title>Postman使用说明</title>
-        <link>https://lyoshur.gitee.io/p/postman%E4%BD%BF%E7%94%A8%E8%AF%B4%E6%98%8E/</link>
+        <link>https://lyoshur.github.io/stack/p/postman%E4%BD%BF%E7%94%A8%E8%AF%B4%E6%98%8E/</link>
         <pubDate>Sun, 06 Mar 2022 00:00:00 +0000</pubDate>
         
-        <guid>https://lyoshur.gitee.io/p/postman%E4%BD%BF%E7%94%A8%E8%AF%B4%E6%98%8E/</guid>
+        <guid>https://lyoshur.github.io/stack/p/postman%E4%BD%BF%E7%94%A8%E8%AF%B4%E6%98%8E/</guid>
         <description>&lt;h1 id=&#34;postman接口说明&#34;&gt;Postman接口说明&lt;/h1&gt;
 &lt;h2 id=&#34;1-请求头header&#34;&gt;1 请求头（Header）&lt;/h2&gt;
 &lt;h3 id=&#34;11-http&#34;&gt;1.1 HTTP&lt;/h3&gt;
@@ -9876,10 +9876,10 @@ flush privileges;&lt;/p&gt;
         </item>
         <item>
         <title>redis常见使用场景</title>
-        <link>https://lyoshur.gitee.io/p/redis%E5%B8%B8%E8%A7%81%E4%BD%BF%E7%94%A8%E5%9C%BA%E6%99%AF/</link>
+        <link>https://lyoshur.github.io/stack/p/redis%E5%B8%B8%E8%A7%81%E4%BD%BF%E7%94%A8%E5%9C%BA%E6%99%AF/</link>
         <pubDate>Sun, 06 Mar 2022 00:00:00 +0000</pubDate>
         
-        <guid>https://lyoshur.gitee.io/p/redis%E5%B8%B8%E8%A7%81%E4%BD%BF%E7%94%A8%E5%9C%BA%E6%99%AF/</guid>
+        <guid>https://lyoshur.github.io/stack/p/redis%E5%B8%B8%E8%A7%81%E4%BD%BF%E7%94%A8%E5%9C%BA%E6%99%AF/</guid>
         <description>&lt;h2 id=&#34;redis常见使用场景&#34;&gt;redis常见使用场景&lt;/h2&gt;
 &lt;h3 id=&#34;1缓存&#34;&gt;1.缓存&lt;/h3&gt;
 &lt;p&gt;对系统中的热点数据进行缓存，减轻数据库压力&lt;/p&gt;
@@ -9940,10 +9940,10 @@ flush privileges;&lt;/p&gt;
         </item>
         <item>
         <title>scrapy环境安装</title>
-        <link>https://lyoshur.gitee.io/p/scrapy%E7%8E%AF%E5%A2%83%E5%AE%89%E8%A3%85/</link>
+        <link>https://lyoshur.github.io/stack/p/scrapy%E7%8E%AF%E5%A2%83%E5%AE%89%E8%A3%85/</link>
         <pubDate>Sun, 06 Mar 2022 00:00:00 +0000</pubDate>
         
-        <guid>https://lyoshur.gitee.io/p/scrapy%E7%8E%AF%E5%A2%83%E5%AE%89%E8%A3%85/</guid>
+        <guid>https://lyoshur.github.io/stack/p/scrapy%E7%8E%AF%E5%A2%83%E5%AE%89%E8%A3%85/</guid>
         <description>&lt;p&gt;Python在安装Scrapy框架时，使用常规的pip install Scrapy命令进行安装，失败。&lt;/p&gt;
 &lt;p&gt;搜索教程，发现是需要在安装scrapy之前预先安装几个环境wheel、lxml、Twisted、pywin32。&lt;/p&gt;
 &lt;p&gt;1.lxml ：lxml是python的一个解析库,支持HTML和XML的解析,支持XPath解析方式。&lt;/p&gt;
@@ -9963,10 +9963,10 @@ flush privileges;&lt;/p&gt;
         </item>
         <item>
         <title>Typora使用教程</title>
-        <link>https://lyoshur.gitee.io/p/typora%E4%BD%BF%E7%94%A8%E6%95%99%E7%A8%8B/</link>
+        <link>https://lyoshur.github.io/stack/p/typora%E4%BD%BF%E7%94%A8%E6%95%99%E7%A8%8B/</link>
         <pubDate>Sun, 06 Mar 2022 00:00:00 +0000</pubDate>
         
-        <guid>https://lyoshur.gitee.io/p/typora%E4%BD%BF%E7%94%A8%E6%95%99%E7%A8%8B/</guid>
+        <guid>https://lyoshur.github.io/stack/p/typora%E4%BD%BF%E7%94%A8%E6%95%99%E7%A8%8B/</guid>
         <description>&lt;h2 id=&#34;typora使用教程&#34;&gt;Typora使用教程&lt;/h2&gt;
 &lt;h3 id=&#34;1快捷键&#34;&gt;1.快捷键&lt;/h3&gt;
 &lt;p&gt;Ctrl + 1 插入一级标题&lt;/p&gt;
@@ -9984,10 +9984,10 @@ flush privileges;&lt;/p&gt;
         </item>
         <item>
         <title>windows关于端口被占用的解决办法</title>
-        <link>https://lyoshur.gitee.io/p/windows%E5%85%B3%E4%BA%8E%E7%AB%AF%E5%8F%A3%E8%A2%AB%E5%8D%A0%E7%94%A8%E7%9A%84%E8%A7%A3%E5%86%B3%E5%8A%9E%E6%B3%95/</link>
+        <link>https://lyoshur.github.io/stack/p/windows%E5%85%B3%E4%BA%8E%E7%AB%AF%E5%8F%A3%E8%A2%AB%E5%8D%A0%E7%94%A8%E7%9A%84%E8%A7%A3%E5%86%B3%E5%8A%9E%E6%B3%95/</link>
         <pubDate>Sun, 06 Mar 2022 00:00:00 +0000</pubDate>
         
-        <guid>https://lyoshur.gitee.io/p/windows%E5%85%B3%E4%BA%8E%E7%AB%AF%E5%8F%A3%E8%A2%AB%E5%8D%A0%E7%94%A8%E7%9A%84%E8%A7%A3%E5%86%B3%E5%8A%9E%E6%B3%95/</guid>
+        <guid>https://lyoshur.github.io/stack/p/windows%E5%85%B3%E4%BA%8E%E7%AB%AF%E5%8F%A3%E8%A2%AB%E5%8D%A0%E7%94%A8%E7%9A%84%E8%A7%A3%E5%86%B3%E5%8A%9E%E6%B3%95/</guid>
         <description>&lt;h4 id=&#34;关于端口被占用的解决办法&#34;&gt;关于端口被占用的解决办法&lt;/h4&gt;
 &lt;p&gt;使用命令： 
 netstat -aon|findstr &amp;ldquo;8080&amp;rdquo;&lt;/p&gt;
@@ -9999,10 +9999,10 @@ taskkill -F /pid &amp;ldquo;2323&amp;rdquo;&lt;/p&gt;
         </item>
         <item>
         <title>附：Spring版本以及Maven spring-milestones作用</title>
-        <link>https://lyoshur.gitee.io/p/%E9%99%84spring%E7%89%88%E6%9C%AC%E4%BB%A5%E5%8F%8Amaven-spring-milestones%E4%BD%9C%E7%94%A8/</link>
+        <link>https://lyoshur.github.io/stack/p/%E9%99%84spring%E7%89%88%E6%9C%AC%E4%BB%A5%E5%8F%8Amaven-spring-milestones%E4%BD%9C%E7%94%A8/</link>
         <pubDate>Sun, 06 Mar 2022 00:00:00 +0000</pubDate>
         
-        <guid>https://lyoshur.gitee.io/p/%E9%99%84spring%E7%89%88%E6%9C%AC%E4%BB%A5%E5%8F%8Amaven-spring-milestones%E4%BD%9C%E7%94%A8/</guid>
+        <guid>https://lyoshur.github.io/stack/p/%E9%99%84spring%E7%89%88%E6%9C%AC%E4%BB%A5%E5%8F%8Amaven-spring-milestones%E4%BD%9C%E7%94%A8/</guid>
         <description>&lt;p&gt;本文非完全原创，仅仅是整理自网上博客加上一部分自己的理解。参考文章：&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;徐小冠 &lt;a class=&#34;link&#34; href=&#34;https://blog.csdn.net/weixin_42114097/article/details/82354534&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
@@ -10079,10 +10079,10 @@ Spring的政策是向那些有兴趣测试它们的公众发布里程碑版本�
         </item>
         <item>
         <title>使用Dockerfile构建镜像</title>
-        <link>https://lyoshur.gitee.io/p/%E4%BD%BF%E7%94%A8dockerfile%E6%9E%84%E5%BB%BA%E9%95%9C%E5%83%8F/</link>
+        <link>https://lyoshur.github.io/stack/p/%E4%BD%BF%E7%94%A8dockerfile%E6%9E%84%E5%BB%BA%E9%95%9C%E5%83%8F/</link>
         <pubDate>Sun, 06 Mar 2022 00:00:00 +0000</pubDate>
         
-        <guid>https://lyoshur.gitee.io/p/%E4%BD%BF%E7%94%A8dockerfile%E6%9E%84%E5%BB%BA%E9%95%9C%E5%83%8F/</guid>
+        <guid>https://lyoshur.github.io/stack/p/%E4%BD%BF%E7%94%A8dockerfile%E6%9E%84%E5%BB%BA%E9%95%9C%E5%83%8F/</guid>
         <description>&lt;h2 id=&#34;使用dockerfile构建镜像&#34;&gt;使用Dockerfile构建镜像&lt;/h2&gt;
 &lt;p&gt;我们使用命令 &lt;strong&gt;docker build&lt;/strong&gt; ， 从零开始来创建一个新的镜像。为此，我们需要创建一个 Dockerfile 文件，其中包含一组指令来告诉 Docker 如何构建我们的镜像。&lt;/p&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
@@ -10140,10 +10140,10 @@ Spring的政策是向那些有兴趣测试它们的公众发布里程碑版本�
         </item>
         <item>
         <title>使用Netty创建websocket服务</title>
-        <link>https://lyoshur.gitee.io/p/%E4%BD%BF%E7%94%A8netty%E5%88%9B%E5%BB%BAwebsocket%E6%9C%8D%E5%8A%A1/</link>
+        <link>https://lyoshur.github.io/stack/p/%E4%BD%BF%E7%94%A8netty%E5%88%9B%E5%BB%BAwebsocket%E6%9C%8D%E5%8A%A1/</link>
         <pubDate>Sun, 06 Mar 2022 00:00:00 +0000</pubDate>
         
-        <guid>https://lyoshur.gitee.io/p/%E4%BD%BF%E7%94%A8netty%E5%88%9B%E5%BB%BAwebsocket%E6%9C%8D%E5%8A%A1/</guid>
+        <guid>https://lyoshur.github.io/stack/p/%E4%BD%BF%E7%94%A8netty%E5%88%9B%E5%BB%BAwebsocket%E6%9C%8D%E5%8A%A1/</guid>
         <description>&lt;h2 id=&#34;创建websocket服务&#34;&gt;创建websocket服务&lt;/h2&gt;
 &lt;h2 id=&#34;依赖环境&#34;&gt;依赖环境&lt;/h2&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
@@ -10491,10 +10491,10 @@ Spring的政策是向那些有兴趣测试它们的公众发布里程碑版本�
         </item>
         <item>
         <title>使用VM虚拟机安装黑苹果教程</title>
-        <link>https://lyoshur.gitee.io/p/%E4%BD%BF%E7%94%A8vm%E8%99%9A%E6%8B%9F%E6%9C%BA%E5%AE%89%E8%A3%85%E9%BB%91%E8%8B%B9%E6%9E%9C%E6%95%99%E7%A8%8B/</link>
+        <link>https://lyoshur.github.io/stack/p/%E4%BD%BF%E7%94%A8vm%E8%99%9A%E6%8B%9F%E6%9C%BA%E5%AE%89%E8%A3%85%E9%BB%91%E8%8B%B9%E6%9E%9C%E6%95%99%E7%A8%8B/</link>
         <pubDate>Sun, 06 Mar 2022 00:00:00 +0000</pubDate>
         
-        <guid>https://lyoshur.gitee.io/p/%E4%BD%BF%E7%94%A8vm%E8%99%9A%E6%8B%9F%E6%9C%BA%E5%AE%89%E8%A3%85%E9%BB%91%E8%8B%B9%E6%9E%9C%E6%95%99%E7%A8%8B/</guid>
+        <guid>https://lyoshur.github.io/stack/p/%E4%BD%BF%E7%94%A8vm%E8%99%9A%E6%8B%9F%E6%9C%BA%E5%AE%89%E8%A3%85%E9%BB%91%E8%8B%B9%E6%9E%9C%E6%95%99%E7%A8%8B/</guid>
         <description>&lt;h2 id=&#34;黑苹果安装&#34;&gt;黑苹果安装&lt;/h2&gt;
 &lt;p&gt;下载镜像以及破解补丁&lt;/p&gt;
 &lt;h3 id=&#34;1复制破解补丁到vm安装目录&#34;&gt;1.复制破解补丁到VM安装目录&lt;/h3&gt;
@@ -10598,10 +10598,10 @@ Spring的政策是向那些有兴趣测试它们的公众发布里程碑版本�
         </item>
         <item>
         <title>网页收藏</title>
-        <link>https://lyoshur.gitee.io/p/%E7%BD%91%E9%A1%B5%E6%94%B6%E8%97%8F/</link>
+        <link>https://lyoshur.github.io/stack/p/%E7%BD%91%E9%A1%B5%E6%94%B6%E8%97%8F/</link>
         <pubDate>Sun, 06 Mar 2022 00:00:00 +0000</pubDate>
         
-        <guid>https://lyoshur.gitee.io/p/%E7%BD%91%E9%A1%B5%E6%94%B6%E8%97%8F/</guid>
+        <guid>https://lyoshur.github.io/stack/p/%E7%BD%91%E9%A1%B5%E6%94%B6%E8%97%8F/</guid>
         <description>&lt;p&gt;golang手把手实现tcp内网穿透代理&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;&lt;a class=&#34;link&#34; href=&#34;https://www.jianshu.com/p/0c3f8323b43c&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
