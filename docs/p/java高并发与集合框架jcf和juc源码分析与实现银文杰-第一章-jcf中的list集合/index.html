@@ -1,0 +1,652 @@
+<!DOCTYPE html>
+<html lang="zh-cn" dir="ltr">
+    <head><meta charset='utf-8'>
+<meta name='viewport' content='width=device-width, initial-scale=1'><meta name='description' content='Java高并发与集合框架：JCF和JUC源码分析与实现（银文杰）- 第一章 JCF中的List集合'><title>第一章 JCF中的List集合</title>
+
+<link rel='canonical' href='https://lyoshur.github.io/stack/p/java%E9%AB%98%E5%B9%B6%E5%8F%91%E4%B8%8E%E9%9B%86%E5%90%88%E6%A1%86%E6%9E%B6jcf%E5%92%8Cjuc%E6%BA%90%E7%A0%81%E5%88%86%E6%9E%90%E4%B8%8E%E5%AE%9E%E7%8E%B0%E9%93%B6%E6%96%87%E6%9D%B0-%E7%AC%AC%E4%B8%80%E7%AB%A0-jcf%E4%B8%AD%E7%9A%84list%E9%9B%86%E5%90%88/'>
+
+<link rel="stylesheet" href="/stack/scss/style.min.ac77dcf8b111b51da39a92990f431923f210f3876d85798a2125667f96dc33a4.css"><meta property='og:title' content='第一章 JCF中的List集合'>
+<meta property='og:description' content='Java高并发与集合框架：JCF和JUC源码分析与实现（银文杰）- 第一章 JCF中的List集合'>
+<meta property='og:url' content='https://lyoshur.github.io/stack/p/java%E9%AB%98%E5%B9%B6%E5%8F%91%E4%B8%8E%E9%9B%86%E5%90%88%E6%A1%86%E6%9E%B6jcf%E5%92%8Cjuc%E6%BA%90%E7%A0%81%E5%88%86%E6%9E%90%E4%B8%8E%E5%AE%9E%E7%8E%B0%E9%93%B6%E6%96%87%E6%9D%B0-%E7%AC%AC%E4%B8%80%E7%AB%A0-jcf%E4%B8%AD%E7%9A%84list%E9%9B%86%E5%90%88/'>
+<meta property='og:site_name' content='羡鱼先生的空间'>
+<meta property='og:type' content='article'><meta property='article:section' content='Post' /><meta property='article:tag' content='Java' /><meta property='article:published_time' content='2022-08-17T10:14:00&#43;00:00'/><meta property='article:modified_time' content='2022-08-17T10:14:00&#43;00:00'/>
+<meta name="twitter:title" content="第一章 JCF中的List集合">
+<meta name="twitter:description" content="Java高并发与集合框架：JCF和JUC源码分析与实现（银文杰）- 第一章 JCF中的List集合">
+    </head>
+    <body class="
+    article-page
+    ">
+    <script>
+        (function() {
+            const colorSchemeKey = 'StackColorScheme';
+            if(!localStorage.getItem(colorSchemeKey)){
+                localStorage.setItem(colorSchemeKey, "auto");
+            }
+        })();
+    </script><script>
+    (function() {
+        const colorSchemeKey = 'StackColorScheme';
+        const colorSchemeItem = localStorage.getItem(colorSchemeKey);
+        const supportDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches === true;
+
+        if (colorSchemeItem == 'dark' || colorSchemeItem === 'auto' && supportDarkMode) {
+            
+
+            document.documentElement.dataset.scheme = 'dark';
+        } else {
+            document.documentElement.dataset.scheme = 'light';
+        }
+    })();
+</script>
+<div class="container main-container flex on-phone--column extended"><aside class="sidebar left-sidebar sticky ">
+    <button class="hamburger hamburger--spin" type="button" id="toggle-menu" aria-label="切换菜单">
+        <span class="hamburger-box">
+            <span class="hamburger-inner"></span>
+        </span>
+    </button>
+
+    <header>
+        
+            
+            <figure class="site-avatar">
+                <a href="/stack">
+                
+                    
+                    
+                    
+                        
+                        <img src="/stack/img/avatar_hu2d8583d10845a885ea33cc67231edc4c_47820_300x0_resize_q75_box.jpg" width="300"
+                            height="300" class="site-logo" loading="lazy" alt="Avatar">
+                    
+                
+                </a>
+                
+                    <span class="emoji">😎</span>
+                
+            </figure>
+            
+        
+        
+        <div class="site-meta">
+            <h1 class="site-name"><a href="/stack">羡鱼先生的空间</a></h1>
+            <h2 class="site-description">来给生活找点乐子~</h2>
+        </div>
+    </header><ol class="social-menu">
+            
+                <li>
+                    <a 
+                        href='https://gitee.com/lyoshur'
+                        target="_blank"
+                        title="gitee"
+                    >
+                        
+                        
+                            <?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="16px" height="16px" viewBox="0 0 16 16" enable-background="new 0 0 16 16" xml:space="preserve">  <image id="image0" width="16" height="16" x="0" y="0"
+    href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAMAAAAoLQ9TAAAABGdBTUEAALGPC/xhBQAAACBjSFJN
+AAB6JgAAgIQAAPoAAACA6AAAdTAAAOpgAAA6mAAAF3CculE8AAAAdVBMVEUAAADbABjaABTaABPZ
+ABT/ACvZABXaABPZABTZABPjSVb2yMz9+Pj////88fLkSlf++/v3y871wcXhPErfLDvdITH++vrj
+RVLbDh/cFifhOEb++fnnX2r99vboanXhOUf0t7z1wsb+/f3iPkz99/f2xcniP003qpK8AAAACXRS
+TlMAK4/V8waU/b0v8seaAAAAAWJLR0QN9rRh9QAAAAd0SU1FB+YICAUFOzO67psAAACKSURBVBjT
+ZY9ZEsIwDEMdJ00qqEvZy1qgwP2PiJ0CM9D3Z83IkogUxz4Ez44GipiQSbHId4kvpSkRmEwrMWpE
+9SfM5E2D5IiBuSyWK2MNMHlgI1u0O6UFPAVAZI+DWSog/Ahigh8EtRzlZBY24awfu4tc7anGflJv
+vcVqsTqf98cTVmxcfTTub/4LPbIKJ1fQ5EgAAAAldEVYdGRhdGU6Y3JlYXRlADIwMjItMDgtMDhU
+MDU6MDU6NTkrMDA6MDB+AB5YAAAAJXRFWHRkYXRlOm1vZGlmeQAyMDIyLTA4LTA4VDA1OjA1OjU5
+KzAwOjAwD12m5AAAAABJRU5ErkJggg==" />
+</svg>
+
+                        
+                    </a>
+                </li>
+            
+        </ol><ol class="menu" id="main-menu">
+        
+        
+        
+
+        <li >
+            <a href='/stack/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-home" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <polyline points="5 12 3 12 12 3 21 12 19 12" />
+  <path d="M5 12v7a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-7" />
+  <path d="M9 21v-6a2 2 0 0 1 2 -2h2a2 2 0 0 1 2 2v6" />
+</svg>
+
+
+
+                
+                <span>主页</span>
+            </a>
+        </li>
+        
+        
+
+        <li >
+            <a href='/stack/archives/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-archive" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <rect x="3" y="4" width="18" height="4" rx="2" />
+  <path d="M5 8v10a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-10" />
+  <line x1="10" y1="12" x2="14" y2="12" />
+</svg>
+
+
+
+                
+                <span>笔记本</span>
+            </a>
+        </li>
+        
+        
+
+        <li >
+            <a href='/stack/search/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-search" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="10" cy="10" r="7" />
+  <line x1="21" y1="21" x2="15" y2="15" />
+</svg>
+
+
+
+                
+                <span>搜索</span>
+            </a>
+        </li>
+        
+        
+
+        <li >
+            <a href='/stack/%E5%85%B3%E4%BA%8E/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-link" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <path d="M10 14a3.5 3.5 0 0 0 5 0l4 -4a3.5 3.5 0 0 0 -5 -5l-.5 .5" />
+  <path d="M14 10a3.5 3.5 0 0 0 -5 0l-4 4a3.5 3.5 0 0 0 5 5l.5 -.5" />
+</svg>
+
+
+
+                
+                <span>关于</span>
+            </a>
+        </li>
+        
+
+        <div class="menu-bottom-section">
+            
+            
+                <li id="dark-mode-toggle">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-toggle-left" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="8" cy="12" r="2" />
+  <rect x="2" y="6" width="20" height="12" rx="6" />
+</svg>
+
+
+
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-toggle-right" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="16" cy="12" r="2" />
+  <rect x="2" y="6" width="20" height="12" rx="6" />
+</svg>
+
+
+
+                    <span>暗色模式</span>
+                </li>
+            
+        </div>
+    </ol>
+</aside>
+<main class="main full-width">
+    <article class="main-article">
+    <header class="article-header">
+
+    <div class="article-details">
+    
+    <header class="article-category">
+        
+            <a href="/stack/categories/java%E9%AB%98%E5%B9%B6%E5%8F%91%E4%B8%8E%E9%9B%86%E5%90%88%E6%A1%86%E6%9E%B6jcf%E5%92%8Cjuc%E6%BA%90%E7%A0%81%E5%88%86%E6%9E%90%E4%B8%8E%E5%AE%9E%E7%8E%B0%E9%93%B6%E6%96%87%E6%9D%B0/" >
+                Java高并发与集合框架：JCF和JUC源码分析与实现（银文杰）
+            </a>
+        
+    </header>
+    
+
+    <div class="article-title-wrapper">
+        <h2 class="article-title">
+            <a href="/stack/p/java%E9%AB%98%E5%B9%B6%E5%8F%91%E4%B8%8E%E9%9B%86%E5%90%88%E6%A1%86%E6%9E%B6jcf%E5%92%8Cjuc%E6%BA%90%E7%A0%81%E5%88%86%E6%9E%90%E4%B8%8E%E5%AE%9E%E7%8E%B0%E9%93%B6%E6%96%87%E6%9D%B0-%E7%AC%AC%E4%B8%80%E7%AB%A0-jcf%E4%B8%AD%E7%9A%84list%E9%9B%86%E5%90%88/">第一章 JCF中的List集合</a>
+        </h2>
+    
+        
+        <h3 class="article-subtitle">
+            Java高并发与集合框架：JCF和JUC源码分析与实现（银文杰）- 第一章 JCF中的List集合
+        </h3>
+        
+    </div>
+
+    
+    <footer class="article-time">
+        
+            <div>
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-calendar-time" width="56" height="56" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <path d="M11.795 21h-6.795a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v4" />
+  <circle cx="18" cy="18" r="4" />
+  <path d="M15 3v4" />
+  <path d="M7 3v4" />
+  <path d="M3 11h16" />
+  <path d="M18 16.496v1.504l1 1" />
+</svg>
+                <time class="article-time--published">2022-08-17 10:14:00</time>
+            </div>
+        
+
+        
+            <div>
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-clock" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="12" cy="12" r="9" />
+  <polyline points="12 7 12 12 15 15" />
+</svg>
+
+
+
+                <time class="article-time--reading">
+                    阅读时长: 4 分钟
+                </time>
+            </div>
+        
+    </footer>
+    
+
+    
+</div>
+</header>
+
+    <section class="article-content">
+    
+    
+    <h1 id="第一章--jcf中的list集合">第一章  JCF中的List集合</h1>
+<h2 id="1-list集合概要和重要接口介绍">1 List集合概要和重要接口介绍</h2>
+<p>JCF中的List集合涉及的部分重要接口</p>
+<ul>
+<li>
+<p>java.util.ArrayList</p>
+</li>
+<li>
+<p>java.util.LinkedList</p>
+</li>
+<li>
+<p>java.util.Vector</p>
+</li>
+<li>
+<p>java.util.Stack</p>
+</li>
+</ul>
+<p>其中java.util.Stack继承自java.util.Vector。不过在jdk1.7+已经推荐使用性能更好的java.util.ArrayDeque集合作为替代方案。</p>
+<p>要理解java.util包中关于java.util.List接口的重要实现类，需要理清楚其涉及的</p>
+<ul>
+<li>
+<p>主要接口</p>
+<ul>
+<li>
+<p>java.lang.Iterable (可迭代接口)</p>
+</li>
+<li>
+<p>java.util.Collection(集合接口)</p>
+<p>有些集合类，并不一定会实现这个接口</p>
+</li>
+</ul>
+</li>
+<li>
+<p>主要抽象类</p>
+<ul>
+<li>
+<p>java.util.AbstractList(抽象列表)</p>
+<p>支持随机访问</p>
+</li>
+<li>
+<p>java.util.AbstractSequentialList(抽象连续列表)</p>
+<p>不支持随机访问</p>
+</li>
+</ul>
+</li>
+</ul>
+<p>在JCF中，可以根据List集合在各维度表现出来的工作特点对其进行分类：</p>
+<ul>
+<li>是否支持随机访问</li>
+<li>数据是否支持修改</li>
+<li>集合容量是否可变</li>
+</ul>
+<p>【插入】标识接口：是指Java中用于标识某个类是否具备某种操作特性、功能类型的接口。标识接口通常不需要下层类实现任何方法。</p>
+<ul>
+<li>java.util.RandomAccess</li>
+<li>java.lang.Cloneable</li>
+<li>java.io.Serializable</li>
+</ul>
+<p>java.util.ArrayList、java.util.Vector集合和java.util.concurrent.CopyOnWriteArrayList集合都实现了java.util.RandomAccess接口，表示它们支持集合中数据对象的随机访问。实现java.util.RandomAccess接口的还有很多第三方类库，如一些厂商封装的JSON工具中的JSONArray类。这些实现了java.util.RandomAccess标识接口的List集合在工作时也会被区别对待。</p>
+<p>JDK14+ instanceof 模式匹配 Girraffe</p>
+<p>LinkedList集合的内部结构是一个双向链表，要寻找链表中某个索引位上的数据对象，只能从头部或尾部依次查询.</p>
+<h2 id="2-vector">2 Vector</h2>
+<p>Vector集合的工作特性除了支持数据对象的随机访问，还有集合的大小可变、保证线程安全的运行环境</p>
+<h2 id="3-arraylist">3 ArrayList</h2>
+<p>ArrayList集合是JCF中非常重要的集合之一，也是实际工作中最常使用的集合之一。ArrayList集合拥有与Vector集合类似的接口和操作逻辑（从JDK 1.2开始提供），但它不支持线程安全操作（Vector集合支持线程安全操作，但是基于线程安全的多线程操作性能不高）。ArrayList集合也支持随机访问，也就是说，ArrayList集合在单线程下对指定索引位上的数据读取操作的时间复杂度为O(1)。</p>
+<p>ArrayList集合是程序员在单线程操作场景中最常使用的List集合之一。该集合的内部结构是一个数组，并且这个数组在需要的时候可以进行扩容操作，所以理论上ArrayList集合能存储任意数量的数据对象（但实际上受各种客观因素限制而无法实现）。ArrayList集合允许将数据对象添加到数组的任意有效索引位上，并且允许从数组的任意有效索引位上获取数据对象。</p>
+<h3 id="31-集合内部结构">3.1 集合内部结构</h3>
+<p>ArrayList集合中数组的默认初始化容量值也为10，也可以指定集合中数组的初始化容量值，但如果使用者没有指定初始化容量值，那么ArrayList集合中的elementData数组会被初始化为一个容量值为0的空数组。</p>
+<h3 id="32-扩容逻辑">3.2 扩容逻辑</h3>
+<p>ArrayList集合在进行扩容操作时会将当前容量增大50%，并且扩容逻辑不能干预，除非扩容前容量值小于10（如果发生这样的情况，则首先扩容到10）。ArrayList集合的扩容逻辑相对动态，这保证了在扩容操作频率和扩容大小之间更好的平衡性。</p>
+<h2 id="4-stack">4 Stack</h2>
+<p>顾名思义，Stack集合的工作效果符合栈结构的定义。栈结构是指能使集合中的数据对象具有后进先出（LIFO）操作特性的集合结构。Stack集合同样有线程安全操作特性（但同样不适合在高并发场景中使用），Stack集合的扩容增量通常也是当前容量的1倍；Stack集合也不会对集合的序列化过程和反序列化过程进行特殊优化处理。</p>
+<h2 id="5-linkedlist">5 LinkedList</h2>
+<p>java.util.LinkedList集合是本书讲解的最后一种主要的List集合，也是本书讲解的第一种Queue集合。换句话说，LinkedList集合同时具有List集合和Queue集合的基本特性。</p>
+<p>LinkedList集合的主要结构是双向链表。双向链表中的节点不要求有连续的内存存储地址，因此在向双向链表中插入新节点时，无须申请一块连续的存储空间，只需按需申请存储空间。LinkedList集合中的链表的每个节点都使用一个java.util.LinkedList.Node类的对象进行描述。</p>
+
+</section>
+
+
+    <footer class="article-footer">
+    
+    <section class="article-tags">
+        
+            <a href="/stack/tags/java/">java</a>
+        
+    </section>
+
+
+    
+    <section class="article-copyright">
+        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-copyright" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="12" cy="12" r="9" />
+  <path d="M14.5 9a3.5 4 0 1 0 0 6" />
+</svg>
+
+
+
+        <span>别扯了，我是有底线的~</span>
+    </section>
+    </footer>
+
+
+    
+        <link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/katex@0.15.6/dist/katex.min.css"integrity="sha256-J&#43;iAE0sgH8QSz9hpcDxXIftnj65JEZgNhGcgReTTK9s="crossorigin="anonymous"
+            ><script 
+                src="https://cdn.jsdelivr.net/npm/katex@0.15.6/dist/katex.min.js"integrity="sha256-InsNdER1b2xUewP&#43;pKCUJpkhiqwHgqiPXDlIk7GzBu4="crossorigin="anonymous"
+                defer
+                >
+            </script><script 
+                src="https://cdn.jsdelivr.net/npm/katex@0.15.6/dist/contrib/auto-render.min.js"integrity="sha256-y39Mpg7V3D4lhBX4x6O0bUqTV4pSrfgwEfGKfxkOdgI="crossorigin="anonymous"
+                defer
+                >
+            </script><script>
+    window.addEventListener("DOMContentLoaded", () => {
+        renderMathInElement(document.querySelector(`.article-content`), {
+            delimiters: [
+                { left: "$$", right: "$$", display: true },
+                { left: "$", right: "$", display: false },
+                { left: "\\(", right: "\\)", display: false },
+                { left: "\\[", right: "\\]", display: true }
+            ]
+        });})
+</script>
+    
+</article>
+
+    
+
+    
+
+<aside class="related-content--wrapper">
+    <h2 class="section-title">相关文章</h2>
+    <div class="related-content">
+        <div class="flex article-list--tile">
+            
+                
+<article class="">
+    <a href="/stack/p/java%E9%AB%98%E5%B9%B6%E5%8F%91%E4%B8%8E%E9%9B%86%E5%90%88%E6%A1%86%E6%9E%B6jcf%E5%92%8Cjuc%E6%BA%90%E7%A0%81%E5%88%86%E6%9E%90%E4%B8%8E%E5%AE%9E%E7%8E%B0%E9%93%B6%E6%96%87%E6%9D%B0-%E7%AC%AC%E4%BA%94%E7%AB%A0-object-monitor%E7%AE%A1%E7%A8%8B%E5%AE%9E%E7%8E%B0/">
+        
+        
+
+        <div class="article-details">
+            <h2 class="article-title">第五章 Object Monitor管程实现</h2>
+        </div>
+    </a>
+</article>
+
+            
+                
+<article class="">
+    <a href="/stack/p/java%E9%AB%98%E5%B9%B6%E5%8F%91%E4%B8%8E%E9%9B%86%E5%90%88%E6%A1%86%E6%9E%B6jcf%E5%92%8Cjuc%E6%BA%90%E7%A0%81%E5%88%86%E6%9E%90%E4%B8%8E%E5%AE%9E%E7%8E%B0%E9%93%B6%E6%96%87%E6%9D%B0-%E7%AC%AC%E5%85%AD%E7%AB%A0-juc%E7%9A%84%E5%BF%85%E8%A6%81%E7%BB%84%E6%88%90%E9%83%A8%E5%88%86/">
+        
+        
+
+        <div class="article-details">
+            <h2 class="article-title">第六章 JUC的必要组成部分</h2>
+        </div>
+    </a>
+</article>
+
+            
+                
+<article class="">
+    <a href="/stack/p/java%E9%AB%98%E5%B9%B6%E5%8F%91%E4%B8%8E%E9%9B%86%E5%90%88%E6%A1%86%E6%9E%B6jcf%E5%92%8Cjuc%E6%BA%90%E7%A0%81%E5%88%86%E6%9E%90%E4%B8%8E%E5%AE%9E%E7%8E%B0%E9%93%B6%E6%96%87%E6%9D%B0-%E7%AC%AC%E4%B8%89%E7%AB%A0-jcf%E4%B8%AD%E7%9A%84map%E9%9B%86%E5%90%88/">
+        
+        
+
+        <div class="article-details">
+            <h2 class="article-title">第三章 JCF中的Map集合</h2>
+        </div>
+    </a>
+</article>
+
+            
+                
+<article class="">
+    <a href="/stack/p/java%E9%AB%98%E5%B9%B6%E5%8F%91%E4%B8%8E%E9%9B%86%E5%90%88%E6%A1%86%E6%9E%B6jcf%E5%92%8Cjuc%E6%BA%90%E7%A0%81%E5%88%86%E6%9E%90%E4%B8%8E%E5%AE%9E%E7%8E%B0%E9%93%B6%E6%96%87%E6%9D%B0-%E7%AC%AC%E5%9B%9B%E7%AB%A0-jcf%E4%B8%AD%E7%9A%84set%E9%9B%86%E5%90%88/">
+        
+        
+
+        <div class="article-details">
+            <h2 class="article-title">第四章 JCF中的Set集合</h2>
+        </div>
+    </a>
+</article>
+
+            
+                
+<article class="">
+    <a href="/stack/p/java%E9%AB%98%E5%B9%B6%E5%8F%91%E4%B8%8E%E9%9B%86%E5%90%88%E6%A1%86%E6%9E%B6jcf%E5%92%8Cjuc%E6%BA%90%E7%A0%81%E5%88%86%E6%9E%90%E4%B8%8E%E5%AE%9E%E7%8E%B0%E9%93%B6%E6%96%87%E6%9D%B0-%E7%AC%AC%E4%BA%8C%E7%AB%A0-jcf%E4%B8%AD%E7%9A%84queuedeque%E9%9B%86%E5%90%88/">
+        
+        
+
+        <div class="article-details">
+            <h2 class="article-title">第二章 JCF中的Queue、Deque集合</h2>
+        </div>
+    </a>
+</article>
+
+            
+        </div>
+    </div>
+</aside>
+
+     
+    
+        
+    
+
+    <footer class="site-footer">
+    <section class="copyright">
+        &copy; 
+        
+        2022 羡鱼先生的空间
+    </section>
+    
+    <section class="powerby">
+        
+            不那么好过的日子里，要学会每天给自己找一个开心的理由，哪怕只是，阳光很暖，电量很满。 <br/>
+        Built with <a href="https://gohugo.io/" target="_blank" rel="noopener">Hugo</a> <br />
+        主题 <b><a href="https://github.com/CaiJimmy/hugo-theme-stack" target="_blank" rel="noopener" data-version="3.13.0">Stack</a></b> 由 <a href="https://jimmycai.com" target="_blank" rel="noopener">Jimmy</a> 设计
+    </section>
+</footer>
+
+
+    
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+    
+    <div class="pswp__bg"></div>
+
+    
+    <div class="pswp__scroll-wrap">
+
+        
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+
+        
+        <div class="pswp__ui pswp__ui--hidden">
+
+            <div class="pswp__top-bar">
+
+                
+
+                <div class="pswp__counter"></div>
+
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+
+                <button class="pswp__button pswp__button--share" title="Share"></button>
+
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+
+                
+                
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                        <div class="pswp__preloader__cut">
+                            <div class="pswp__preloader__donut"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div>
+            </div>
+
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+
+        </div>
+
+    </div>
+
+</div><script 
+                src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.js"integrity="sha256-ePwmChbbvXbsO02lbM3HoHbSHTHFAeChekF1xKJdleo="crossorigin="anonymous"
+                defer
+                >
+            </script><script 
+                src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe-ui-default.min.js"integrity="sha256-UKkzOn/w1mBxRmLLGrSeyB4e1xbrp4xylgAWb3M42pU="crossorigin="anonymous"
+                defer
+                >
+            </script><link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/default-skin/default-skin.min.css"crossorigin="anonymous"
+            ><link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.css"crossorigin="anonymous"
+            >
+
+            </main>
+    <aside class="sidebar right-sidebar sticky">
+        
+            
+                
+    <section class="widget archives">
+        <div class="widget-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-hash" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <line x1="5" y1="9" x2="19" y2="9" />
+  <line x1="5" y1="15" x2="19" y2="15" />
+  <line x1="11" y1="4" x2="7" y2="20" />
+  <line x1="17" y1="4" x2="13" y2="20" />
+</svg>
+
+
+
+        </div>
+        <h2 class="widget-title section-title">目录</h2>
+        
+        <div class="widget--toc">
+            <nav id="TableOfContents">
+  <ol>
+    <li><a href="#1-list集合概要和重要接口介绍">1 List集合概要和重要接口介绍</a></li>
+    <li><a href="#2-vector">2 Vector</a></li>
+    <li><a href="#3-arraylist">3 ArrayList</a>
+      <ol>
+        <li><a href="#31-集合内部结构">3.1 集合内部结构</a></li>
+        <li><a href="#32-扩容逻辑">3.2 扩容逻辑</a></li>
+      </ol>
+    </li>
+    <li><a href="#4-stack">4 Stack</a></li>
+    <li><a href="#5-linkedlist">5 LinkedList</a></li>
+  </ol>
+</nav>
+        </div>
+    </section>
+
+            
+        
+    </aside>
+
+
+        </div>
+        <script 
+                src="https://cdn.jsdelivr.net/npm/node-vibrant@3.1.6/dist/vibrant.min.js"integrity="sha256-awcR2jno4kI5X0zL8ex0vi2z&#43;KMkF24hUW8WePSA9HM="crossorigin="anonymous"
+                
+                >
+            </script><script type="text/javascript" src="/stack/ts/main.js" defer></script>
+<script>
+    (function () {
+        const customFont = document.createElement('link');
+        customFont.href = "https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&display=swap";
+
+        customFont.type = "text/css";
+        customFont.rel = "stylesheet";
+
+        document.head.appendChild(customFont);
+    }());
+</script>
+
+    </body>
+</html>

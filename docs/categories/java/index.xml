@@ -6,7 +6,501 @@
         <description>Recent content in JAVA on 羡鱼先生的空间</description>
         <generator>Hugo -- gohugo.io</generator>
         <language>zh-cn</language>
-        <lastBuildDate>Thu, 10 Mar 2022 00:00:00 +0000</lastBuildDate><atom:link href="https://lyoshur.github.io/stack/categories/java/index.xml" rel="self" type="application/rss+xml" /><item>
+        <lastBuildDate>Thu, 25 Aug 2022 14:41:00 +0000</lastBuildDate><atom:link href="https://lyoshur.github.io/stack/categories/java/index.xml" rel="self" type="application/rss+xml" /><item>
+        <title>spring事务</title>
+        <link>https://lyoshur.github.io/stack/p/spring%E4%BA%8B%E5%8A%A1/</link>
+        <pubDate>Thu, 25 Aug 2022 14:41:00 +0000</pubDate>
+        
+        <guid>https://lyoshur.github.io/stack/p/spring%E4%BA%8B%E5%8A%A1/</guid>
+        <description>&lt;h2 id=&#34;spring事务&#34;&gt;spring事务&lt;/h2&gt;
+&lt;p&gt;Spring 之中除了设置事务的「隔离级别」之外，还可以额外配置事务的「传播特性」。&lt;/p&gt;
+&lt;p&gt;Spring支持以下7种事务传播行为：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;propagation-required：支持当前事务，如果有就加入当前事务中；如果当前方法没有事务，就新建一个事务。&lt;/p&gt;
+&lt;p&gt;【note】required 必须的，所以会加入一个事务，加入不了就新建。&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;propagation-supports：支持当前事务，如果有就加入当前事务中，如果当前方法没有事务，就以非事务的方法运行。&lt;/p&gt;
+&lt;p&gt;【note】supports 支持，有事务支持加入，没有就算了&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;propagation-mandatory：支持当前事务，如果有就加入到当前事务，如果房前没有事务，就抛出异常。&lt;/p&gt;
+&lt;p&gt;【note】mandatory 强制，当前有事务就算了，要是没有就哭给你看&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;propagation-requires_new：新建事务，如果当前存在事务，就把当前事务挂起，如果当前方法不存在事务，就新建事务&lt;/p&gt;
+&lt;p&gt;【note】就是要一个新的，旧的不要&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;propagation-not-supported：以非事务的方法运行，如果当前方法有事务，则挂起当前事务，如果当前没有事务，则已非事务的方法运行&lt;/p&gt;
+&lt;p&gt;【note】不管有没有，我都不用&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;propagation-never：以非事务方式运行，如果当前方法存在事务，则抛出异常。如果不存在，就以非事务的方式运行&lt;/p&gt;
+&lt;p&gt;【note】我不要，给就哭&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;propagation-nested：如果当前方法有事务,则在嵌套事务内执行;如果当前方法没有事务，就新建一个事务&lt;/p&gt;
+&lt;p&gt;【note】nested 嵌套&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;【重要】！！！！在同一个类中，一个方法调用另外一个有注解（比如@Async，@Transational）的方法，注解是不会生效的&lt;/p&gt;
+&lt;p&gt;在一个Service内部，事务方法之间的嵌套调用，普通方法和事务方法之间的嵌套调用，都不会开启新的事务&lt;/p&gt;
+</description>
+        </item>
+        <item>
+        <title>spring中的异步方法</title>
+        <link>https://lyoshur.github.io/stack/p/spring%E4%B8%AD%E7%9A%84%E5%BC%82%E6%AD%A5%E6%96%B9%E6%B3%95/</link>
+        <pubDate>Thu, 25 Aug 2022 14:41:00 +0000</pubDate>
+        
+        <guid>https://lyoshur.github.io/stack/p/spring%E4%B8%AD%E7%9A%84%E5%BC%82%E6%AD%A5%E6%96%B9%E6%B3%95/</guid>
+        <description>&lt;h1 id=&#34;spring中的异步方法&#34;&gt;spring中的异步方法&lt;/h1&gt;
+&lt;p&gt;@Async注解可以使被修饰的方法成为异步方法，曾经看到一个文章说，异步方法让编程提升了一个台阶，确实在实际项目中，异步方法可以很大的提高用户体验，使用效率，不再是那个一个依赖另一个串行任务，在前一个任务不知道什么时候完成时在那傻等，然而彼此间没有什么强依赖关系。&lt;/p&gt;
+&lt;h2 id=&#34;1-配置异步编程&#34;&gt;1 配置异步编程&lt;/h2&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt; 1
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 2
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 3
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 4
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 5
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 6
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 7
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 8
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 9
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;10
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;11
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;12
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;13
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-java&#34; data-lang=&#34;java&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;c1&#34;&gt;// 基于Java配置的启用方式：
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;c1&#34;&gt;&lt;/span&gt;&lt;span class=&#34;nd&#34;&gt;@Configuration&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;nd&#34;&gt;@EnableAsync&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;kd&#34;&gt;public&lt;/span&gt; &lt;span class=&#34;kd&#34;&gt;class&lt;/span&gt; &lt;span class=&#34;nc&#34;&gt;SpringAsyncConfig&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;{&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;...&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;}&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;c1&#34;&gt;// Spring boot启用：
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;c1&#34;&gt;&lt;/span&gt;&lt;span class=&#34;nd&#34;&gt;@EnableAsync&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;nd&#34;&gt;@EnableTransactionManagement&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;kd&#34;&gt;public&lt;/span&gt; &lt;span class=&#34;kd&#34;&gt;class&lt;/span&gt; &lt;span class=&#34;nc&#34;&gt;SettlementApplication&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;{&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    &lt;span class=&#34;kd&#34;&gt;public&lt;/span&gt; &lt;span class=&#34;kd&#34;&gt;static&lt;/span&gt; &lt;span class=&#34;kt&#34;&gt;void&lt;/span&gt; &lt;span class=&#34;nf&#34;&gt;main&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;String&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;[]&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;args&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;)&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;{&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;        &lt;span class=&#34;n&#34;&gt;SpringApplication&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;na&#34;&gt;run&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;SettlementApplication&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;na&#34;&gt;class&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;args&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;);&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    &lt;span class=&#34;o&#34;&gt;}&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;o&#34;&gt;}&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;h2 id=&#34;2-使用async方法来处理问题&#34;&gt;2 使用@Async方法来处理问题&lt;/h2&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt; 1
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 2
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 3
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 4
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 5
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 6
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 7
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 8
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 9
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;10
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;11
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;12
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;13
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;14
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;15
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;16
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;17
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;18
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;19
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;20
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;21
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-java&#34; data-lang=&#34;java&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;nd&#34;&gt;@Service&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;kd&#34;&gt;public&lt;/span&gt; &lt;span class=&#34;kd&#34;&gt;class&lt;/span&gt; &lt;span class=&#34;nc&#34;&gt;DeviceProcessServiceImpl&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;impleme&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;n&#34;&gt;nts&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;DeviceProcessService&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;{&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    &lt;span class=&#34;nd&#34;&gt;@Autowired&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    &lt;span class=&#34;kd&#34;&gt;private&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;DeviceRpcService&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;deviceRpcService&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    &lt;span class=&#34;nd&#34;&gt;@Async&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;s&#34;&gt;&amp;#34;taskExecutor&amp;#34;&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    &lt;span class=&#34;nd&#34;&gt;@Override&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    &lt;span class=&#34;kd&#34;&gt;public&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;Future&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;Map&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;Long&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;List&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;ProcessDTO&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;&amp;gt;&amp;gt;&amp;gt;&lt;/span&gt; &lt;span class=&#34;nf&#34;&gt;queryDeviceProcessAbilities&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;List&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;BindDeviceDO&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;&amp;gt;&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;bindDevices&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;)&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;{&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;        &lt;span class=&#34;k&#34;&gt;if&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;CollectionUtils&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;na&#34;&gt;isEmpty&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;bindDevices&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;))&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;{&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;            &lt;span class=&#34;k&#34;&gt;return&lt;/span&gt; &lt;span class=&#34;k&#34;&gt;new&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;AsyncResult&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;&amp;lt;&amp;gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;Maps&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;na&#34;&gt;newHashMap&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;());&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;        &lt;span class=&#34;o&#34;&gt;}&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;        &lt;span class=&#34;n&#34;&gt;List&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;Long&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;&amp;gt;&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;deviceIds&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;bindDevices&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;na&#34;&gt;stream&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;().&lt;/span&gt;&lt;span class=&#34;na&#34;&gt;map&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;BindDeviceDO&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;::&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;getDeviceId&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;).&lt;/span&gt;&lt;span class=&#34;na&#34;&gt;collect&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;Collectors&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;na&#34;&gt;toList&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;());&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;        &lt;span class=&#34;n&#34;&gt;List&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;DeviceInstanceWithProcessResp&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;&amp;gt;&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;devices&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;deviceRpcService&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;na&#34;&gt;getDeviceProcessAbility&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;deviceIds&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;);&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;        &lt;span class=&#34;n&#34;&gt;Map&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;Long&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;List&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;ProcessDTO&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;&amp;gt;&amp;gt;&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;deviceAbilityMap&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;Maps&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;na&#34;&gt;newHashMap&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;();&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;        &lt;span class=&#34;o&#34;&gt;...&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;        &lt;span class=&#34;k&#34;&gt;return&lt;/span&gt; &lt;span class=&#34;k&#34;&gt;new&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;AsyncResult&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;&amp;lt;&amp;gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;deviceAbilityMap&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;);&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    &lt;span class=&#34;o&#34;&gt;}&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;o&#34;&gt;}&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;p&gt;注意返回值为Future&lt;/p&gt;
+&lt;p&gt;原文章中，提到加了注解但是不生效的问题，但实际上@Async注解和事务注解一样，Spring在生成动态代理类时，当入口方法没有异步注解，通过一个同步方法去调用一个同类的异步方法，是无法使这个方法异步执行的。&lt;/p&gt;
+</description>
+        </item>
+        <item>
+        <title>Java并发编程</title>
+        <link>https://lyoshur.github.io/stack/p/java%E5%B9%B6%E5%8F%91%E7%BC%96%E7%A8%8B/</link>
+        <pubDate>Mon, 22 Aug 2022 11:00:00 +0000</pubDate>
+        
+        <guid>https://lyoshur.github.io/stack/p/java%E5%B9%B6%E5%8F%91%E7%BC%96%E7%A8%8B/</guid>
+        <description>&lt;h1 id=&#34;java并发编程&#34;&gt;Java并发编程&lt;/h1&gt;
+&lt;h2 id=&#34;1-死锁的产生必须具备以下四个条件&#34;&gt;1 死锁的产生必须具备以下四个条件：&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;互斥条件：指线程对已经获取到的资源进行排它性使用，即该资源同时只由一个线程占用。如果此时还有其他线程请求获取该资源，则请求者只能等待，直至占有资源的线程释放该资源。&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;请求并持有条件：指一个线程已经持有了至少一个资源，但又提出了新的资源请求，而新资源已被其他线程占有，所以当前线程会被阻塞，但阻塞的同时并不释放自己已经获取的资源。&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;不可剥夺条件：指线程获取到的资源在自己使用完之前不能被其他线程抢占，只有在自己使用完毕后才由自己释放该资源。&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;环路等待条件：指在发生死锁时，必然存在一个线程—资源的环形链，即线程集合{T0, T1, T2, …, Tn}中的T0正在等待一个T1占用的资源，T1正在等待T2占用的资源，……Tn正在等待已被T0占用的资源。&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;要想避免死锁，只需要破坏掉至少一个构造死锁的必要条件即可，但是学过操作系统的读者应该都知道，目前只有请求并持有和环路等待条件是可以被破坏的。&lt;/p&gt;
+&lt;h2 id=&#34;2-jmm&#34;&gt;2 JMM&lt;/h2&gt;
+&lt;p&gt;Java内存模型规定，将所有的变量都存放在主内存中，当线程使用变量时，会把主内存里面的变量复制到自己的工作空间或者叫作工作内存，线程读写变量时操作的是自己工作内存中的变量。&lt;/p&gt;
+&lt;h2 id=&#34;3-锁&#34;&gt;3 锁&lt;/h2&gt;
+&lt;h3 id=&#34;乐观锁&#34;&gt;乐观锁&lt;/h3&gt;
+&lt;p&gt;乐观锁和悲观锁是在数据库中引入的名词，但是在并发包锁里面也引入了类似的思想。&lt;/p&gt;
+&lt;h3 id=&#34;悲观锁&#34;&gt;悲观锁&lt;/h3&gt;
+&lt;h3 id=&#34;排他锁&#34;&gt;排他锁&lt;/h3&gt;
+&lt;p&gt;&lt;em&gt;排他锁&lt;/em&gt;，又称为写锁、&lt;em&gt;独占锁&lt;/em&gt;，是一种基本的锁类型。&lt;/p&gt;
+&lt;h3 id=&#34;独占锁&#34;&gt;独占锁&lt;/h3&gt;
+&lt;h3 id=&#34;共享锁&#34;&gt;共享锁&lt;/h3&gt;
+&lt;h3 id=&#34;公平锁&#34;&gt;公平锁&lt;/h3&gt;
+&lt;h3 id=&#34;非公平锁&#34;&gt;非公平锁&lt;/h3&gt;
+&lt;h3 id=&#34;自旋锁&#34;&gt;自旋锁&lt;/h3&gt;
+&lt;p&gt;由于Java中的线程是与操作系统中的线程一一对应的，所以当一个线程在获取锁（比如独占锁）失败后，会被切换到内核状态而被挂起。当该线程获取到锁时又需要将其切换到内核状态而唤醒该线程。而从用户状态切换到内核状态的开销是比较大的，在一定程度上会影响并发性能。自旋锁则是，当前线程在获取锁时，如果发现锁已经被其他线程占有，它不马上阻塞自己，在不放弃CPU使用权的情况下，多次尝试获取（默认次数是10，可以使用-XX:PreBlockSpinsh参数设置该值），很有可能在后面几次尝试中其他线程已经释放了锁。如果尝试指定的次数后仍没有获取到锁则当前线程才会被阻塞挂起。由此看来自旋锁是使用CPU时间换取线程阻塞与调度的开销，但是很有可能这些CPU时间白白浪费了。&lt;/p&gt;
+&lt;h3 id=&#34;可重入锁&#34;&gt;可重入锁&lt;/h3&gt;
+&lt;p&gt;当一个线程要获取一个被其他线程持有的独占锁时，该线程会被阻塞，那么当一个线程再次获取它自己已经获取的锁时是否会被阻塞呢？如果不被阻塞，那么我们说该锁是可重入的，也就是只要该线程获取了该锁，那么可以无限次数（在高级篇中我们将知道，严格来说是有限次数）地进入被该锁锁住的代码。&lt;/p&gt;
+&lt;h2 id=&#34;4-longadder&#34;&gt;4 LongAdder&lt;/h2&gt;
+&lt;p&gt;volatile解决了多线程内存不可见问题，对于一读多写，是可以解决变量同步问题的。但是对于一写多读同样无法解决线程安全问题。&lt;/p&gt;
+&lt;p&gt;如果是JDK8推荐使用LongAdder对象，比AtomicLong性能更好（减少乐观锁的重试次数）。&lt;/p&gt;
+&lt;p&gt;该类通过内部cells数组分担了高并发下多线程同时对一个原子变量进行更新时的竞争量，让多个线程可以同时对cells数组里面的元素进行并行的更新操作。另外，数组元素Cell使用@sun.misc.Contended注解进行修饰，这避免了cells数组内多个原子变量被放入同一个缓存行，也就是避免了伪共享，这对性能也是一个提升。&lt;/p&gt;
+&lt;h2 id=&#34;5-longaccumulator&#34;&gt;5 LongAccumulator&lt;/h2&gt;
+&lt;p&gt;LongAdder类是LongAccumulator的一个特例，LongAccumulator比LongAdder的功能更强大。例如下面的构造函数，其中accumulatorFunction是一个双目运算器接口，其根据输入的两个参数返回一个计算值，identity则是LongAccumulator累加器的初始值。&lt;/p&gt;
+&lt;h2 id=&#34;6-copyonwritearraylist&#34;&gt;6 CopyOnWriteArrayList&lt;/h2&gt;
+&lt;p&gt;CopyOnWriteArrayList使用写时复制的策略来保证list的一致性，而获取—修改—写入三步操作并不是原子性的，所以在增删改的过程中都使用了独占锁，来保证在某个时间只有一个线程能对list数组进行修改。另外CopyOnWriteArrayList提供了弱一致性的迭代器，从而保证在获取迭代器后，其他线程对list的修改是不可见的，迭代器遍历的数组是一个快照。另外，CopyOnWriteArraySet的底层就是使用它实现的，感兴趣的读者可以查阅相关源码。&lt;/p&gt;
+&lt;h2 id=&#34;7-locksupport&#34;&gt;7 LockSupport&lt;/h2&gt;
+</description>
+        </item>
+        <item>
+        <title>设计模式设计原则</title>
+        <link>https://lyoshur.github.io/stack/p/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F%E8%AE%BE%E8%AE%A1%E5%8E%9F%E5%88%99/</link>
+        <pubDate>Fri, 12 Aug 2022 14:00:00 +0000</pubDate>
+        
+        <guid>https://lyoshur.github.io/stack/p/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F%E8%AE%BE%E8%AE%A1%E5%8E%9F%E5%88%99/</guid>
+        <description>&lt;h1 id=&#34;设计模式设计原则&#34;&gt;设计模式设计原则&lt;/h1&gt;
+&lt;ol&gt;
+&lt;li&gt;找出应用中可能需要变化之处，把他们独立出来，不要和那些不需要变化的代码混在一起。&lt;/li&gt;
+&lt;li&gt;针对接口编程，而不是针对实现编程。&lt;/li&gt;
+&lt;li&gt;多用组合，少用继承。&lt;/li&gt;
+&lt;li&gt;类应该对拓展开放，对修改关闭。&lt;/li&gt;
+&lt;li&gt;要依赖抽象，不要依赖具体类。&lt;/li&gt;
+&lt;li&gt;最少知识原则：只和你的密友谈话。&lt;/li&gt;
+&lt;li&gt;好莱坞原则，别调用我们，我们会调用你。&lt;/li&gt;
+&lt;li&gt;一个类应该只有一个引起变化的原因。&lt;/li&gt;
+&lt;/ol&gt;
+</description>
+        </item>
+        <item>
+        <title>javadoc注释规范</title>
+        <link>https://lyoshur.github.io/stack/p/javadoc%E6%B3%A8%E9%87%8A%E8%A7%84%E8%8C%83/</link>
+        <pubDate>Thu, 11 Aug 2022 16:00:00 +0000</pubDate>
+        
+        <guid>https://lyoshur.github.io/stack/p/javadoc%E6%B3%A8%E9%87%8A%E8%A7%84%E8%8C%83/</guid>
+        <description>&lt;h1 id=&#34;javadoc注释规范&#34;&gt;javadoc注释规范&lt;/h1&gt;
+&lt;p&gt;暂无&lt;/p&gt;
+</description>
+        </item>
+        <item>
+        <title>JDK工具一览表</title>
+        <link>https://lyoshur.github.io/stack/p/jdk%E5%B7%A5%E5%85%B7%E4%B8%80%E8%A7%88%E8%A1%A8/</link>
+        <pubDate>Thu, 11 Aug 2022 15:31:00 +0000</pubDate>
+        
+        <guid>https://lyoshur.github.io/stack/p/jdk%E5%B7%A5%E5%85%B7%E4%B8%80%E8%A7%88%E8%A1%A8/</guid>
+        <description>&lt;h1 id=&#34;jdk工具一览表&#34;&gt;JDK工具一览表&lt;/h1&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;工具名称&lt;/th&gt;
+&lt;th&gt;功能描述&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;appletviewer.exe&lt;/td&gt;
+&lt;td&gt;用于运行并浏览applet小程序。&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;apt.exe&lt;/td&gt;
+&lt;td&gt;注解处理工具(Annotation Processing Tool)，主要用于注解处理。&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;extcheck.exe&lt;/td&gt;
+&lt;td&gt;扩展检测工具，主要用于检测指定jar文件与当前已安装的Java SDK扩展之间是否存在版本冲突。&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;idlj.exe&lt;/td&gt;
+&lt;td&gt;IDL转Java编译器(IDL-to-Java Compiler)，用于为指定的IDL文件生成Java绑定。IDL意即接口定义语言(Interface Definition Language)。&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;jabswitch.exe&lt;/td&gt;
+&lt;td&gt;Java访问桥开关(Java Access Bridge switch)，用于启用/禁用Java访问桥。Java访问桥内置于Java 7 Update 6及以上版本，主要为Windows系统平台提供一套访问Java应用的API。&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;jar.exe&lt;/td&gt;
+&lt;td&gt;jar文件管理工具，主要用于打包压缩、解压jar文件。&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;jarsigner.exe&lt;/td&gt;
+&lt;td&gt;jar密匙签名工具。&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;java.exe&lt;/td&gt;
+&lt;td&gt;Java运行工具，用于运行.class字节码文件或.jar文件。&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;javac.exe&lt;/td&gt;
+&lt;td&gt;Java编译工具(Java Compiler)，用于编译Java源代码文件。&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;javadoc.exe&lt;/td&gt;
+&lt;td&gt;Java文档工具，主要用于根据Java源代码中的注释信息生成HTML格式的API帮助文档。&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;javafxpackager.exe&lt;/td&gt;
+&lt;td&gt;JavaFX包装器，用于执行与封装或签名JavaFX应用有关的任务。&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;javah.exe&lt;/td&gt;
+&lt;td&gt;Java头文件工具，用于根据Java类生成C/C++头文件和源文件(主要用于JNI开发领域)。&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;javap.exe&lt;/td&gt;
+&lt;td&gt;Java反编译工具，主要用于根据Java字节码文件反汇编为Java源代码文件。&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;java-rmi.exe&lt;/td&gt;
+&lt;td&gt;Java远程方法调用(Java Remote Method Invocation)工具，主要用于在客户机上调用远程服务器上的对象。&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;javaw.exe&lt;/td&gt;
+&lt;td&gt;Java运行工具，用于运行.class字节码文件或.jar文件，但不会显示控制台输出信息，适用于运行图形化程序。&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;javaws.exe&lt;/td&gt;
+&lt;td&gt;Java Web Start，使您可以从Web下载和运行Java应用程序，下载、安装、运行、更新Java应用程序都非常简单方便。&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;jcmd.exe&lt;/td&gt;
+&lt;td&gt;Java 命令行(Java Command)，用于向正在运行的JVM发送诊断命令请求。&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;jconsole.exe&lt;/td&gt;
+&lt;td&gt;图形化用户界面的监测工具，主要用于监测并显示运行于Java平台上的应用程序的性能和资源占用等信息。&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;jdb.exe&lt;/td&gt;
+&lt;td&gt;Java调试工具(Java Debugger)，主要用于对Java应用进行断点调试。&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;jhat.exe&lt;/td&gt;
+&lt;td&gt;Java堆分析工具(Java Heap Analysis Tool)，用于分析Java堆内存中的对象信息。&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;jinfo.exe&lt;/td&gt;
+&lt;td&gt;Java配置信息工具(Java Configuration Information)，用于打印指定Java进程、核心文件或远程调试服务器的配置信息。&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;jmap.exe&lt;/td&gt;
+&lt;td&gt;Java内存映射工具(Java Memory Map)，主要用于打印指定Java进程、核心文件或远程调试服务器的共享对象内存映射或堆内存细节。&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;jmc.exe&lt;/td&gt;
+&lt;td&gt;Java任务控制工具(Java Mission Control)，主要用于HotSpot JVM的生产时间监测、分析、诊断。&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;jps.exe&lt;/td&gt;
+&lt;td&gt;JVM进程状态工具(JVM Process Status Tool)，用于显示目标系统上的HotSpot JVM的Java进程信息。&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;jrunscript.exe&lt;/td&gt;
+&lt;td&gt;Java命令行脚本外壳工具(command line script shell)，主要用于解释执行javascript、groovy、ruby等脚本语言。&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;jsadebugd.exe&lt;/td&gt;
+&lt;td&gt;Java可用性代理调试守护进程(Java Serviceability Agent Debug Daemon)，主要用于附加到指定的Java进程、核心文件，或充当一个调试服务器。&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;jstack.exe&lt;/td&gt;
+&lt;td&gt;Java堆栈跟踪工具，主要用于打印指定Java进程、核心文件或远程调试服务器的Java线程的堆栈跟踪信息。&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;jstat.exe&lt;/td&gt;
+&lt;td&gt;JVM统计监测工具(JVM Statistics Monitoring Tool)，主要用于监测并显示JVM的性能统计信息。&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;jstatd.exe&lt;/td&gt;
+&lt;td&gt;jstatd(VM jstatd Daemon)工具是一个RMI服务器应用，用于监测HotSpot JVM的创建和终止，并提供一个接口，允许远程监测工具附加到运行于本地主机的JVM上。&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;jvisualvm.exe&lt;/td&gt;
+&lt;td&gt;JVM监测、故障排除、分析工具，主要以图形化界面的方式提供运行于指定虚拟机的Java应用程序的详细信息。&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;keytool.exe&lt;/td&gt;
+&lt;td&gt;密钥和证书管理工具，主要用于密钥和证书的创建、修改、删除等。&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;kinit.exe&lt;/td&gt;
+&lt;td&gt;主要用于获取或缓存Kerberos协议的票据授权票据。&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;klist.exe&lt;/td&gt;
+&lt;td&gt;允许用户查看本地凭据缓存和密钥表中的条目(用于Kerberos协议)。&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;ktab.exe&lt;/td&gt;
+&lt;td&gt;Kerberos密钥表管理工具，允许用户管理存储于本地密钥表中的主要名称和服务密钥。&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;native2ascii.exe&lt;/td&gt;
+&lt;td&gt;本地编码到ASCII编码的转换器(Native-to-ASCII Converter)，用于&amp;quot;任意受支持的字符编码&amp;quot;和与之对应的&amp;quot;ASCII编码和(或)Unicode转义&amp;quot;之间的相互转换。&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;orbd.exe&lt;/td&gt;
+&lt;td&gt;对象请求代理守护进程(Object Request Broker Daemon)，它使客户端能够透明地定位和调用位于CORBA环境的服务器上的持久对象。&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;pack200.exe&lt;/td&gt;
+&lt;td&gt;JAR文件打包压缩工具，它可以利用Java类特有的结构，对普通JAR文件进行高效压缩，以便于能够更快地进行网络传输。&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;packager.exe&lt;/td&gt;
+&lt;td&gt;这是微软提供的对象包装程序，用于对象安装包。&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;policytool.exe&lt;/td&gt;
+&lt;td&gt;策略工具，用于管理用户策略文件(.java.policy)。&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;rmic.exe&lt;/td&gt;
+&lt;td&gt;Java RMI 编译器，为使用JRMP或IIOP协议的远程对象生成stub、skeleton、和tie类，也用于生成OMG IDL。&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;rmid.exe&lt;/td&gt;
+&lt;td&gt;Java RMI 激活系统守护进程，rmid启动激活系统守护进程，允许在虚拟机中注册或激活对象。&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;rmiregistry.exe&lt;/td&gt;
+&lt;td&gt;Java 远程对象注册表，用于在当前主机的指定端口上创建并启动一个远程对象注册表。&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;schemagen.exe&lt;/td&gt;
+&lt;td&gt;XML schema生成器，用于生成XML schema文件。&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;serialver.exe&lt;/td&gt;
+&lt;td&gt;序列版本命令，用于生成并返回serialVersionUID。&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;servertool.exe&lt;/td&gt;
+&lt;td&gt;Java IDL 服务器工具，用于注册、取消注册、启动和终止持久化的服务器。&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;tnameserv.exe&lt;/td&gt;
+&lt;td&gt;Java IDL瞬时命名服务。&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;unpack200.exe&lt;/td&gt;
+&lt;td&gt;JAR文件解压工具，将一个由pack200打包的文件解压提取为JAR文件。&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;wsgen.exe&lt;/td&gt;
+&lt;td&gt;XML Web Service 2.0的Java API，生成用于JAX-WS Web Service的JAX-WS便携式产物。&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;wsimport.exe&lt;/td&gt;
+&lt;td&gt;XML Web Service 2.0的Java API，主要用于根据服务端发布的wsdl文件生成客户端存根及框架&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;xjc.exe&lt;/td&gt;
+&lt;td&gt;主要用于根据XML schema文件生成对应的Java类。&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+</description>
+        </item>
+        <item>
+        <title>jconsole使用说明</title>
+        <link>https://lyoshur.github.io/stack/p/jconsole%E4%BD%BF%E7%94%A8%E8%AF%B4%E6%98%8E/</link>
+        <pubDate>Thu, 11 Aug 2022 13:31:00 +0000</pubDate>
+        
+        <guid>https://lyoshur.github.io/stack/p/jconsole%E4%BD%BF%E7%94%A8%E8%AF%B4%E6%98%8E/</guid>
+        <description>&lt;h1 id=&#34;jconsole使用说明&#34;&gt;jconsole使用说明&lt;/h1&gt;
+&lt;p&gt;JConsole 是一个内置 Java 性能分析器，可以从命令行（直接输入jconsole）或在 GUI shell （jdk\bin下打开）中运行。&lt;/p&gt;
+&lt;p&gt;它用于对JVM中内存，线程和类等的监控。可使用JTop插件。它可以监控本地的jvm，也可以监控远程的jvm，也可以同时监控几个jvm。&lt;/p&gt;
+&lt;p&gt;这款工具的好处在于，占用系统资源少，而且结合Jstat，可以有效监控到java内存的变动情况，以及引起变动的原因。在项目追踪内存泄露问题时，很实用。&lt;/p&gt;
+&lt;h2 id=&#34;1-概览&#34;&gt;1 概览&lt;/h2&gt;
+&lt;p&gt;以图标的形式显示堆内存使用量，线程使用量，类加载数量，以及CPU占用率&lt;/p&gt;
+&lt;h2 id=&#34;2-内存&#34;&gt;2 内存&lt;/h2&gt;
+&lt;p&gt;这里比jvisualvm实时性要高一点，并且可以通过切换，来展示堆内存、非堆内存、PS Old Gen、PS Eden Space、PS Survivor Space、Metaspace、Code Cache、Compressed Class Space。等内存的使用图标。&lt;/p&gt;
+&lt;h2 id=&#34;3-线程&#34;&gt;3 线程&lt;/h2&gt;
+&lt;p&gt;这里能显示活动线程数量以及峰值线程数量的变化图表。&lt;/p&gt;
+&lt;p&gt;下面的线程框，能查看每个线程的线程名称，以及线程的堆栈跟踪。还有一个按钮来支持死锁检测。&lt;/p&gt;
+&lt;h2 id=&#34;4-类&#34;&gt;4 类&lt;/h2&gt;
+&lt;p&gt;类页卡主要展示已加装当前类数量、已加载类总数、已卸载类总数等类相关信息&lt;/p&gt;
+&lt;h2 id=&#34;5-vm概要&#34;&gt;5 VM概要&lt;/h2&gt;
+&lt;p&gt;vm概要主要显示堆信息、虚拟机信息、类路径等相关信息&lt;/p&gt;
+&lt;h2 id=&#34;6-mbean&#34;&gt;6 MBean&lt;/h2&gt;
+&lt;p&gt;JMX把所有被管理的资源都成为MBean（ManagedBean），这些MBean全部由MBeanServer管理，如果要访问MBean，可以通过MBeanServer对外提供的访问接口，例如RMI或HTTP。&lt;/p&gt;
+&lt;h3 id=&#34;61-spring-boot程序接入mbean&#34;&gt;6.1 spring boot程序接入Mbean&lt;/h3&gt;
+&lt;p&gt;在启动程序添加注解@EnableMBeanExport，告知spring自动注册MBean&lt;/p&gt;
+&lt;p&gt;在Controller上，添加@ManagedResource注解 （objectName = &amp;ldquo;company:name = testName&amp;rdquo;, descriptiopn = &amp;ldquo;描述信息&amp;rdquo;）&lt;/p&gt;
+&lt;p&gt;在值添加 @ManagedAttribute（descriptiopn = &amp;ldquo;描述信息&amp;rdquo;）&lt;/p&gt;
+&lt;p&gt;在方法上添加@ManagedOperation&lt;/p&gt;
+&lt;p&gt;@ManagedOperationParameter（name= &amp;ldquo;name&amp;rdquo;, descriptiopn = &amp;ldquo;描述信息&amp;rdquo;）&lt;/p&gt;
+&lt;h2 id=&#34;7-注意事项&#34;&gt;7 注意事项&lt;/h2&gt;
+&lt;p&gt;想监控JAVA程序需要在程序启动时，添加JMX相关参数。如果是本地连接，可以不加&lt;/p&gt;
+</description>
+        </item>
+        <item>
+        <title>jvisualvm使用说明</title>
+        <link>https://lyoshur.github.io/stack/p/jvisualvm%E4%BD%BF%E7%94%A8%E8%AF%B4%E6%98%8E/</link>
+        <pubDate>Thu, 11 Aug 2022 13:31:00 +0000</pubDate>
+        
+        <guid>https://lyoshur.github.io/stack/p/jvisualvm%E4%BD%BF%E7%94%A8%E8%AF%B4%E6%98%8E/</guid>
+        <description>&lt;h1 id=&#34;jvisualvm使用说明&#34;&gt;jvisualvm使用说明&lt;/h1&gt;
+&lt;p&gt;JVisualVM是JDK自带的性能检测工具，路径在%JAVA_HOME%/bin下面。双击打开&lt;/p&gt;
+&lt;p&gt;在本地页卡下是，本地启动的java程序列表，同时能够包含显示Pid&lt;/p&gt;
+&lt;p&gt;点击某一个程序，能够从 概述、监视、线程、抽样器、Profiler 几个防线显示应用程序的信息&lt;/p&gt;
+&lt;h2 id=&#34;概述&#34;&gt;概述&lt;/h2&gt;
+&lt;p&gt;概述下主要包括应用程序的PID、主类、以及JVM相关的一些参数。系统属性这里能够显示一些java、spring、tomcat等相关属性信息&lt;/p&gt;
+&lt;h2 id=&#34;监视&#34;&gt;监视&lt;/h2&gt;
+&lt;p&gt;监视页卡主要显示CPU使用情况，堆内存使用情况，装载的类数量、以及线程活跃情况&lt;/p&gt;
+&lt;h2 id=&#34;线程&#34;&gt;线程&lt;/h2&gt;
+&lt;p&gt;线程页卡主要显示线程的活跃情况，根据不同颜色包含运行、休眠、等待、驻留、监视等几个不同的状态。&lt;/p&gt;
+&lt;p&gt;这里可以使用右上角的线程Dump,来获取每个线程的调用栈信息。&lt;/p&gt;
+&lt;h2 id=&#34;抽样器&#34;&gt;抽样器&lt;/h2&gt;
+&lt;p&gt;抽样器是这个工具比较核心的部分，主要分为CPU抽样和内存抽样。&lt;/p&gt;
+&lt;p&gt;CPU抽样能按照CPU样例显示每个java方法（这里能看到自定义的方法名）的CPU执行时间，可以通过页卡切换为每个线程的CPU占用时间。这里有些线程是类似Thread-22这种线程名称，如果需要定位到具体某个类启动的方法，可以结合线程的线程Dump来定位具体的线程。&lt;/p&gt;
+&lt;p&gt;内存抽样能按照堆内存中的不同变量类型，显示内存占用，不过因为实现原理的原因，比如说 String的底层是 []char，显示的结果并不是太直观。点击每个线程分配页卡，能看到每个线程的内存分配用量。&lt;/p&gt;
+&lt;p&gt;内存抽样还可以手动点击执行GC，来测试内存回收结果。点击堆Dump，可以导出展示当前堆内存结果，类似String之类比较简单的内存，能看到一些简单值。&lt;/p&gt;
+&lt;h2 id=&#34;profiler&#34;&gt;Profiler&lt;/h2&gt;
+&lt;p&gt;暂时不知道有什么用，点击后显示正在连接到目标VM就卡死了 = =、&lt;/p&gt;
+</description>
+        </item>
+        <item>
         <title>stream流操作</title>
         <link>https://lyoshur.github.io/stack/p/stream%E6%B5%81%E6%93%8D%E4%BD%9C/</link>
         <pubDate>Thu, 10 Mar 2022 00:00:00 +0000</pubDate>

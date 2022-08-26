@@ -6,7 +6,2686 @@
         <description>Recent content on 羡鱼先生的空间</description>
         <generator>Hugo -- gohugo.io</generator>
         <language>zh-cn</language>
-        <lastBuildDate>Sun, 13 Mar 2022 00:00:00 +0000</lastBuildDate><atom:link href="https://lyoshur.github.io/stack/index.xml" rel="self" type="application/rss+xml" /><item>
+        <lastBuildDate>Thu, 25 Aug 2022 14:41:00 +0000</lastBuildDate><atom:link href="https://lyoshur.github.io/stack/index.xml" rel="self" type="application/rss+xml" /><item>
+        <title>spring事务</title>
+        <link>https://lyoshur.github.io/stack/p/spring%E4%BA%8B%E5%8A%A1/</link>
+        <pubDate>Thu, 25 Aug 2022 14:41:00 +0000</pubDate>
+        
+        <guid>https://lyoshur.github.io/stack/p/spring%E4%BA%8B%E5%8A%A1/</guid>
+        <description>&lt;h2 id=&#34;spring事务&#34;&gt;spring事务&lt;/h2&gt;
+&lt;p&gt;Spring 之中除了设置事务的「隔离级别」之外，还可以额外配置事务的「传播特性」。&lt;/p&gt;
+&lt;p&gt;Spring支持以下7种事务传播行为：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;propagation-required：支持当前事务，如果有就加入当前事务中；如果当前方法没有事务，就新建一个事务。&lt;/p&gt;
+&lt;p&gt;【note】required 必须的，所以会加入一个事务，加入不了就新建。&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;propagation-supports：支持当前事务，如果有就加入当前事务中，如果当前方法没有事务，就以非事务的方法运行。&lt;/p&gt;
+&lt;p&gt;【note】supports 支持，有事务支持加入，没有就算了&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;propagation-mandatory：支持当前事务，如果有就加入到当前事务，如果房前没有事务，就抛出异常。&lt;/p&gt;
+&lt;p&gt;【note】mandatory 强制，当前有事务就算了，要是没有就哭给你看&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;propagation-requires_new：新建事务，如果当前存在事务，就把当前事务挂起，如果当前方法不存在事务，就新建事务&lt;/p&gt;
+&lt;p&gt;【note】就是要一个新的，旧的不要&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;propagation-not-supported：以非事务的方法运行，如果当前方法有事务，则挂起当前事务，如果当前没有事务，则已非事务的方法运行&lt;/p&gt;
+&lt;p&gt;【note】不管有没有，我都不用&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;propagation-never：以非事务方式运行，如果当前方法存在事务，则抛出异常。如果不存在，就以非事务的方式运行&lt;/p&gt;
+&lt;p&gt;【note】我不要，给就哭&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;propagation-nested：如果当前方法有事务,则在嵌套事务内执行;如果当前方法没有事务，就新建一个事务&lt;/p&gt;
+&lt;p&gt;【note】nested 嵌套&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;【重要】！！！！在同一个类中，一个方法调用另外一个有注解（比如@Async，@Transational）的方法，注解是不会生效的&lt;/p&gt;
+&lt;p&gt;在一个Service内部，事务方法之间的嵌套调用，普通方法和事务方法之间的嵌套调用，都不会开启新的事务&lt;/p&gt;
+</description>
+        </item>
+        <item>
+        <title>spring中的异步方法</title>
+        <link>https://lyoshur.github.io/stack/p/spring%E4%B8%AD%E7%9A%84%E5%BC%82%E6%AD%A5%E6%96%B9%E6%B3%95/</link>
+        <pubDate>Thu, 25 Aug 2022 14:41:00 +0000</pubDate>
+        
+        <guid>https://lyoshur.github.io/stack/p/spring%E4%B8%AD%E7%9A%84%E5%BC%82%E6%AD%A5%E6%96%B9%E6%B3%95/</guid>
+        <description>&lt;h1 id=&#34;spring中的异步方法&#34;&gt;spring中的异步方法&lt;/h1&gt;
+&lt;p&gt;@Async注解可以使被修饰的方法成为异步方法，曾经看到一个文章说，异步方法让编程提升了一个台阶，确实在实际项目中，异步方法可以很大的提高用户体验，使用效率，不再是那个一个依赖另一个串行任务，在前一个任务不知道什么时候完成时在那傻等，然而彼此间没有什么强依赖关系。&lt;/p&gt;
+&lt;h2 id=&#34;1-配置异步编程&#34;&gt;1 配置异步编程&lt;/h2&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt; 1
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 2
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 3
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 4
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 5
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 6
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 7
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 8
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 9
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;10
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;11
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;12
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;13
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-java&#34; data-lang=&#34;java&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;c1&#34;&gt;// 基于Java配置的启用方式：
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;c1&#34;&gt;&lt;/span&gt;&lt;span class=&#34;nd&#34;&gt;@Configuration&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;nd&#34;&gt;@EnableAsync&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;kd&#34;&gt;public&lt;/span&gt; &lt;span class=&#34;kd&#34;&gt;class&lt;/span&gt; &lt;span class=&#34;nc&#34;&gt;SpringAsyncConfig&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;{&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;...&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;}&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;c1&#34;&gt;// Spring boot启用：
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;c1&#34;&gt;&lt;/span&gt;&lt;span class=&#34;nd&#34;&gt;@EnableAsync&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;nd&#34;&gt;@EnableTransactionManagement&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;kd&#34;&gt;public&lt;/span&gt; &lt;span class=&#34;kd&#34;&gt;class&lt;/span&gt; &lt;span class=&#34;nc&#34;&gt;SettlementApplication&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;{&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    &lt;span class=&#34;kd&#34;&gt;public&lt;/span&gt; &lt;span class=&#34;kd&#34;&gt;static&lt;/span&gt; &lt;span class=&#34;kt&#34;&gt;void&lt;/span&gt; &lt;span class=&#34;nf&#34;&gt;main&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;String&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;[]&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;args&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;)&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;{&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;        &lt;span class=&#34;n&#34;&gt;SpringApplication&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;na&#34;&gt;run&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;SettlementApplication&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;na&#34;&gt;class&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;args&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;);&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    &lt;span class=&#34;o&#34;&gt;}&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;o&#34;&gt;}&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;h2 id=&#34;2-使用async方法来处理问题&#34;&gt;2 使用@Async方法来处理问题&lt;/h2&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt; 1
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 2
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 3
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 4
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 5
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 6
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 7
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 8
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 9
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;10
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;11
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;12
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;13
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;14
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;15
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;16
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;17
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;18
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;19
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;20
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;21
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-java&#34; data-lang=&#34;java&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;nd&#34;&gt;@Service&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;kd&#34;&gt;public&lt;/span&gt; &lt;span class=&#34;kd&#34;&gt;class&lt;/span&gt; &lt;span class=&#34;nc&#34;&gt;DeviceProcessServiceImpl&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;impleme&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;n&#34;&gt;nts&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;DeviceProcessService&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;{&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    &lt;span class=&#34;nd&#34;&gt;@Autowired&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    &lt;span class=&#34;kd&#34;&gt;private&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;DeviceRpcService&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;deviceRpcService&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    &lt;span class=&#34;nd&#34;&gt;@Async&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;s&#34;&gt;&amp;#34;taskExecutor&amp;#34;&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    &lt;span class=&#34;nd&#34;&gt;@Override&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    &lt;span class=&#34;kd&#34;&gt;public&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;Future&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;Map&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;Long&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;List&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;ProcessDTO&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;&amp;gt;&amp;gt;&amp;gt;&lt;/span&gt; &lt;span class=&#34;nf&#34;&gt;queryDeviceProcessAbilities&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;List&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;BindDeviceDO&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;&amp;gt;&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;bindDevices&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;)&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;{&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;        &lt;span class=&#34;k&#34;&gt;if&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;CollectionUtils&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;na&#34;&gt;isEmpty&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;bindDevices&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;))&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;{&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;            &lt;span class=&#34;k&#34;&gt;return&lt;/span&gt; &lt;span class=&#34;k&#34;&gt;new&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;AsyncResult&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;&amp;lt;&amp;gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;Maps&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;na&#34;&gt;newHashMap&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;());&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;        &lt;span class=&#34;o&#34;&gt;}&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;        &lt;span class=&#34;n&#34;&gt;List&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;Long&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;&amp;gt;&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;deviceIds&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;bindDevices&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;na&#34;&gt;stream&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;().&lt;/span&gt;&lt;span class=&#34;na&#34;&gt;map&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;BindDeviceDO&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;::&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;getDeviceId&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;).&lt;/span&gt;&lt;span class=&#34;na&#34;&gt;collect&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;Collectors&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;na&#34;&gt;toList&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;());&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;        &lt;span class=&#34;n&#34;&gt;List&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;DeviceInstanceWithProcessResp&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;&amp;gt;&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;devices&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;deviceRpcService&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;na&#34;&gt;getDeviceProcessAbility&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;deviceIds&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;);&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;        &lt;span class=&#34;n&#34;&gt;Map&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;Long&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;List&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;ProcessDTO&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;&amp;gt;&amp;gt;&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;deviceAbilityMap&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;Maps&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;na&#34;&gt;newHashMap&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;();&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;        &lt;span class=&#34;o&#34;&gt;...&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;        &lt;span class=&#34;k&#34;&gt;return&lt;/span&gt; &lt;span class=&#34;k&#34;&gt;new&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;AsyncResult&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;&amp;lt;&amp;gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;deviceAbilityMap&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;);&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    &lt;span class=&#34;o&#34;&gt;}&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;o&#34;&gt;}&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;p&gt;注意返回值为Future&lt;/p&gt;
+&lt;p&gt;原文章中，提到加了注解但是不生效的问题，但实际上@Async注解和事务注解一样，Spring在生成动态代理类时，当入口方法没有异步注解，通过一个同步方法去调用一个同类的异步方法，是无法使这个方法异步执行的。&lt;/p&gt;
+</description>
+        </item>
+        <item>
+        <title>MySQL事务</title>
+        <link>https://lyoshur.github.io/stack/p/mysql%E4%BA%8B%E5%8A%A1/</link>
+        <pubDate>Thu, 25 Aug 2022 13:36:00 +0000</pubDate>
+        
+        <guid>https://lyoshur.github.io/stack/p/mysql%E4%BA%8B%E5%8A%A1/</guid>
+        <description>&lt;h2 id=&#34;mysql事务&#34;&gt;mysql事务&lt;/h2&gt;
+&lt;h2 id=&#34;1-事务的acid&#34;&gt;1 事务的ACID&lt;/h2&gt;
+&lt;p&gt;与数据库的事务同时为大众熟知的是ACID。即数据库的原子性(Atomicity)、一致性(Consistency)、隔离性(Isolation)和持久性(Durability)。就像应用内为了线程之间的互斥，线程安全等，需要做大量的工作，数据库为了 ACID，也做了许多的工作。&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;原子性(Atomicity)&lt;/p&gt;
+&lt;p&gt;一个事务（transaction）中的所有操作，要么全部完成，要么全部不完成，不会结束在中间某个环节。事务在执行过程中发生错误，会被恢复（Rollback）到事务开始前的状态，就像这个事务从来没有执行过一样。&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;一致性(Consistency)&lt;/p&gt;
+&lt;p&gt;在事务开始之前和事务结束以后，数据库的完整性没有被破坏。这表示写入的资料必须完全符合所有的预设规则，这包含资料的精确度、串联性以及后续数据库可以自发性地完成预定的工作。&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;隔离性(Isolation)&lt;/p&gt;
+&lt;p&gt;隔离性还有其他的称呼，如并发控制（concurrency control）、可串行化（serializability）、锁（locking）。事务的隔离性要求每个读写事务的对象与其他事务的操作对象能相互分离，即该事务提交前对其他事务都不可见，这通常使用锁来实现。当前数据库系统中都提供了一种粒度锁（granular lock）的策略，允许事务仅锁住一个实体对象的子集，以此来提高事务之间的并发度。&lt;/p&gt;
+&lt;p&gt;数据库允许多个并发事务同时对其数据进行读写和修改的能力，隔离性可以防止多个事务并发执行时由于交叉执行而导致数据的不一致。事务隔离分为不同级别，包括:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;读未提交（Read uncommitted）&lt;/li&gt;
+&lt;li&gt;读提交（read committed）&lt;/li&gt;
+&lt;li&gt;可重复读（repeatable read）&lt;/li&gt;
+&lt;li&gt;串行化（Serializable）&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;持久性(Durability)&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;mysql默认的事务隔离级别是 可重复读（repeatable read）。&lt;/p&gt;
+&lt;h2 id=&#34;2-事务的分类&#34;&gt;2 事务的分类&lt;/h2&gt;
+&lt;p&gt;从理论的角度来说，可以把事务分为一下几种类型&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;扁平事务（flat transactions）&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;带有保存点的扁平事务（flat transactions with savepoints）&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;链事务（chained transactions）&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;嵌套事务（nested transactions）&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;分布式事务（distributed transactions）&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;21-扁平事务&#34;&gt;2.1 扁平事务&lt;/h3&gt;
+&lt;p&gt;对于扁平事务来说，其隐式地设置了一个保存点，但是在整个事务中，只有这一个保存点，回滚只能回滚到事务开始时的状态。保存点用SAVE WORK函数来建立，通知系统记录当前的处理状态。&lt;/p&gt;
+&lt;h3 id=&#34;22-带有保存点的扁平事务&#34;&gt;2.2 带有保存点的扁平事务&lt;/h3&gt;
+&lt;p&gt;允许在事务执行过程中回滚到同一事务中较早的一个状态，这是因为可能某些事务在执行过程中出现的错误并不会对所有的操作都无效，放弃整个事务不合乎要求，开销也太大。保存点（savepoint）用来通知系统应该记住事务当前的状态，以便以后发生错误时，事务能回到该状态。&lt;/p&gt;
+&lt;h3 id=&#34;23-链事务&#34;&gt;2.3 链事务&lt;/h3&gt;
+&lt;p&gt;链事务可视为保存点模式的一个变种。带有保存点的扁平事务，当发生系统崩溃时，所有的保存点都将消失，因为其保存点是易失的（volatile），而非持久的（persistent）。这意味着当恢复保存点时，事务需要从开始处重新执行，而不能从最近的一个保存点继续执行。&lt;/p&gt;
+&lt;p&gt;链事务的思想是：在提交一个事务时，释放不需要的数据对象，将必要的处理上下文隐式地传给下一个要开始的事务。注意，提交事务操作和开始下一个事务操作将合并为一个原子操作。这意味着下一个事务将看到上一个事务的结果，就好像在一个事务中进行的。&lt;/p&gt;
+&lt;h3 id=&#34;24-嵌套事务&#34;&gt;2.4 嵌套事务&lt;/h3&gt;
+&lt;p&gt;嵌套事务是一个层次结构框架。有一个顶层事务（top-level transaction）控制着各个层次的事务。顶层事务之下嵌套的事务被称为子事务（subtransaction），其控制每一个局部的变换。&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;嵌套事务是由若干事务组成的一棵树，子树既可以是嵌套事务，也可以是扁平事务。&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;处在叶节点的事务是扁平事务，但是每个子事务从根到叶节点的距离可以是不同的。&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;位于根节点的事务称为顶层事务，其他事务称为子事务。事务的前驱（predecessor）称为父事务（parent），事务的下一层称为儿子事务（child）。&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;子事务既可以提交也可以回滚，但是它的提交操作并不马上生效，除非由其父事务提交。因此可以推论出，任何子事务都在顶层事务提交后才真正提交。&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;树中的任意一个事务的回滚会引起它的所有子事务一同回滚。故子事务仅保留A、C、I特性，不具有D特性。&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;在Moss的理论中，实际的工作交由叶节点来完成，即只有叶节点的事务才能访问数据库、发送消息、获取其他类型的资源。而高层的事务仅负责逻辑控制，决定何时调用相关的子事务。即使一个系统不支持嵌套事务，用户也可以通过保存点技术来模拟嵌套事务&lt;/p&gt;
+&lt;h3 id=&#34;25-分布式事务&#34;&gt;2.5 分布式事务&lt;/h3&gt;
+&lt;p&gt;分布式事务通常是一个在分布式环境下运行的扁平事务，因此需要根据数据所在位置访问网络中的不同节点。&lt;/p&gt;
+&lt;h2 id=&#34;3-事务控制语句&#34;&gt;3 事务控制语句&lt;/h2&gt;
+&lt;p&gt;在MySQL命令行的默认设置下，事务都是自动提交（auto commit）的，即执行SQL语句后就会马上执行COMMIT操作。因此要显式地开启一个事务须使用命令BEGIN和START TRANSACTION，或者执行命令SET AUTOCOMMIT=0，以禁用当前会话的自动提交。&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;START TRANSACTION | BEGIN：显式地开启一个事务。&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;COMMIT：要想使用这个语句的最简形式，只需发出COMMIT。也可以更详细一些，写为COMMIT WORK，不过这二者几乎是等价的。COMMIT会提交事务，并使已对数据库进行的所有修改成为永久性的。&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;ROLLBACK：要使用这个语句的最简形式，只需发出ROLLBACK。同样地，也可以写为ROLLBACK WORK，但是二者几乎是等价的。回滚会结束用户的事务，并撤销正在进行的所有未提交的修改。&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;SAVEPOINT identifier：SAVEPOINT允许在事务中创建一个保存点，一个事务中可以有多个SAVEPOINT。&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;RELEASE SAVEPOINT identifier：删除一个事务的保存点，当没有一个保存点执行这句语句时，会抛出一个异常。&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;ROLLBACK TO [SAVEPOINT] identifier ：这个语句与SAVEPOINT命令一起使用。可以把事务回滚到标记点，而不回滚在此标记点之前的任何工作。例如可以发出两条UPDATE语句，后面跟一个SAVEPOINT，然后又是两条DELETE语句。如果执行DELETE语句期间出现了某种异常情况，而且捕获到这个异常，并发出ROLLBACK TO SAVEPOINT命令，事务就会回滚到指定的SAVEPOINT，撤销DELETE完成的所有工作，而UPDATE语句完成的工作不受影响。&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;SET TRANSACTION：这个语句用来设置事务的隔离级别。InnoDB存储引擎提供的事务隔离级别有READ UNCOMMITTED、READ COMMITTED、REPEATABLE READ和SERIALIZABLE。&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;START TRANSACTION和BEGIN语句都可以在MySQL命令行下显式地开启一个事务。但是在存储过程中，MySQL数据库的分析器会自动将BEGIN识别为BEGIN &amp;hellip;END，因此在存储过程中只能使用START TRANSACTION语句来开启一个事务。&lt;/p&gt;
+&lt;p&gt;COMMIT和COMMIT WORK语句基本上是一致的，都用来提交事务。不同之处在于COMMIT WORK用来控制事务结束后的行为是CHAIN还是RELEASE的。如果是CHAIN方式，那么事务就变成了链事务。用户可以通过参数completion_type来进行控制:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;该参数为0，表示没有任何操作。在这种设置下，COMMIT和COMMIT WORK是完全等价的。&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;当参数completion_type的值为1时，COMMIT WORK等同于COMMIT AND CHAIN，表示马上自动开启一个相同隔离级别的事务&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;参数completion_type为2时，COMMIT WORK等同于COMMIT AND RELEASE。当事务提交后会自动断开与服务器的连接&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&#34;4-事务的隔离级别详解&#34;&gt;4 事务的隔离级别详解&lt;/h2&gt;
+&lt;p&gt;ISO和ANSI SQL标准制定了四种事务隔离级别的标准，但是很少有数据库厂商遵循这些标准。比如Oracle数据库就不支持READ UNCOMMITTED和REPEATABLE READ的事务隔离级别。&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;READ UNCOMMITTED&lt;/p&gt;
+&lt;p&gt;READ UNCOMMITTED被称为浏览访问（browse access），仅仅只是对事务而言的&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;READ COMMITTED&lt;/p&gt;
+&lt;p&gt;READ COMMITTED被称为游标稳定（cursor stability）&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;REPEATABLE READ&lt;/p&gt;
+&lt;p&gt;REPEATABLE READ是2.9999°的隔离，没有幻读的保护&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;SERIALIZABLE&lt;/p&gt;
+&lt;p&gt;SERIALIZABLE被称为隔离，或3°的隔离。SQL和SQL2标准的默认事务隔离级别是SERIALIZABLE&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;InnoDB存储引擎默认的支持隔离级别是REPEATABLE READ，但是与标准SQL不同的是，InnoDB存储引擎在REPEATABLE READ事务隔离级别下，使用Next-Key Lock的锁算法，因此避免了幻读的产生。所以说，InnoDB存储引擎在默认的REPEATABLE READ事务隔离级别下已经能完全保证事务的隔离性要求，即达到SQL标准的SERIALIZABLE隔离级别。&lt;/p&gt;
+&lt;h2 id=&#34;5-分布式事务编程&#34;&gt;5 分布式事务编程&lt;/h2&gt;
+&lt;p&gt;InnoDB存储引擎提供了对于XA事务的支持，并通过XA事务来支持分布式事务的实现。分布式事务指的是允许多个独立的事务资源 （transactional resources） 参与到一个全局的事务中。事务资源通常是关系型数据库系统，也可以是其他类型的资源。全局事务要求在其中的所有参与的事务要么都提交，要么都回滚，这对于事务原有的ACID要求又有了提高。另外，在使用分布式事务时，InnoDB存储引擎的事务隔离级别必须设置为SERIALIZABLE。&lt;/p&gt;
+&lt;p&gt;XA事务允许不同数据库之间的分布式事务，如一台服务器是MySQL数据库的，另一台是Oracle数据库的，可能还有一台服务器是SQL Server数据库的，只要参与到全局事务中的每个节点都支持XA事务即可。&lt;/p&gt;
+&lt;p&gt;XA事务由一个或多个资源管理器（resource manager）、一个事务管理器（transaction manager）以及一个应用程序（application program）组成。&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;资源管理器：提供访问事务资源的方法。通常一个数据库就是一个资源管理器。&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;事务管理器：协调参与全局事务中的各个事务。需要和参与到全局事务中的所有资源管理器进行通信。&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;应用程序：定义事务的边界，指定全局事务中的操作。&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;在MySQL数据库的分布式事务中，资源管理器就是MySQL数据库，事务管理器为连接到MySQL服务器的客户端。&lt;/p&gt;
+&lt;p&gt;分布式事务使用两段式提交（two-phase commit）的方式。在第一个阶段，所有参与全局事务的节点都开始准备（PREPARE），告诉事务管理器它们准备好提交了。第二个阶段，事务管理器告诉资源管理器执行ROLLBACK还是COMMIT。如果任何一个节点显示不能提交，则所有的节点都被告知需要回滚。可见与本地事务不同的是，需要多一次的PREPARE操作，待收到所有节点的同意信息后，再进行COMMIT或ROLLBACK操作。&lt;/p&gt;
+</description>
+        </item>
+        <item>
+        <title>第二章 JCF中的Queue、Deque集合</title>
+        <link>https://lyoshur.github.io/stack/p/java%E9%AB%98%E5%B9%B6%E5%8F%91%E4%B8%8E%E9%9B%86%E5%90%88%E6%A1%86%E6%9E%B6jcf%E5%92%8Cjuc%E6%BA%90%E7%A0%81%E5%88%86%E6%9E%90%E4%B8%8E%E5%AE%9E%E7%8E%B0%E9%93%B6%E6%96%87%E6%9D%B0-%E7%AC%AC%E4%BA%8C%E7%AB%A0-jcf%E4%B8%AD%E7%9A%84queuedeque%E9%9B%86%E5%90%88/</link>
+        <pubDate>Mon, 22 Aug 2022 14:48:00 +0000</pubDate>
+        
+        <guid>https://lyoshur.github.io/stack/p/java%E9%AB%98%E5%B9%B6%E5%8F%91%E4%B8%8E%E9%9B%86%E5%90%88%E6%A1%86%E6%9E%B6jcf%E5%92%8Cjuc%E6%BA%90%E7%A0%81%E5%88%86%E6%9E%90%E4%B8%8E%E5%AE%9E%E7%8E%B0%E9%93%B6%E6%96%87%E6%9D%B0-%E7%AC%AC%E4%BA%8C%E7%AB%A0-jcf%E4%B8%AD%E7%9A%84queuedeque%E9%9B%86%E5%90%88/</guid>
+        <description>&lt;h1 id=&#34;第二章--jcf中的queuedeque集合&#34;&gt;第二章  JCF中的Queue、Deque集合&lt;/h1&gt;
+&lt;p&gt;Queue（队列）、Deque（双端队列）集合是JCF中另一种重要的集合。&lt;/p&gt;
+&lt;p&gt;队列存储的数据允许从结构的一端进行添加操作（入队操作），并且从结构的另一端进行移除操作（出队操作）。进行入队操作的一端称为队列尾部；进行出队操作的一端称为队列头部。双端队列是指可以在一端既进行入队操作，又进行出队操作的队列结构。&lt;/p&gt;
+&lt;p&gt;注意：队列和双端队列都不允许在除了队列头部或队列尾部的其他索引位上进行数据的读/写操作。在JCF中，具有队列操作特性的集合都实现或间接实现了java.util.Queue接口；具有双端队列操作特性的集合都实现或间接实现了java.util.Deque接口。&lt;/p&gt;
+&lt;p&gt;java.util.ArrayDeque集合和java.util.PriorityQueue队列分别是Queue（队列）接口和Deque（双端队列）接口在JCF中的基础集合。ArrayDeque集合为了保证对已有数组控件的充分利用，使用的是可循环的双指针数组（但不代表不进行扩容操作）；PriorityQueue队列使用的是小顶堆结构，对基于权值的排序性能进行了优化。&lt;/p&gt;
+&lt;h2 id=&#34;1-arraydeque&#34;&gt;1 ArrayDeque&lt;/h2&gt;
+&lt;p&gt;ArrayDeque集合是从JDK 1.6开始推出的，它是一个基于数组（可扩容的数组）结构实现的双端队列。与普通的数组结构相比，这种数组结构是一种可循环使用的数组结构，可以有效减少数组扩容的次数。ArrayDeque集合是线程不安全的，不能在多线程场景中使用。&lt;/p&gt;
+&lt;p&gt;ArrayDeque集合既有队列、双端队列的操作特点，又有栈结构的操作特点。因此在JDK 1.6发布后，ArrayDeque集合是官方推荐的继Stack集合和LinkedList集合后，用于进行栈结构操作的新集合。&lt;/p&gt;
+&lt;h2 id=&#34;2-priorityqueue&#34;&gt;2 PriorityQueue&lt;/h2&gt;
+&lt;p&gt;PriorityQueue队列是基于堆结构构建的，具体来说，是基于数组形式的小顶堆构建的。它保证了在每次添加新数据对象、移除已有数据对象后，集合都能维持小顶堆的结构特点。&lt;/p&gt;
+</description>
+        </item>
+        <item>
+        <title>第六章 JUC的必要组成部分</title>
+        <link>https://lyoshur.github.io/stack/p/java%E9%AB%98%E5%B9%B6%E5%8F%91%E4%B8%8E%E9%9B%86%E5%90%88%E6%A1%86%E6%9E%B6jcf%E5%92%8Cjuc%E6%BA%90%E7%A0%81%E5%88%86%E6%9E%90%E4%B8%8E%E5%AE%9E%E7%8E%B0%E9%93%B6%E6%96%87%E6%9D%B0-%E7%AC%AC%E5%85%AD%E7%AB%A0-juc%E7%9A%84%E5%BF%85%E8%A6%81%E7%BB%84%E6%88%90%E9%83%A8%E5%88%86/</link>
+        <pubDate>Mon, 22 Aug 2022 14:48:00 +0000</pubDate>
+        
+        <guid>https://lyoshur.github.io/stack/p/java%E9%AB%98%E5%B9%B6%E5%8F%91%E4%B8%8E%E9%9B%86%E5%90%88%E6%A1%86%E6%9E%B6jcf%E5%92%8Cjuc%E6%BA%90%E7%A0%81%E5%88%86%E6%9E%90%E4%B8%8E%E5%AE%9E%E7%8E%B0%E9%93%B6%E6%96%87%E6%9D%B0-%E7%AC%AC%E5%85%AD%E7%AB%A0-juc%E7%9A%84%E5%BF%85%E8%A6%81%E7%BB%84%E6%88%90%E9%83%A8%E5%88%86/</guid>
+        <description>&lt;h1 id=&#34;第六章-juc的必要组成部分&#34;&gt;第六章 JUC的必要组成部分&lt;/h1&gt;
+&lt;p&gt;JUC的体系结构分为多层，底层Native JNI外的上层分别由多个关键技术模块构成：AQS、CAS、LockSupport和句柄（JDK 9开始提供变量句柄）等。&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;基于park的线程控制 juc.locks.LockSupport&lt;/p&gt;
+&lt;p&gt;LockSupport工具类属于AQS框架的底层支持部分，主要用于进行线程元语级别的执行/阻塞控制。LockSupport工具类的主要方法有两个，分别为park()方法和unpark()方法。park()方法主要用于使当前线程进入阻塞状态，unpark()方法（及其重载方法）主要用于使指定线程退出阻塞状态。&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;AQS&lt;/p&gt;
+&lt;p&gt;需要LockSupport和CAS支撑&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;由unsafe直接提供的CAS操作&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;VarHandle和MethodHandle&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;基于Object Monitor的线程控制&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;变量句柄VarHandle是从JDK 9开始引入的较新技术，它具有Unsafe工具类的部分功能特性，为程序员进行变量的原子性操作、可见性操作（内存屏障方式）提供了一种新的途径。变量句柄VarHandle可以与任意字段、数组变量、静态变量进行关联，支持在不同访问模型中对这些变量的访问（包括但不限于简单的read/write访问、使用volatile修饰的read/write访问等。变量句柄VarHandle是Java官方推荐的，可以由程序员直接使用的编程工具，不用担心它像Unsafe工具类一样突破Java的安全性限制。&lt;/p&gt;
+&lt;p&gt;在这些关键技术模块的上层，JUC提供了多种可以在高并发场景中直接使用的工具类，这些工具类主要分为如下五个维度。&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;信号：这些工具类主要基于AQS技术，用于解决线程间的同步和互斥问题，即解决多个线程的执行顺序控制问题。j.u.c.Semaphore类、j.u.c.CyclicBarrier类、j.u.c.CountDownLatch类都属于这方面的工具类&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;高并发场景中的JCF：这些工具类是Java官方建议在高并发场景中优先考虑使用的工具类，如j.u.c.ConcurrentHashMap类、j.u.c.ConcurrentSkipListMap类、j.u.c.ArrayBlockingQueue类等&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;线程管理/执行：这些工具类主要用于帮助应用程序控制线程规模，保证应用程序在高并发场景中不会开启过多线程，从而导致线程切换占用过多CPU资源，即帮助应用程序在线程规模和系统性能之间保持平衡。这些工具类包括我们经常使用的各类线程池线程管理工具类，如j.u.c.ThreadPoolExecutor类&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;线程/数据控制：这些工具类主要用于完成数据在各线程间的传递工作，或者帮助调用者完成线程间的异步调用工作，并且跟踪处理的状态和数据。这些工具类和信号工具类最大的区别是，前者着眼于一个线程，如果获得其他线程中的数据，并且对这些线程的执行顺序没有过多的要求，那么无论线程的运行先后顺序如何，数据都应该被正确传递。j.u.c.LinkedTransferQueue、j.u.c.Exchanger、j.u.c.Callable等类或接口都属于这个类型的工具类&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;原子性操作（无锁）：高并发场景中的操作原子性是编程过程中需要关注的另一个问题。JUC中有一个子工具箱java.util.concurrent.atomic，主要用于解决原子性操作问题，基本设计思想是CAS。&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&#34;1-volatile修饰符&#34;&gt;1 volatile修饰符&lt;/h2&gt;
+&lt;p&gt;JUC主要依靠volatile修饰符解决内存可见性问题，更确切地说是依靠volatile修饰符背后隐含的各种形式的内存屏障来解决内存可见性问题。volatile修饰符主要用于以下场景中。&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;在多线程场景中，需要保证共享数据内存可见性的场景。&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;需要避免指令重排的场景（实际用于应对有序性问题）。&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&#34;2-mesi协议cpu缓存一致性协议&#34;&gt;2 MESI协议（CPU缓存一致性协议）&lt;/h2&gt;
+&lt;h2 id=&#34;3-内存屏障memory-barrier&#34;&gt;3 内存屏障（Memory Barrier）&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;LoadLoad Barrier（Load Memory Barrier）：该内存屏障主要用于保证高速缓存行在进行本地读操作时的内存可见性，即保证屏障后的本地读操作结果一定是最新的数据结果。具体做法如下。一旦本地CPU内核发现执行了LoadLoad Barrier，则本地CPU内核将强制等待，直到失效队列（Invalid Queue）中所有应更新为I状态的操作全部执行完毕，才会继续执行后续读操作指令。这样，本地高速缓存行中后续读取的数据和内存中最新的数据就可以保持一致了。&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;StoreStore Barrier（Store Memory Barrier）：该内存屏障主要用于保证高速缓存行在进行本地写操作时的数据可见性，即保证屏障后的本地写操作对其他高速缓存行可见。&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;StoreLoad Barrier（Full Barrier）：该内存屏障的性能不高，但是可以保证数据一致性，是操作系统提供的通用屏障。&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;LoadStore Barrier：在对存储缓存和失效队列的操作层面上，LoadStore Barrier和LoadLoad Barrier（Load Memory Barrier）没有太大的区别，但是LS对指令重排做出了不同的限制&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&#34;4-指令重排&#34;&gt;4 指令重排&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;StoreStore Barrier（Store Memory Barrier）：该内存屏障可以保证，在内存屏障前的任意写操作不会被重排到该内存屏障后的任意写操作的后面；在内存屏障后的任意写操作不会被重排到该内存屏障前的任意写操作的前面。&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;LoadLoad Barrier（Load Memory Barrier）：该内存屏障可以保证，在内存屏障前的任意读操作不会被重排到该内存屏障后的任意读操作的后面；在内存屏障后的任意读操作不会被重排到该内存屏障前的任意读操作的前面。&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;LoadStore Barrier：该内存屏障对存储缓存和失效队列的操作效果和LoadLoad Barrier的效果类似，但对指令重排层面上的效果是不一样的。该内存屏障可以保证，在内存屏障前的任意读操作不会被重排到该内存屏障后的任意写操作的后面；保证在内存屏障后的任意写操作不会被重排到该内存屏障前的任意读操作的前面。&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;StoreLoad Barrier（Full Barrier）：该内存屏障又称为通用屏障，其禁止重排的效果是，可以保证在内存屏障前的任意写操作不会被重排到该内存屏障后的任意读操作的后面；该内存屏障后的任意读操作不会被重排到该内存屏障前的任意写操作的前面。&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&#34;5-java提供的内存栅栏&#34;&gt;5 Java提供的内存栅栏&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;存储栅栏（storeStore Fence，VarHandle.storeStoreFence()）：存储栅栏在编译器中的禁止重排效果和Store Memory Barrier基本内存屏障的禁止重排效果一致，即对内存屏障前的任意写操作和当前内存屏障后的任意写操作禁止重排。&lt;/li&gt;
+&lt;li&gt;加载栅栏（loadLoad Fence，VarHandle.loadLoadFence()）：加载栅栏在编译器中的禁止重排效果和Load Memory Barrier基本内存屏障的禁止重排效果一致，即对内存屏障前的任意读操作和当前内存屏障后的任意读操作禁止重排。&lt;/li&gt;
+&lt;li&gt;获取栅栏（acquire Fence，VarHandle.acquireFence()）：该栅栏的禁止重排效果是LoadLoad Barrier+LoadStore Barrier的禁止重排效果的组合。它可以对内存屏障后的任意读/写操作和当前内存屏障前的任意读操作禁止重排。&lt;/li&gt;
+&lt;li&gt;释放栅栏（release Fence，VarHandle.releaseFence()）：该栅栏的禁止重排效果是StoreStore Barrier+LoadStore Barrier的禁止重排效果组合。它可以对内存屏障前的任意读/写操作和当前内存屏障后的任意写操作禁止重排。&lt;/li&gt;
+&lt;li&gt;全栅栏（full Fence，VarHandle.fullFence()）：该栅栏是存储栅栏（storeStore Fence）+加载栅栏（loadLoad Fence）+通用屏障（StoreLoad Barrier）的禁止重排效果组合，它可以对内存屏障前的任意读/写操作和当前内存屏障后的任意读/写操作禁止重排。&lt;/li&gt;
+&lt;/ul&gt;
+</description>
+        </item>
+        <item>
+        <title>第三章 JCF中的Map集合</title>
+        <link>https://lyoshur.github.io/stack/p/java%E9%AB%98%E5%B9%B6%E5%8F%91%E4%B8%8E%E9%9B%86%E5%90%88%E6%A1%86%E6%9E%B6jcf%E5%92%8Cjuc%E6%BA%90%E7%A0%81%E5%88%86%E6%9E%90%E4%B8%8E%E5%AE%9E%E7%8E%B0%E9%93%B6%E6%96%87%E6%9D%B0-%E7%AC%AC%E4%B8%89%E7%AB%A0-jcf%E4%B8%AD%E7%9A%84map%E9%9B%86%E5%90%88/</link>
+        <pubDate>Mon, 22 Aug 2022 14:48:00 +0000</pubDate>
+        
+        <guid>https://lyoshur.github.io/stack/p/java%E9%AB%98%E5%B9%B6%E5%8F%91%E4%B8%8E%E9%9B%86%E5%90%88%E6%A1%86%E6%9E%B6jcf%E5%92%8Cjuc%E6%BA%90%E7%A0%81%E5%88%86%E6%9E%90%E4%B8%8E%E5%AE%9E%E7%8E%B0%E9%93%B6%E6%96%87%E6%9D%B0-%E7%AC%AC%E4%B8%89%E7%AB%A0-jcf%E4%B8%AD%E7%9A%84map%E9%9B%86%E5%90%88/</guid>
+        <description>&lt;h1 id=&#34;第三章-jcf中的map集合&#34;&gt;第三章 JCF中的Map集合&lt;/h1&gt;
+&lt;p&gt;JCF中的Map集合和Set集合之间存在非常密切的关联关系，从相应集合的命名可以看出来，如HashMap集合和HashSet集合、TreeMap集合和TreeSet集合、LinkedHashMap集合和LinkedHashSet集合、ConcurrentSkipListSet集合和ConcurrentSkipListMap集合。因此，如果搞清楚了JCF中的Map集合结构，就基本搞清楚了JCF中的Set集合结构。本书首先介绍JCF中具有代表性的Map集合，然后在此基础上针对性地介绍Set集合。&lt;/p&gt;
+&lt;p&gt;TreeMap集合是基于红黑树结构构造的，HashMap集合和LinkedHashMap集合是基于数组+链表+红黑树的复合结构构造的，这两种集合的区别仅体现在LinkedHashMap集合中增加了一个虚拟的链表结构。&lt;/p&gt;
+&lt;h2 id=&#34;1-javautiimap接口&#34;&gt;1 java.utiI.Map接口&lt;/h2&gt;
+&lt;p&gt;java.util.Map接口是JCF中Map集合的顶层接口，它给出了Map体系中的基本操作功能，并且要求下层具体的Map集合对其进行实现&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;V put(K key, V value);&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;void clear();&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;V get(Object K);&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;int size();&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;boolean isEmpty();&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&#34;2-javautiisortedmap接口&#34;&gt;2 java.utiI.SortedMap接口&lt;/h2&gt;
+&lt;h2 id=&#34;3-javautiinavigabiemap接口&#34;&gt;3 java.utiI.NavigabIeMap接口&lt;/h2&gt;
+&lt;h2 id=&#34;4-javautiiabstractmap抽象类&#34;&gt;4 java.utiI.AbstractMap抽象类&lt;/h2&gt;
+&lt;p&gt;java.util.AbstractMap抽象类是实现了java.util.Map接口的一个抽象类，主要用于向下层具体的Map集合提供一些默认的功能逻辑，以便减少具体Map集合的构建源码量，从而降低实现具体Map集合的难度。&lt;/p&gt;
+&lt;h2 id=&#34;5-treemap&#34;&gt;5 TreeMap&lt;/h2&gt;
+&lt;p&gt;TreeMap集合是基于红黑树构建的，其集合内的所有K-V键值对节点都是这棵红黑树上的节点。这些K-V键值对节点的排列顺序主要基于两种逻辑考虑：第一种是基于K-V键值对节点中Key键信息的Hash值，第二种是基于使用者设置的java.util.Comparator接口实现的比较结果。选择哪种排序逻辑取决于TreeMap集合在实例化时使用哪个构造方法。&lt;/p&gt;
+&lt;p&gt;【note】这里指的插入这个Map的数据，会根据java.util.Comparator进行排序，并且，当进行元素查找时，是在树上进行查找。而不是按照hash的方式。&lt;/p&gt;
+&lt;h2 id=&#34;6-linkedhashmap&#34;&gt;6 LinkedHashMap&lt;/h2&gt;
+&lt;p&gt;LinkedHashMap集合继承自HashMap集合，也就是说，前者和后者的基本结构一致。在HashMap集合的基础上，LinkedHashMap集合提供了一个新的特性，用于保证整个集合内部各个节点可以以某种顺序进行遍历（迭代器支持）。&lt;/p&gt;
+&lt;p&gt;【note】这里很奇怪。为什么jdk不提供一个ArrayHashMap&lt;/p&gt;
+</description>
+        </item>
+        <item>
+        <title>第四章 JCF中的Set集合</title>
+        <link>https://lyoshur.github.io/stack/p/java%E9%AB%98%E5%B9%B6%E5%8F%91%E4%B8%8E%E9%9B%86%E5%90%88%E6%A1%86%E6%9E%B6jcf%E5%92%8Cjuc%E6%BA%90%E7%A0%81%E5%88%86%E6%9E%90%E4%B8%8E%E5%AE%9E%E7%8E%B0%E9%93%B6%E6%96%87%E6%9D%B0-%E7%AC%AC%E5%9B%9B%E7%AB%A0-jcf%E4%B8%AD%E7%9A%84set%E9%9B%86%E5%90%88/</link>
+        <pubDate>Mon, 22 Aug 2022 14:48:00 +0000</pubDate>
+        
+        <guid>https://lyoshur.github.io/stack/p/java%E9%AB%98%E5%B9%B6%E5%8F%91%E4%B8%8E%E9%9B%86%E5%90%88%E6%A1%86%E6%9E%B6jcf%E5%92%8Cjuc%E6%BA%90%E7%A0%81%E5%88%86%E6%9E%90%E4%B8%8E%E5%AE%9E%E7%8E%B0%E9%93%B6%E6%96%87%E6%9D%B0-%E7%AC%AC%E5%9B%9B%E7%AB%A0-jcf%E4%B8%AD%E7%9A%84set%E9%9B%86%E5%90%88/</guid>
+        <description>&lt;h1 id=&#34;第四章-jcf中的set集合&#34;&gt;第四章 JCF中的Set集合&lt;/h1&gt;
+&lt;p&gt;Set集合中几个重要的接口和抽象类:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;java.util.SortedSet接口&lt;/p&gt;
+&lt;p&gt;如果某个具体的Set集合实现了java.util.SortedSet接口，就表示该集合中的数据对象会按照某种比较方法进行全局性的有序排列。实现了java.util.SortedSet接口的集合都提供了以下两种比较方法。&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;使用一个实现了Comparable接口的类的对象进行比较。这个对象来源于集合中K-V键值对节点的Key键信息。&lt;/li&gt;
+&lt;li&gt;通过在集合实例化时设置的Comparator比较器进行比较。如果要采用这种方法，那么Set集合需要实现java.util.SortedSet接口。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;java.util.NavigableSet接口&lt;/p&gt;
+&lt;p&gt;java.util.NavigableSet接口是java.util.SortedSet接口的子级接口，可以将其理解成支持基于参照对象进行引导操作的Set集合。也就是说，在满足集合中对象有序组织的前提下，可以参照指定的数据对象进行集合中各数据对象的读/写操作。例如，可以参照集合中已有的数据对象X，查询集合中所有值小于或等于该数据对象X权值的数据对象。保证基于参照数据对象进行引导操作的前提是集合中的数据对象按照一定的顺序排列，这也就解释了为什么java.util.NavigableSet接口是java.util.SortedSet接口的一个子级接口。&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;java.util.AbstractSet抽象类&lt;/p&gt;
+&lt;p&gt;java.util.AbstractSet抽象类存在的意义和java.util.AbstractMap抽象类存在的意义相似，主要是为了有效降低具体的Set集合的实现复杂度。该抽象类提供了一些通用方法的实现逻辑，包括equals()方法、hashCode()方法、removeAll()方法（在一般情况下，不需要在具体集合中对这些方法进行改动）。&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&#34;1-hashset&#34;&gt;1 HashSet&lt;/h2&gt;
+&lt;h2 id=&#34;2-linkedhashset&#34;&gt;2 LinkedHashSet&lt;/h2&gt;
+&lt;h2 id=&#34;3-treeset&#34;&gt;3 TreeSet&lt;/h2&gt;
+</description>
+        </item>
+        <item>
+        <title>第五章 Object Monitor管程实现</title>
+        <link>https://lyoshur.github.io/stack/p/java%E9%AB%98%E5%B9%B6%E5%8F%91%E4%B8%8E%E9%9B%86%E5%90%88%E6%A1%86%E6%9E%B6jcf%E5%92%8Cjuc%E6%BA%90%E7%A0%81%E5%88%86%E6%9E%90%E4%B8%8E%E5%AE%9E%E7%8E%B0%E9%93%B6%E6%96%87%E6%9D%B0-%E7%AC%AC%E4%BA%94%E7%AB%A0-object-monitor%E7%AE%A1%E7%A8%8B%E5%AE%9E%E7%8E%B0/</link>
+        <pubDate>Mon, 22 Aug 2022 14:48:00 +0000</pubDate>
+        
+        <guid>https://lyoshur.github.io/stack/p/java%E9%AB%98%E5%B9%B6%E5%8F%91%E4%B8%8E%E9%9B%86%E5%90%88%E6%A1%86%E6%9E%B6jcf%E5%92%8Cjuc%E6%BA%90%E7%A0%81%E5%88%86%E6%9E%90%E4%B8%8E%E5%AE%9E%E7%8E%B0%E9%93%B6%E6%96%87%E6%9D%B0-%E7%AC%AC%E4%BA%94%E7%AB%A0-object-monitor%E7%AE%A1%E7%A8%8B%E5%AE%9E%E7%8E%B0/</guid>
+        <description>&lt;h1 id=&#34;第五章-object-monitor管程实现&#34;&gt;第五章 Object Monitor管程实现&lt;/h1&gt;
+&lt;p&gt;为了在不同场景中保证多线程工作的安全性，Java主要基于两种思想进行线程安全性的设计：悲观锁思想和乐观锁思想。&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;悲观锁
+&lt;ul&gt;
+&lt;li&gt;在任何时候都会有其他操作者同时要求操作资源，从而产生操作冲突。&lt;/li&gt;
+&lt;li&gt;如果没有绝对安全的资源独占前提，那么对资源的操作一定会出现问题。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;乐观锁
+&lt;ul&gt;
+&lt;li&gt;并不是任何时候都有两个或多个操作者同时操作相同的资源，从而产生操作冲突。&lt;/li&gt;
+&lt;li&gt;即使操作结果存在错误也没有关系。可以通过对比预期值和实际值来确认操作的正误，如果出现错误，则放弃本次操作，重新操作即可。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;悲观锁在Java中有两种典型的实现方式，一种是基于Object Monitor模式的资源操作方式，另一种是基于AQS技术的资源操作方式。&lt;/p&gt;
+&lt;p&gt;Java中的乐观锁思想通常基于CAS（Compare and Swap，比较与交换）技术实现，但CAS进行比较的判定依据及比较后是否要进行重试，往往由操作者自行决定。所以在Java中，基于乐观锁工作的工具类都存在类似于for(;;)或while(true)的源码结构，这并不是BUG，而是为了匹配乐观锁的实现思想。&lt;/p&gt;
+&lt;h2 id=&#34;1-object-monitor&#34;&gt;1 Object Monitor&lt;/h2&gt;
+&lt;p&gt;Object Monitor模式是一种典型的悲观锁实现，使用Java对象模型中的特定区域对线程状态、对象状态的描述进行线程操作。&lt;/p&gt;
+&lt;p&gt;所以Object Monitor模式并没有禁止指令重排，虽然有内存屏障控制synchronized代码块的重排特征（内存屏障的知识点会在后续讲解volatile修饰符时讲解），但synchronized代码块中的代码并没有禁止指令重排操作。&lt;/p&gt;
+&lt;p&gt;虽然synchronized修饰符没有禁止源码在编译时的指令重排操作，但由于Object Monitor模式已经实现了在获取对象独占操作权的情况下，最多存在一个线程能够顺序执行，因此无论如何设计基于happens-before规则的JMM工作过程，单线程下的as-if-serial语义原则都可以得到保证。也就是说，Object Monitor模式将有序性问题的解决过程，简化成了在保证原子性的前提下，单线程遵循as-if-serial语义规则的执行过程，从而实现禁止与指令重排操作相似的效果。&lt;/p&gt;
+&lt;h2 id=&#34;2-和同步块控制有关的对象结构&#34;&gt;2 和同步块控制有关的对象结构&lt;/h2&gt;
+&lt;p&gt;在HotSpot JVM的工作区中将对象结构分为3个区域&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;对象头（Header）：实现Object Monitor管程控制模式的关键&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;Markword：运行时数据&lt;/p&gt;
+&lt;p&gt;在64位JVM中，该区域在未压缩时占据对象头区域中的8字节，共64位，主要用于存储对象在运行时的数据，并且记录对象当前锁机制的相关信息。&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Klass：元数据指针&lt;/p&gt;
+&lt;p&gt;是一个指针区域，这个指针区域指向元数据区中（JDK 1.8+）该对象所代表的类，这样JVM才知道这个对象是哪个类的实例，在未压缩时为8字节，共64位。&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Length：数组对象的数组长度&lt;/p&gt;
+&lt;p&gt;（只有数组形式的对象会有这个区域）：如果一个对象是数组，那么这个区域表示数组长度，在未压缩时为8字节，共64位。&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;对象实际数据（Instance Data）&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Data：对象/数组对象的实际数据&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;对齐区（可能存在）&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Padding：对象填充区域&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;详细解释：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;对象头（Header）：对象头是本节重点讨论的部分，在不同操作系统中、不同JVM配置（如是否开启指针压缩）下，对象头的结构不完全一致。为了便于讲解，本书讨论64位JDK在64位操作系统中的内部结构（不考虑对象压缩）。&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;对象实际数据：这个区域主要用于描述真实的对象数据，包括对象中的所有成员的属性信息，如其他对象的地址引用、基础数据类型的数据值。&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;对齐区（Padding）：对齐区并不是必须存在的，它最大的作用是占位，因为HotSpot JVM要求被管理的对象的大小是8字节的整数倍，在某些情况下，需要对不足的对象区域进行填充。&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;这里我们重点讨论和synchronized代码块加锁过程有关的Markword区域，首先说明以下两点。&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;对象的锁状态不同，Markword区域的存储结构不同。例如，在对象处于轻量级锁状态的情况下，Markword区域的存储结构是一种；在对象处于偏向锁状态的情况下，Markword区域的存储结构是另一种。&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Markword区域在64位JVM中和在32位JVM中的结构长度不同。&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;程序员在Object Monitor模式下协调多个线程抢占同一个对象的独占操作权，就是通过改变该对象Markword区域中的数据实现的。线程在Object Monitor模式下的执行过程中，为了尽可能保证操作性能，对象的Markword区域还涉及一个锁机制的升级过程（又称为锁膨胀过程），升级顺序为偏向锁→轻量级锁→重量级锁。需要注意的是，偏向锁在JDK 15中已经确认被去掉。&lt;/p&gt;
+&lt;p&gt;偏向锁实际上是在没有多个线程抢占指定对象独占操作权的情况下，完全取消对这个对象独占操作权的抢占工作。当前唯一请求对象独占操作权的线程，其线程ID会被对象记录到对象头的Markword区域中（使用CAS技术更新记录）。如果一直没有出现其他线程抢占对象独占操作权的情况，那么在当前synchronized代码块中基本不会出现针对独占权抢占工作的额外处理。&lt;/p&gt;
+&lt;h2 id=&#34;3-锁粗化和锁消除&#34;&gt;3 锁粗化和锁消除&lt;/h2&gt;
+&lt;h2 id=&#34;4-object-monitor模式的控制结构&#34;&gt;4 Object Monitor模式的控制结构&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;Entry Set&lt;/p&gt;
+&lt;p&gt;第一个控制象限为待进入synchronized代码块的区域（Entry Set），停留在这个区域内的线程还没有获得对象的独占操作权，因此仍然停留在synchronized代码块外，即代码“synchronized(Object)”的位置。处于Entry Set区域内的线程，其线程状态被标识为BLOCKED&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Owner&lt;/p&gt;
+&lt;p&gt;第二个控制象限为对象独占操作权持有区域（Owner），在对象的Object Monitor模式下，在同一时间最多有一个线程处于这个区域内，所以Object Monitor模式就会出现同一时间只能有一个线程在synchronize代码块内执行的效果。当前持有对象独占操作权的线程互斥量会被记录到该对象的对象头中。&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Wait Set&lt;/p&gt;
+&lt;p&gt;第三个象限为待授权区域（Wait Set），没有退出synchronized代码块，并且暂时没有对象独占操作权的线程会被放置到该区域内。注意对象独占操作权和抢占权之间的关系：如果某个线程使用wait()等方法释放了对象的独占操作权，那么只要这个线程没有退出synchronized代码块，在未来就有权被通知重新参与对象独占操作权的抢占工作。并不是处于待授权区域（Wait Set）的线程都可以重新参与对象独占操作权的抢占工作，只有使用notify()方法或类似方法被通知转移的线程才可以参与。需要注意的是，每个对象的Object Monitor模式检查过程相对独立，但是一个线程可以同时拥有一个或多个对象的独占操作权。&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&#34;5-as-if-serial语义原则与happens-before规则&#34;&gt;5 as-if-serial语义原则与happens-before规则&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;as-if-seriaI语义原则&lt;/p&gt;
+&lt;p&gt;如果进行重排，则会使单线程内的执行结果发生错误。这样的执行原则称为as-if-serial语义原则&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;happens-before规则&lt;/p&gt;
+&lt;p&gt;线程安全的三性要求&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+</description>
+        </item>
+        <item>
+        <title>Java并发编程</title>
+        <link>https://lyoshur.github.io/stack/p/java%E5%B9%B6%E5%8F%91%E7%BC%96%E7%A8%8B/</link>
+        <pubDate>Mon, 22 Aug 2022 11:00:00 +0000</pubDate>
+        
+        <guid>https://lyoshur.github.io/stack/p/java%E5%B9%B6%E5%8F%91%E7%BC%96%E7%A8%8B/</guid>
+        <description>&lt;h1 id=&#34;java并发编程&#34;&gt;Java并发编程&lt;/h1&gt;
+&lt;h2 id=&#34;1-死锁的产生必须具备以下四个条件&#34;&gt;1 死锁的产生必须具备以下四个条件：&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;互斥条件：指线程对已经获取到的资源进行排它性使用，即该资源同时只由一个线程占用。如果此时还有其他线程请求获取该资源，则请求者只能等待，直至占有资源的线程释放该资源。&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;请求并持有条件：指一个线程已经持有了至少一个资源，但又提出了新的资源请求，而新资源已被其他线程占有，所以当前线程会被阻塞，但阻塞的同时并不释放自己已经获取的资源。&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;不可剥夺条件：指线程获取到的资源在自己使用完之前不能被其他线程抢占，只有在自己使用完毕后才由自己释放该资源。&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;环路等待条件：指在发生死锁时，必然存在一个线程—资源的环形链，即线程集合{T0, T1, T2, …, Tn}中的T0正在等待一个T1占用的资源，T1正在等待T2占用的资源，……Tn正在等待已被T0占用的资源。&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;要想避免死锁，只需要破坏掉至少一个构造死锁的必要条件即可，但是学过操作系统的读者应该都知道，目前只有请求并持有和环路等待条件是可以被破坏的。&lt;/p&gt;
+&lt;h2 id=&#34;2-jmm&#34;&gt;2 JMM&lt;/h2&gt;
+&lt;p&gt;Java内存模型规定，将所有的变量都存放在主内存中，当线程使用变量时，会把主内存里面的变量复制到自己的工作空间或者叫作工作内存，线程读写变量时操作的是自己工作内存中的变量。&lt;/p&gt;
+&lt;h2 id=&#34;3-锁&#34;&gt;3 锁&lt;/h2&gt;
+&lt;h3 id=&#34;乐观锁&#34;&gt;乐观锁&lt;/h3&gt;
+&lt;p&gt;乐观锁和悲观锁是在数据库中引入的名词，但是在并发包锁里面也引入了类似的思想。&lt;/p&gt;
+&lt;h3 id=&#34;悲观锁&#34;&gt;悲观锁&lt;/h3&gt;
+&lt;h3 id=&#34;排他锁&#34;&gt;排他锁&lt;/h3&gt;
+&lt;p&gt;&lt;em&gt;排他锁&lt;/em&gt;，又称为写锁、&lt;em&gt;独占锁&lt;/em&gt;，是一种基本的锁类型。&lt;/p&gt;
+&lt;h3 id=&#34;独占锁&#34;&gt;独占锁&lt;/h3&gt;
+&lt;h3 id=&#34;共享锁&#34;&gt;共享锁&lt;/h3&gt;
+&lt;h3 id=&#34;公平锁&#34;&gt;公平锁&lt;/h3&gt;
+&lt;h3 id=&#34;非公平锁&#34;&gt;非公平锁&lt;/h3&gt;
+&lt;h3 id=&#34;自旋锁&#34;&gt;自旋锁&lt;/h3&gt;
+&lt;p&gt;由于Java中的线程是与操作系统中的线程一一对应的，所以当一个线程在获取锁（比如独占锁）失败后，会被切换到内核状态而被挂起。当该线程获取到锁时又需要将其切换到内核状态而唤醒该线程。而从用户状态切换到内核状态的开销是比较大的，在一定程度上会影响并发性能。自旋锁则是，当前线程在获取锁时，如果发现锁已经被其他线程占有，它不马上阻塞自己，在不放弃CPU使用权的情况下，多次尝试获取（默认次数是10，可以使用-XX:PreBlockSpinsh参数设置该值），很有可能在后面几次尝试中其他线程已经释放了锁。如果尝试指定的次数后仍没有获取到锁则当前线程才会被阻塞挂起。由此看来自旋锁是使用CPU时间换取线程阻塞与调度的开销，但是很有可能这些CPU时间白白浪费了。&lt;/p&gt;
+&lt;h3 id=&#34;可重入锁&#34;&gt;可重入锁&lt;/h3&gt;
+&lt;p&gt;当一个线程要获取一个被其他线程持有的独占锁时，该线程会被阻塞，那么当一个线程再次获取它自己已经获取的锁时是否会被阻塞呢？如果不被阻塞，那么我们说该锁是可重入的，也就是只要该线程获取了该锁，那么可以无限次数（在高级篇中我们将知道，严格来说是有限次数）地进入被该锁锁住的代码。&lt;/p&gt;
+&lt;h2 id=&#34;4-longadder&#34;&gt;4 LongAdder&lt;/h2&gt;
+&lt;p&gt;volatile解决了多线程内存不可见问题，对于一读多写，是可以解决变量同步问题的。但是对于一写多读同样无法解决线程安全问题。&lt;/p&gt;
+&lt;p&gt;如果是JDK8推荐使用LongAdder对象，比AtomicLong性能更好（减少乐观锁的重试次数）。&lt;/p&gt;
+&lt;p&gt;该类通过内部cells数组分担了高并发下多线程同时对一个原子变量进行更新时的竞争量，让多个线程可以同时对cells数组里面的元素进行并行的更新操作。另外，数组元素Cell使用@sun.misc.Contended注解进行修饰，这避免了cells数组内多个原子变量被放入同一个缓存行，也就是避免了伪共享，这对性能也是一个提升。&lt;/p&gt;
+&lt;h2 id=&#34;5-longaccumulator&#34;&gt;5 LongAccumulator&lt;/h2&gt;
+&lt;p&gt;LongAdder类是LongAccumulator的一个特例，LongAccumulator比LongAdder的功能更强大。例如下面的构造函数，其中accumulatorFunction是一个双目运算器接口，其根据输入的两个参数返回一个计算值，identity则是LongAccumulator累加器的初始值。&lt;/p&gt;
+&lt;h2 id=&#34;6-copyonwritearraylist&#34;&gt;6 CopyOnWriteArrayList&lt;/h2&gt;
+&lt;p&gt;CopyOnWriteArrayList使用写时复制的策略来保证list的一致性，而获取—修改—写入三步操作并不是原子性的，所以在增删改的过程中都使用了独占锁，来保证在某个时间只有一个线程能对list数组进行修改。另外CopyOnWriteArrayList提供了弱一致性的迭代器，从而保证在获取迭代器后，其他线程对list的修改是不可见的，迭代器遍历的数组是一个快照。另外，CopyOnWriteArraySet的底层就是使用它实现的，感兴趣的读者可以查阅相关源码。&lt;/p&gt;
+&lt;h2 id=&#34;7-locksupport&#34;&gt;7 LockSupport&lt;/h2&gt;
+</description>
+        </item>
+        <item>
+        <title>第3章 垃圾收集器与内存分配策略</title>
+        <link>https://lyoshur.github.io/stack/p/%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3java%E8%99%9A%E6%8B%9F%E6%9C%BAjvm%E9%AB%98%E7%BA%A7%E7%89%B9%E6%80%A7%E4%B8%8E%E6%9C%80%E4%BD%B3%E5%AE%9E%E8%B7%B5%E7%AC%AC%E4%BA%8C%E7%89%88%E5%91%A8%E5%BF%97%E6%98%8E-%E7%AC%AC3%E7%AB%A0-%E5%9E%83%E5%9C%BE%E6%94%B6%E9%9B%86%E5%99%A8%E4%B8%8E%E5%86%85%E5%AD%98%E5%88%86%E9%85%8D%E7%AD%96%E7%95%A5/</link>
+        <pubDate>Thu, 18 Aug 2022 11:05:00 +0000</pubDate>
+        
+        <guid>https://lyoshur.github.io/stack/p/%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3java%E8%99%9A%E6%8B%9F%E6%9C%BAjvm%E9%AB%98%E7%BA%A7%E7%89%B9%E6%80%A7%E4%B8%8E%E6%9C%80%E4%BD%B3%E5%AE%9E%E8%B7%B5%E7%AC%AC%E4%BA%8C%E7%89%88%E5%91%A8%E5%BF%97%E6%98%8E-%E7%AC%AC3%E7%AB%A0-%E5%9E%83%E5%9C%BE%E6%94%B6%E9%9B%86%E5%99%A8%E4%B8%8E%E5%86%85%E5%AD%98%E5%88%86%E9%85%8D%E7%AD%96%E7%95%A5/</guid>
+        <description>&lt;h1 id=&#34;第3章-垃圾收集器与内存分配策略&#34;&gt;第3章 垃圾收集器与内存分配策略&lt;/h1&gt;
+&lt;p&gt;说起垃圾收集（Garbage Collection，GC），大部分人都把这项技术当做Java语言的伴生产物。事实上，GC的历史比Java久远，1960年诞生于MIT的Lisp是第一门真正使用内存动态分配和垃圾收集技术的语言。当Lisp还在胚胎时期时，人们就在思考GC需要完成的3件事情：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;那些内存需要回收&lt;/li&gt;
+&lt;li&gt;如何回收&lt;/li&gt;
+&lt;li&gt;什么时候回收&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&#34;1-那些内存需要回收&#34;&gt;1 那些内存需要回收&lt;/h2&gt;
+&lt;h3 id=&#34;11-引用计数算法reference-counting&#34;&gt;1.1 引用计数算法（Reference Counting）&lt;/h3&gt;
+&lt;p&gt;给对象中添加一个引用计数器，每当有一个地方引用它时，计数器值就加1；当引用失效时，计数器值就减1；任何时刻计数器为0的对象就是不可能再被使用的。&lt;/p&gt;
+&lt;h3 id=&#34;12-可达性分析算法&#34;&gt;1.2 可达性分析算法&lt;/h3&gt;
+&lt;p&gt;这个算法的基本思路就是通过一系列的称为“GC Roots”的对象作为起始点，从这些节点开始向下搜索，搜索所走过的路径称为引用链（Reference Chain），当一个对象到GC Roots没有任何引用链相连（用图论的话来说，就是从GC Roots到这个对象不可达）时，则证明此对象是不可用的。&lt;/p&gt;
+&lt;h3 id=&#34;13-强引用strong-reference软引用soft-reference弱引用weak-reference虚引用phantom-reference&#34;&gt;1.3 强引用（Strong Reference）、软引用（Soft Reference）、弱引用（Weak Reference）、虚引用（Phantom Reference）&lt;/h3&gt;
+&lt;p&gt;在JDK 1.2之后，Java对引用的概念进行了扩充，将引用分为强引用（Strong Reference）、软引用（Soft Reference）、弱引用（Weak Reference）、虚引用（Phantom Reference）4种，这4种引用强度依次逐渐减弱。&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;在JDK 1.2之后，Java对引用的概念进行了扩充，将引用分为强引用（Strong Reference）、软引用（Soft Reference）、弱引用（Weak Reference）、虚引用（Phantom Reference）4种，这4种引用强度依次逐渐减弱。&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;软引用是用来描述一些还有用但并非必需的对象。对于软引用关联着的对象，在系统将要发生内存溢出异常之前，将会把这些对象列进回收范围之中进行第二次回收。如果这次回收还没有足够的内存，才会抛出内存溢出异常。在JDK 1.2之后，提供了SoftReference类来实现软引用。&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;弱引用也是用来描述非必需对象的，但是它的强度比软引用更弱一些，被弱引用关联的对象只能生存到下一次垃圾收集发生之前。当垃圾收集器工作时，无论当前内存是否足够，都会回收掉只被弱引用关联的对象。在JDK 1.2之后，提供了WeakReference类来实现弱引用。&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;虚引用也称为幽灵引用或者幻影引用，它是最弱的一种引用关系。一个对象是否有虚引用的存在，完全不会对其生存时间构成影响，也无法通过虚引用来取得一个对象实例。为一个对象设置虚引用关联的唯一目的就是能在这个对象被收集器回收时收到一个系统通知。在JDK 1.2之后，提供了PhantomReference类来实现虚引用。&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;14-回收方法区&#34;&gt;1.4 回收方法区&lt;/h3&gt;
+&lt;p&gt;很多人认为方法区（或者HotSpot虚拟机中的永久代）是没有垃圾收集的，Java虚拟机规范中确实说过可以不要求虚拟机在方法区实现垃圾收集，而且在方法区中进行垃圾收集的“性价比”一般比较低：在堆中，尤其是在新生代中，常规应用进行一次垃圾收集一般可以回收70%～95%的空间，而永久代的垃圾收集效率远低于此。&lt;/p&gt;
+&lt;h2 id=&#34;2-如何回收&#34;&gt;2 如何回收&lt;/h2&gt;
+&lt;h3 id=&#34;21-垃圾收集算法&#34;&gt;2.1 垃圾收集算法&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;标记-清除算法&lt;/p&gt;
+&lt;p&gt;最基础的收集算法是“标记-清除”（Mark-Sweep）算法，如同它的名字一样，算法分为“标记”和“清除”两个阶段：首先标记出所有需要回收的对象，在标记完成后统一回收所有被标记的对象，它的标记过程其实在前一节讲述对象标记判定时已经介绍过了。之所以说它是最基础的收集算法，是因为后续的收集算法都是基于这种思路并对其不足进行改进而得到的。它的主要不足有两个：一个是效率问题，标记和清除两个过程的效率都不高；另一个是空间问题，标记清除之后会产生大量不连续的内存碎片，空间碎片太多可能会导致以后在程序运行过程中需要分配较大对象时，无法找到足够的连续内存而不得不提前触发另一次垃圾收集动作。&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;复制算法(新生代)&lt;/p&gt;
+&lt;p&gt;最基础的收集算法是“标记-清除”（Mark-Sweep）算法，如同它的名字一样，算法分为“标记”和“清除”两个阶段：首先标记出所有需要回收的对象，在标记完成后统一回收所有被标记的对象，它的标记过程其实在前一节讲述对象标记判定时已经介绍过了。之所以说它是最基础的收集算法，是因为后续的收集算法都是基于这种思路并对其不足进行改进而得到的。它的主要不足有两个：一个是效率问题，标记和清除两个过程的效率都不高；另一个是空间问题，标记清除之后会产生大量不连续的内存碎片，空间碎片太多可能会导致以后在程序运行过程中需要分配较大对象时，无法找到足够的连续内存而不得不提前触发另一次垃圾收集动作。&lt;/p&gt;
+&lt;p&gt;现在的商业虚拟机都采用这种收集算法来回收新生代，IBM公司的专门研究表明，新生代中的对象98%是“朝生夕死”的，所以并不需要按照1∶1的比例来划分内存空间，而是将内存分为一块较大的Eden空间和两块较小的Survivor空间，每次使用Eden和其中一块Survivor[插图]。当回收时，将Eden和Survivor中还存活着的对象一次性地复制到另外一块Survivor空间上，最后清理掉Eden和刚才用过的Survivor空间&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;标记整理算法(老年代)&lt;/p&gt;
+&lt;p&gt;复制收集算法在对象存活率较高时就要进行较多的复制操作，效率将会变低。更关键的是，如果不想浪费50%的空间，就需要有额外的空间进行分配担保，以应对被使用的内存中所有对象都100%存活的极端情况，所以在老年代一般不能直接选用这种算法。根据老年代的特点，有人提出了另外一种“标记-整理”（Mark-Compact）算法，标记过程仍然与“标记-清除”算法一样，但后续步骤不是直接对可回收对象进行清理，而是让所有存活的对象都向一端移动，然后直接清理掉端边界以外的内存&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&#34;3-何时回收&#34;&gt;3 何时回收&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;安全点&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;安全区&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&#34;4-垃圾收集器&#34;&gt;4 垃圾收集器&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;Serial收集器&lt;/p&gt;
+&lt;p&gt;Serial收集器是最基本、发展历史最悠久的收集器，曾经（在JDK 1.3.1之前）是虚拟机新生代收集的唯一选择。大家看名字就会知道，这个收集器是一个单线程的收集器，但它的“单线程”的意义并不仅仅说明它只会使用一个CPU或一条收集线程去完成垃圾收集工作，更重要的是在它进行垃圾收集时，必须暂停其他所有的工作线程，直到它收集结束。“Stop The World”这个名字也许听起来很酷，但这项工作实际上是由虚拟机在后台自动发起和自动完成的，在用户不可见的情况下把用户正常工作的线程全部停掉，这对很多应用来说都是难以接受的。&lt;/p&gt;
+&lt;p&gt;它依然是虚拟机运行在Client模式下的默认新生代收集器。它也有着优于其他收集器的地方：简单而高效&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;ParNew收集器&lt;/p&gt;
+&lt;p&gt;ParNew收集器除了多线程收集之外，其他与Serial收集器相比并没有太多创新之处，但它却是许多运行在Server模式下的虚拟机中首选的新生代收集器，其中有一个与性能无关但很重要的原因是，除了Serial收集器外，目前只有它能与CMS收集器配合工作。&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Parallel Scavenge收集器&lt;/p&gt;
+&lt;p&gt;不幸的是，CMS作为老年代的收集器，却无法与JDK 1.4.0中已经存在的新生代收集器Parallel Scavenge配合工作&lt;/p&gt;
+&lt;p&gt;Parallel Scavenge收集器是一个新生代收集器，它也是使用复制算法的收集器，又是并行的多线程收集器……看上去和ParNew都一样，那它有什么特别之处呢？Parallel Scavenge收集器的特点是它的关注点与其他收集器不同，CMS等收集器的关注点是尽可能地缩短垃圾收集时用户线程的停顿时间，而Parallel Scavenge收集器的目标则是达到一个可控制的吞吐量（Throughput）。所谓吞吐量就是CPU用于运行用户代码的时间与CPU总消耗时间的比值，即吞吐量 = 运行用户代码时间 /（运行用户代码时间 +垃圾收集时间），虚拟机总共运行了100分钟，其中垃圾收集花掉1分钟，那吞吐量就是99%。停顿时间越短就越适合需要与用户交互的程序，良好的响应速度能提升用户体验，而高吞吐量则可以高效率地利用CPU时间，尽快完成程序的运算任务，主要适合在后台运算而不需要太多交互的任务。&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Serial Old收集器&lt;/p&gt;
+&lt;p&gt;Serial Old是Serial收集器的老年代版本，它同样是一个单线程收集器，使用“标记-整理”算法。这个收集器的主要意义也是在于给Client模式下的虚拟机使用。如果在Server模式下，那么它主要还有两大用途：一种用途是在JDK 1.5以及之前的版本中与Parallel Scavenge收集器搭配使&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Parallel Old收集器&lt;/p&gt;
+&lt;p&gt;Parallel Old是Parallel Scavenge收集器的老年代版本，使用多线程和“标记-整理”算法。这个收集器是在JDK 1.6中才开始提供的，在此之前，新生代的Parallel Scavenge收集器一直处于比较尴尬的状态。原因是，如果新生代选择了Parallel Scavenge收集器，老年代除了Serial Old（PS MarkSweep）收集器外别无选择（还记得上面说过Parallel Scavenge收集器无法与CMS收集器配合工作吗？）。由于老年代Serial Old收集器在服务端应用性能上的“拖累”，使用了Parallel Scavenge收集器也未必能在整体应用上获得吞吐量最大化的效果，由于单线程的老年代收集中无法充分利用服务器多CPU的处理能力，在老年代很大而且硬件比较高级的环境中，这种组合的吞吐量甚至还不一定有ParNew加CMS的组合“给力”。直到Parallel Old收集器出现后，“吞吐量优先”收集器终于有了比较名副其实的应用组合，在注重吞吐量以及CPU资源敏感的场合，都可以优先考虑Parallel Scavenge加Parallel Old收集器。&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;CMS收集器&lt;/p&gt;
+&lt;p&gt;CMS（Concurrent Mark Sweep）收集器是一种以获取最短回收停顿时间为目标的收集器。目前很大一部分的Java应用集中在互联网站或者B/S系统的服务端上，这类应用尤其重视服务的响应速度，希望系统停顿时间最短，以给用户带来较好的体验。CMS收集器就非常符合这类应用的需求。从名字（包含“Mark Sweep”）上就可以看出，CMS收集器是基于“标记—清除”算法实现的，它的运作过程相对于前面几种收集器来说更复杂一些&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;G1收集器&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+</description>
+        </item>
+        <item>
+        <title>第4章 虚拟机性能监控与故障处理工具</title>
+        <link>https://lyoshur.github.io/stack/p/%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3java%E8%99%9A%E6%8B%9F%E6%9C%BAjvm%E9%AB%98%E7%BA%A7%E7%89%B9%E6%80%A7%E4%B8%8E%E6%9C%80%E4%BD%B3%E5%AE%9E%E8%B7%B5%E7%AC%AC%E4%BA%8C%E7%89%88%E5%91%A8%E5%BF%97%E6%98%8E-%E7%AC%AC4%E7%AB%A0-%E8%99%9A%E6%8B%9F%E6%9C%BA%E6%80%A7%E8%83%BD%E7%9B%91%E6%8E%A7%E4%B8%8E%E6%95%85%E9%9A%9C%E5%A4%84%E7%90%86%E5%B7%A5%E5%85%B7/</link>
+        <pubDate>Thu, 18 Aug 2022 11:05:00 +0000</pubDate>
+        
+        <guid>https://lyoshur.github.io/stack/p/%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3java%E8%99%9A%E6%8B%9F%E6%9C%BAjvm%E9%AB%98%E7%BA%A7%E7%89%B9%E6%80%A7%E4%B8%8E%E6%9C%80%E4%BD%B3%E5%AE%9E%E8%B7%B5%E7%AC%AC%E4%BA%8C%E7%89%88%E5%91%A8%E5%BF%97%E6%98%8E-%E7%AC%AC4%E7%AB%A0-%E8%99%9A%E6%8B%9F%E6%9C%BA%E6%80%A7%E8%83%BD%E7%9B%91%E6%8E%A7%E4%B8%8E%E6%95%85%E9%9A%9C%E5%A4%84%E7%90%86%E5%B7%A5%E5%85%B7/</guid>
+        <description>&lt;h1 id=&#34;第4章-虚拟机性能监控与故障处理工具&#34;&gt;第4章 虚拟机性能监控与故障处理工具&lt;/h1&gt;
+&lt;h2 id=&#34;1-jdk的命令行工具&#34;&gt;1 JDK的命令行工具&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;jps：虚拟机进程状况工具&lt;/li&gt;
+&lt;li&gt;jstat：虚拟机统计信息监视工具&lt;/li&gt;
+&lt;li&gt;jinfo：Java配置信息工具&lt;/li&gt;
+&lt;li&gt;jmap：Java内存映像工具&lt;/li&gt;
+&lt;li&gt;jhat：虚拟机堆转储快照分析工具&lt;/li&gt;
+&lt;li&gt;jstack：Java堆栈跟踪工具&lt;/li&gt;
+&lt;/ul&gt;
+</description>
+        </item>
+        <item>
+        <title>第二章 自动内存管理机制</title>
+        <link>https://lyoshur.github.io/stack/p/%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3java%E8%99%9A%E6%8B%9F%E6%9C%BAjvm%E9%AB%98%E7%BA%A7%E7%89%B9%E6%80%A7%E4%B8%8E%E6%9C%80%E4%BD%B3%E5%AE%9E%E8%B7%B5%E7%AC%AC%E4%BA%8C%E7%89%88%E5%91%A8%E5%BF%97%E6%98%8E-%E7%AC%AC%E4%BA%8C%E7%AB%A0-%E8%87%AA%E5%8A%A8%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86%E6%9C%BA%E5%88%B6/</link>
+        <pubDate>Thu, 18 Aug 2022 11:05:00 +0000</pubDate>
+        
+        <guid>https://lyoshur.github.io/stack/p/%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3java%E8%99%9A%E6%8B%9F%E6%9C%BAjvm%E9%AB%98%E7%BA%A7%E7%89%B9%E6%80%A7%E4%B8%8E%E6%9C%80%E4%BD%B3%E5%AE%9E%E8%B7%B5%E7%AC%AC%E4%BA%8C%E7%89%88%E5%91%A8%E5%BF%97%E6%98%8E-%E7%AC%AC%E4%BA%8C%E7%AB%A0-%E8%87%AA%E5%8A%A8%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86%E6%9C%BA%E5%88%B6/</guid>
+        <description>&lt;h1 id=&#34;第二章-自动内存管理机制&#34;&gt;第二章 自动内存管理机制&lt;/h1&gt;
+&lt;p&gt;Java与C++之间有一堵由内存动态分配和垃圾收集技术所围成的“高墙”，墙外面的人想进去，墙里面的人却想出来。&lt;/p&gt;
+&lt;h2 id=&#34;1-运行时数据区域&#34;&gt;1 运行时数据区域&lt;/h2&gt;
+&lt;p&gt;Java虚拟机在执行Java程序的过程中会把它所管理的内存划分为若干个不同的数据区域。这些区域都有各自的用途，以及创建和销毁的时间，有的区域随着虚拟机进程的启动而存在，有些区域则依赖用户线程的启动和结束而建立和销毁。根据《Java虚拟机规范（Java SE 7版）》的规定，Java虚拟机所管理的内存将会包括以下几个运行时数据区域：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;方法区&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;堆&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;虚拟机栈&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;本地方法栈&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;程序计数器&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;11--运行时常量池runtime-constant-pool&#34;&gt;1.1  运行时常量池（Runtime Constant Pool）&lt;/h3&gt;
+&lt;p&gt;运行时常量池（Runtime Constant Pool）是方法区的一部分。Class文件中除了有类的版本、字段、方法、接口等描述信息外，还有一项信息是常量池（Constant Pool Table），用于存放编译期生成的各种字面量和符号引用，这部分内容将在类加载后进入方法区的运行时常量池中存放。&lt;/p&gt;
+&lt;h3 id=&#34;12-直接内存&#34;&gt;1.2 直接内存&lt;/h3&gt;
+&lt;p&gt;直接内存（Direct Memory）并不是虚拟机运行时数据区的一部分，也不是Java虚拟机规范中定义的内存区域。但是这部分内存也被频繁地使用，而且也可能导致OutOfMemoryError异常出现，所以我们放到这里一起讲解。&lt;/p&gt;
+&lt;p&gt;在JDK 1.4中新加入了NIO（New Input/Output）类，引入了一种基于通道（Channel）与缓冲区（Buffer）的I/O方式，它可以使用Native函数库直接分配堆外内存，然后通过一个存储在Java堆中的DirectByteBuffer对象作为这块内存的引用进行操作。这样能在一些场景中显著提高性能，因为避免了在Java堆和Native堆中来回复制数据。&lt;/p&gt;
+&lt;p&gt;显然，本机直接内存的分配不会受到Java堆大小的限制，但是，既然是内存，肯定还是会受到本机总内存（包括RAM以及SWAP区或者分页文件）大小以及处理器寻址空间的限制。服务器管理员在配置虚拟机参数时，会根据实际内存设置-Xmx等参数信息，但经常忽略直接内存，使得各个内存区域总和大于物理内存限制（包括物理的和操作系统级的限制），从而导致动态扩展时出现OutOfMemoryError异常。&lt;/p&gt;
+&lt;h2 id=&#34;2-对象的创建&#34;&gt;2 对象的创建&lt;/h2&gt;
+&lt;p&gt;虚拟机遇到一条new指令时，首先将去检查这个指令的参数是否能在常量池中定位到一个类的符号引用，并且检查这个符号引用代表的类是否已被加载、解析和初始化过。如果没有，那必须先执行相应的类加载过程。&lt;/p&gt;
+&lt;p&gt;在类加载检查通过后，接下来虚拟机将为新生对象分配内存。对象所需内存的大小在类加载完成后便可完全确定。&lt;/p&gt;
+&lt;p&gt;两种分配方式：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;“指针碰撞”（Bump the Pointer）&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;“空闲列表”（Free List）&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;21-对象的内存布局&#34;&gt;2.1 对象的内存布局&lt;/h3&gt;
+&lt;p&gt;在HotSpot虚拟机中，对象在内存中存储的布局可以分为3块区域：对象头（Header）、实例数据（Instance Data）和对齐填充（Padding）&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;对象头&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;HotSpot虚拟机的对象头包括两部分信息，第一部分用于存储对象自身的运行时数据，如哈希码（HashCode）、GC分代年龄、锁状态标志、线程持有的锁、偏向线程ID、偏向时间戳等，这部分数据的长度在32位和64位的虚拟机（未开启压缩指针）中分别为32bit和64bit，官方称它为“Mark Word”。对象需要存储的运行时数据很多，其实已经超出了32位、64位Bitmap结构所能记录的限度，但是对象头信息是与对象自身定义的数据无关的额外存储成本，考虑到虚拟机的空间效率，Mark Word被设计成一个非固定的数据结构以便在极小的空间内存储尽量多的信息，它会根据对象的状态复用自己的存储空间。例如，在32位的HotSpot虚拟机中，如果对象处于未被锁定的状态下，那么Mark Word的32bit空间中的25bit用于存储对象哈希码，4bit用于存储对象分代年龄，2bit用于存储锁标志位，1bit固定为0，而在其他状态（轻量级锁定、重量级锁定、GC标记、可偏向）下对象的存储内容见表2-1。&lt;/p&gt;
+&lt;p&gt;对象头的另外一部分是类型指针，即对象指向它的类元数据的指针，虚拟机通过这个指针来确定这个对象是哪个类的实例。并不是所有的虚拟机实现都必须在对象数据上保留类型指针，换句话说，查找对象的元数据信息并不一定要经过对象本身，这点将在2.3.3节讨论。另外，如果对象是一个Java数组，那在对象头中还必须有一块用于记录数组长度的数据，因为虚拟机可以通过普通Java对象的元数据信息确定Java对象的大小，但是从数组的元数据中却无法确定数组的大小。&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;实例数据&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;接下来的实例数据部分是对象真正存储的有效信息，也是在程序代码中所定义的各种类型的字段内容。无论是从父类继承下来的，还是在子类中定义的，都需要记录起来。这部分的存储顺序会受到虚拟机分配策略参数（FieldsAllocationStyle）和字段在Java源码中定义顺序的影响。HotSpot虚拟机默认的分配策略为longs/doubles、ints、shorts/chars、bytes/booleans、oops（Ordinary Object Pointers），从分配策略中可以看出，相同宽度的字段总是被分配到一起。在满足这个前提条件的情况下，在父类中定义的变量会出现在子类之前。如果CompactFields参数值为true（默认为true），那么子类之中较窄的变量也可能会插入到父类变量的空隙之中。&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;对其填充&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;第三部分对齐填充并不是必然存在的，也没有特别的含义，它仅仅起着占位符的作用。由于HotSpot VM的自动内存管理系统要求对象起始地址必须是8字节的整数倍，换句话说，就是对象的大小必须是8字节的整数倍。而对象头部分正好是8字节的倍数（1倍或者2倍），因此，当对象实例数据部分没有对齐时，就需要通过对齐填充来补全。&lt;/p&gt;
+&lt;h3 id=&#34;22-对象的访问定位&#34;&gt;2.2 对象的访问定位&lt;/h3&gt;
+&lt;p&gt;建立对象是为了使用对象，我们的Java程序需要通过栈上的reference数据来操作堆上的具体对象。由于reference类型在Java虚拟机规范中只规定了一个指向对象的引用，并没有定义这个引用应该通过何种方式去定位、访问堆中的对象的具体位置，所以对象访问方式也是取决于虚拟机实现而定的。目前主流的访问方式有使用句柄和直接指针两种。&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;如果使用句柄访问的话，那么Java堆中将会划分出一块内存来作为句柄池，reference中存储的就是对象的句柄地址，而句柄中包含了对象实例数据与类型数据各自的具体地址信息&lt;/li&gt;
+&lt;li&gt;果使用直接指针访问，那么Java堆对象的布局中就必须考虑如何放置访问类型数据的相关信息，而reference中存储的直接就是对象地址&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;这两种对象访问方式各有优势，使用句柄来访问的最大好处就是reference中存储的是稳定的句柄地址，在对象被移动（垃圾收集时移动对象是非常普遍的行为）时只会改变句柄中的实例数据指针，而reference本身不需要修改。&lt;/p&gt;
+&lt;p&gt;使用直接指针访问方式的最大好处就是速度更快，它节省了一次指针定位的时间开销，由于对象的访问在Java中非常频繁，因此这类开销积少成多后也是一项非常可观的执行成本。就本书讨论的主要虚拟机Sun HotSpot而言，它是使用第二种方式进行对象访问的.&lt;/p&gt;
+</description>
+        </item>
+        <item>
+        <title>第二章 Java并发包之原子类型详解</title>
+        <link>https://lyoshur.github.io/stack/p/java%E9%AB%98%E5%B9%B6%E5%8F%91%E7%BC%96%E7%A8%8B%E8%AF%A6%E8%A7%A3%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E5%B9%B6%E5%8F%91%E6%A0%B8%E5%BF%83%E5%BA%93%E6%B1%AA%E6%96%87%E5%90%9B-%E7%AC%AC%E4%BA%8C%E7%AB%A0-java%E5%B9%B6%E5%8F%91%E5%8C%85%E4%B9%8B%E5%8E%9F%E5%AD%90%E7%B1%BB%E5%9E%8B%E8%AF%A6%E8%A7%A3/</link>
+        <pubDate>Wed, 17 Aug 2022 10:14:00 +0000</pubDate>
+        
+        <guid>https://lyoshur.github.io/stack/p/java%E9%AB%98%E5%B9%B6%E5%8F%91%E7%BC%96%E7%A8%8B%E8%AF%A6%E8%A7%A3%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E5%B9%B6%E5%8F%91%E6%A0%B8%E5%BF%83%E5%BA%93%E6%B1%AA%E6%96%87%E5%90%9B-%E7%AC%AC%E4%BA%8C%E7%AB%A0-java%E5%B9%B6%E5%8F%91%E5%8C%85%E4%B9%8B%E5%8E%9F%E5%AD%90%E7%B1%BB%E5%9E%8B%E8%AF%A6%E8%A7%A3/</guid>
+        <description>&lt;h1 id=&#34;第二章-java并发包之原子类型详解&#34;&gt;第二章 Java并发包之原子类型详解&lt;/h1&gt;
+&lt;h2 id=&#34;1-atomicinteger详解&#34;&gt;1 AtomicInteger详解&lt;/h2&gt;
+&lt;p&gt;AtomicInteger有两个构造，无参构造，初始值为0；以及带初始值的构造。&lt;/p&gt;
+&lt;p&gt;方法：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;void set(int newValue)：为AtomicInteger的value设置一个新值，通过对前面内容的学习，我们知道在AtomicInteger中有一个被volatile关键字修饰的value成员属性，因此调用set方法为value设置新值后其他线程就会立即看见&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;void lazySet(int newValue)：set方法修改被volatile关键字修饰的value值会被强制刷新到主内存中，从而立即被其他线程看到，这一切都应该归功于volatile关键字底层的内存屏障。内存屏障虽然足够轻量，但是毕竟还是会带来性能上的开销，比如，在单线程中对AtomicInteger的value进行修改时没有必要保留内存屏障，而value又是被volatile关键字修饰的，这似乎是无法调和的矛盾。幸好追求性能极致的JVM开发者们早就考虑到了这一点，lazySet方法的作用正在于此&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;int getAndIncrement()  i++&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;int incrementAndGet() ++i&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;int getAndDecrement() i&amp;ndash;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;int decrementAndGet() &amp;ndash;i&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;boolean compareAndSet(int expect, int update)&lt;/p&gt;
+&lt;p&gt;其中expect代表当前的AtomicInteger数值，update则是需要设置的新值，该方法会返回一个boolean的结果：当expect和AtomicInteger的当前值不相等时，修改会失败，返回值为false；若修改成功则会返回true&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;int getAndAdd(int delta)&lt;/p&gt;
+&lt;p&gt;原子性地更新AtomicInteger 的value值，更新后的value为value和delta之和&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;int addAndGet(int delta)&lt;/p&gt;
+&lt;p&gt;类似 i++和++i的区别&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;自JDK1.8增加了函数式接口之后，AtomicInteger也提供了对函数式接口的支持。&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;int getAndUpdate(IntUnaryOperator updateFunction)：原子性地更新AtomicInteger的值，方法入参为IntUnaryOperator接口，返回值为value更新之前的值。&lt;/li&gt;
+&lt;li&gt;int updateAndGet(IntUnaryOperator updateFunction)：原子性地更新AtomicInteger的值，方法入参为IntUnaryOperator接口，该方法会立即返回更新后的value值&lt;/li&gt;
+&lt;li&gt;int getAndAccumulate(int x, IntBinaryOperator accumulatorFunction)：原子性地更新AtomicInteger的值，方法入参为IntBinaryOperator接口和delta值x，返回值为value更新之前的值&lt;/li&gt;
+&lt;li&gt;int accumulateAndGet(int x, IntBinaryOperator accumulatorFunction)：该方法与getAndAccumulate类似，只不过会立即返回AtomicInteger的更新值&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&#34;2-atomicinteger内幕&#34;&gt;2 AtomicInteger内幕&lt;/h2&gt;
+&lt;p&gt;Unsafe是由C++实现的，其内部存在着大量的汇编 CPU指令等代码，JDK实现的 Lock Free几乎完全依赖于该类&lt;/p&gt;
+&lt;p&gt;【note】openjdk-jdk8u/hotspot/src/share/vm/prims/unsafe.cpp / openjdk-jdk8u/hotspot/src/os_cpu/bsd_x86/vm/atomic_bsd_x86.inline.hpp&lt;/p&gt;
+&lt;p&gt;文件我们会找到相关的C++代码文件。java通过调用unsafe.cpp定义的方法，来完成cas操作，根本实现在和CPU相关的atomic_bsd_x86.inline.hpp中，里面会调用不同CPU架构下的汇编代码。&lt;/p&gt;
+&lt;h2 id=&#34;3-atomicboolean详解&#34;&gt;3 AtomicBoolean详解&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;get()：获取AtomicBoolean的当前布尔值&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;set(boolean newValue)：设置AtomicBoolean最新的value值，该新值的更新对其他线程立即可见&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;lazySet(boolean newValue)：设置AtomicBoolean的布尔值&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;getAndSet(boolean newValue)：返回AtomicBoolean的前一个布尔值，并且设置新的值&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;compareAndSet(boolean expect, boolean update)&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;weakCompareAndSet(boolean expect, boolean update)&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&#34;4trylock显式锁的实现&#34;&gt;4TryLock显式锁的实现&lt;/h2&gt;
+&lt;p&gt;类保存两个变量，一个AtomicBoolean，一个ThreadLocal&lt;!-- raw HTML omitted --&gt;。使用AtomicBoolean来进行cas，判断当前线程能否拿到锁。ThreadLocal用来存储当前线程是否拿到锁。&lt;/p&gt;
+&lt;p&gt;两个方法 tryLock 和 release。&lt;/p&gt;
+&lt;h2 id=&#34;5-atomiclong详解&#34;&gt;5 AtomicLong详解&lt;/h2&gt;
+&lt;p&gt;相对于compareAndSwapInt方法，在unsafe.cpp中，compareAndSwapLong方法多了条件编译SUPPORTS_NATIVE_CX8。SUPPORTS_NATIVE_CX8主要用于判断机器硬件是否支持8字节数字的cmpxchg CPU指令，如果机器硬件不支持，比如32位的CPU肯定不支持8字节64位数字的cmpxchg CPU指令，那么此时就需要判断当前JVM版本是否支持8字节数字的cmpxchg操作；如果机器硬件与当前JVM的版本都不支持，那么实际上针对long型数据的原子性操作将不会是Lock Free的，而是需要采用加锁的方式确保原子性。&lt;/p&gt;
+&lt;h2 id=&#34;6-atomicreference详解&#34;&gt;6 AtomicReference详解&lt;/h2&gt;
+&lt;p&gt;AtomicReference类提供了对象引用的非阻塞原子性读写操作，并且提供了其他一些高级的用法。众所周知，对象的引用其实是一个4字节的数字，代表着在JVM堆内存中的引用地址。&lt;/p&gt;
+&lt;p&gt;我们使用AtomicReference封装对象引用，每一次对AtomicReference的更新操作，我们都采用CAS这一乐观非阻塞的方式进行，因此也会存在对DebitCard对象引用更改失败的问题。CAS算法在此处就是要确保接下来要修改的对象引用是基于当前线程刚才获取的对象引用，否则更新将直接失败。&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;get()：获取AtomicReference的当前对象引用值&lt;/li&gt;
+&lt;li&gt;set(V newValue)：设置AtomicReference最新的对象引用值，该新值的更新对其他线程立即可见&lt;/li&gt;
+&lt;li&gt;lazySet(V newValue)：设置AtomicReference的对象引用值&lt;/li&gt;
+&lt;li&gt;getAndSet(V newValue)：原子性地更新AtomicReference内部的value值，并且返回AtomicReference的旧值&lt;/li&gt;
+&lt;li&gt;compareAndSet(V expect, V update)：原子性地更新AtomicReference内部的value值，其中expect代表当前AtomicReference的value值，update则是需要设置的新引用值。该方法会返回一个boolean的结果，当expect和AtomicReference的当前值不相等时，修改会失败，返回值为false，若修改成功则会返回true&lt;/li&gt;
+&lt;li&gt;getAndUpdate(UnaryOperator&lt;!-- raw HTML omitted --&gt; updateFunction)：原子性地更新value值，并且返回AtomicReference的旧值，该方法需要传入一个Function接口&lt;/li&gt;
+&lt;li&gt;updateAndGet(UnaryOperator&lt;!-- raw HTML omitted --&gt; updateFunction)：原子性地更新value值，并且返回AtomicReference更新后的新值，该方法需要传入一个Function接口&lt;/li&gt;
+&lt;li&gt;getAndAccumulate(V x, BinaryOperator&lt;!-- raw HTML omitted --&gt; accumulatorFunction)：原子性地更新value值，并且返回AtomicReference更新前的旧值。该方法需要传入两个参数，第一个是更新后的新值，第二个是BinaryOperator接口&lt;/li&gt;
+&lt;li&gt;accumulateAndGet(V x, BinaryOperator&lt;!-- raw HTML omitted --&gt; accumulatorFunction)：原子性地更新value值，并且返回AtomicReference更新后的值。该方法需要传入两个参数，第一个是更新的新值，第二个是BinaryOperator接口&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&#34;7-atomicstampedreference详解&#34;&gt;7 AtomicStampedReference详解&lt;/h2&gt;
+&lt;p&gt;截至目前我们已经学习了AtomicInteger、AtomicBoolean、AtomicLong、AtomicReference这些原子类型，它们无一例外都采用了基于volatile关键字+CAS算法无锁的操作方式来确保共享数据在多线程操作下的线程安全性。&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;volatile关键字保证了线程间的可见性，当某线程操作了被volatile关键字修饰的变量，其他线程可以立即看到该共享变量的变化&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;CAS算法，即对比交换算法，是由UNSAFE提供的，实质上是通过操作CPU指令来得到保证的。CAS算法提供了一种快速失败的方式，当某线程修改已经被改变的数据时会快速失败&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;如何避免CAS算法带来的ABA问题呢？针对乐观锁在并发情况下的操作，我们通常会增加版本号，比如数据库中关于乐观锁的实现方式，以此来解决并发操作带来的ABA问题。在Java原子包中也提供了这样的实现AtomicStampedReference&lt;!-- raw HTML omitted --&gt;。&lt;/p&gt;
+&lt;p&gt;AtomicStampedReference在构建的时候需要一个类似于版本号的int类型变量stamped，每一次针对共享数据的变化都会导致该stamped的增加（stamped的自增维护需要应用程序自身去负责，AtomicStampedReference并不提供），因此就可以避免ABA问题的出现，AtomicStampedReference的使用也是极其简单的，创建时我们不仅需要指定初始值，还需要设定stamped的初始值，在AtomicStampedReference的内部会将这两个变量封装成Pair对象。&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;getReference()：获取当前引用值，等同于其他原子类型的get方法&lt;/li&gt;
+&lt;li&gt;getStamp()：获取当前引用值的stamp数值&lt;/li&gt;
+&lt;li&gt;V get(int[] stampHolder)：这个方法的意图是获取当前值以及stamp值，但是Java不支持多值的返回，并且在AtomicStampedReference内部Pair被定义为私有的，因此这里就采用了传参的方式来解决（个人觉得这样的方法设计不算优雅，作者如果不想暴露Pair，完全可以再定义一个专门用于返回value和stamp对的public对象）&lt;/li&gt;
+&lt;li&gt;compareAndSet(V expectedReference, V newReference,int expectedStamp, int newStamp)：对比并且设置当前的引用值，这与其他的原子类型CAS算法类似，只不过多了expectedStamp和newStamp，只有当expectedReference与当前的Reference相等，且expectedStamp与当前引用值的stamp相等时才会发生设置，否则set动作将会直接失败&lt;/li&gt;
+&lt;li&gt;weakCompareAndSet (V expectedReference, V newReference, int expectedStamp, int newStamp)：同上&lt;/li&gt;
+&lt;li&gt;set(V newReference, int newStamp)：设置新的引用值以及stamp&lt;/li&gt;
+&lt;li&gt;attemptStamp(V expectedReference, int newStamp)：该方法的主要作用是为当前的引用值设置一个新的stamp，该方法为原子性方法&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;熟悉数据库开发的朋友肯定知道在多线程或者多系统中，同时对数据库的某条记录进行更改的时候，我们一般是采用乐观锁的方式，即为该记录增加版本号字段，比如如下的更新操作，其实AtomicStampedReference的实现原理也是这样的&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-sql&#34; data-lang=&#34;sql&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;k&#34;&gt;UPDATE&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;k&#34;&gt;TABLE&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;n&#34;&gt;TAB&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;k&#34;&gt;SET&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;n&#34;&gt;X&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;newValue&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;k&#34;&gt;VERSION&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;&lt;span class=&#34;k&#34;&gt;VERSION&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;+&lt;/span&gt;&lt;span class=&#34;mi&#34;&gt;1&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;k&#34;&gt;WHERE&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;n&#34;&gt;X&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;oldValue&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;k&#34;&gt;AND&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;k&#34;&gt;VERSION&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;expectedVersion&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;h2 id=&#34;8-atomicarray详解&#34;&gt;8 AtomicArray详解&lt;/h2&gt;
+&lt;p&gt;在Java原子包中提供了相应的原子性操作数组元素相关的类&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;AtomicIntegerArray：提供了原子性操作int数据类型数组元素的操作&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;AtomicLongArray：提供了原子性操作long数据类型数组元素的操作&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;AtomicReferenceArray：提供了原子性操作对象引用数组元素的操作&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&#34;9-atomicfieldupdater详解&#34;&gt;9 AtomicFieldUpdater详解&lt;/h2&gt;
+&lt;p&gt;在Java的原子包中提供了三种原子性更新对象属性的类&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;AtomicIntegerFieldUpdater：原子性地更新对象的int类型属性，该属性无须被声明成AtomicInteger&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;AtomicLongFieldUpdater：原子性地更新对象的long类型属性，该属性无须被声明成AtomicLong&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;AtomicReferenceFieldUpdater：原子性地更新对象的引用类型属性，该属性无须被声明成AtomicReference&lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;2
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-java&#34; data-lang=&#34;java&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;n&#34;&gt;AtomicIntegerFieldUpdater&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;Alex&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;&amp;gt;&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;updater&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;AtomicIntegerFieldUpdater&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;na&#34;&gt;newUpdater&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;Alex&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;na&#34;&gt;class&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;s&#34;&gt;&amp;#34;salary&amp;#34;&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;);&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;kt&#34;&gt;int&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;result&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;updater&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;na&#34;&gt;addAndGet&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;alex&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;1&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;);&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;p&gt;注意事项：AtomicFieldUpdater在使用上非常简单，其内部实现原理也是很容易理解的，但是并不是所有的成员属性都适合被原子性地更新&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;未被volatile关键字修饰的成员属性无法被原子性地更新&lt;/li&gt;
+&lt;li&gt;类变量无法被原子性地更新&lt;/li&gt;
+&lt;li&gt;无法直接访问的成员属性不支持原子性地更新&lt;/li&gt;
+&lt;li&gt;final修饰的成员属性无法被原子性地更新&lt;/li&gt;
+&lt;li&gt;父类的成员属性无法被原子性地更新&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&#34;10-sunmiscunsafe详解&#34;&gt;10 sun.misc.Unsafe详解&lt;/h2&gt;
+&lt;p&gt;Java是一种安全的开发语言，Java的设计者在设计之初就想将一些危险的操作屏蔽掉。比如对内存的手动管理，但是本章所学习的原子类型，甚至在接下来的章节中将要学习到的并发工具、并发容器等在其底层都依赖于一个特殊的类sun.misc.Unsafe，该类是可以直接对内存进行相关操作的，甚至还可以通过汇编指令直接进行CPU的操作。&lt;/p&gt;
+&lt;p&gt;sun.misc.Unsafe提供了非常多的底层操作方法，这些方法更加接近机器硬件（CPU/内存），因此效率会更高。不仅Java本身提供的很多API都对其有严重依赖，而且很多优秀的第三方库/框架都对它有着严重的依赖，比如LMAX Disruptor，不熟悉系统底层，不熟悉C/C++汇编等的开发者没有必要对它进行深究，但是这并不妨碍我们直接使用它。在使用的过程中，如果使用不得当，那么代价将是非常高昂的，因此该类被命名为Unsafe也就在情理之中了，总之一句话，你可以用，但请慎用！&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;绕过类构造函数完成对象创建&lt;/li&gt;
+&lt;li&gt;直接修改内存数据&lt;/li&gt;
+&lt;li&gt;类的加载&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&#34;11-本章总结&#34;&gt;11 本章总结&lt;/h2&gt;
+&lt;p&gt;本章非常详细地讲解了Java原子类型包中的所有原子类型的原理以及用法，原子类型包为我们提供了一种无锁的原子性操作共享数据的方式，无锁的操作方式可以减少线程的阻塞，减少CPU上下文的切换，提高程序的运行效率，但是这并不是一条放之四海皆准的规律，比如，同样被synchronized关键字同步的共享数据和原子类型的数据在单线程运行的情况下，synchronized关键字的效率却要高很多，究其原因是synchronized关键字是由JVM提供的相关指令所保证的，因此在Java程序运行期优化时可以将同步擦除，而原子类是由本地方法和汇编指令来提供保障的，在Java程序运行期间是没有办法被优化的。&lt;/p&gt;
+</description>
+        </item>
+        <item>
+        <title>第三章 java并发包之工具类详解</title>
+        <link>https://lyoshur.github.io/stack/p/java%E9%AB%98%E5%B9%B6%E5%8F%91%E7%BC%96%E7%A8%8B%E8%AF%A6%E8%A7%A3%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E5%B9%B6%E5%8F%91%E6%A0%B8%E5%BF%83%E5%BA%93%E6%B1%AA%E6%96%87%E5%90%9B-%E7%AC%AC%E4%B8%89%E7%AB%A0-java%E5%B9%B6%E5%8F%91%E5%8C%85%E4%B9%8B%E5%B7%A5%E5%85%B7%E7%B1%BB%E8%AF%A6%E8%A7%A3/</link>
+        <pubDate>Wed, 17 Aug 2022 10:14:00 +0000</pubDate>
+        
+        <guid>https://lyoshur.github.io/stack/p/java%E9%AB%98%E5%B9%B6%E5%8F%91%E7%BC%96%E7%A8%8B%E8%AF%A6%E8%A7%A3%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E5%B9%B6%E5%8F%91%E6%A0%B8%E5%BF%83%E5%BA%93%E6%B1%AA%E6%96%87%E5%90%9B-%E7%AC%AC%E4%B8%89%E7%AB%A0-java%E5%B9%B6%E5%8F%91%E5%8C%85%E4%B9%8B%E5%B7%A5%E5%85%B7%E7%B1%BB%E8%AF%A6%E8%A7%A3/</guid>
+        <description>&lt;h1 id=&#34;第三章-java并发包之工具类详解&#34;&gt;第三章 java并发包之工具类详解&lt;/h1&gt;
+&lt;h2 id=&#34;1-countdownlatch工具详解&#34;&gt;1 CountDownLatch工具详解&lt;/h2&gt;
+&lt;p&gt;CountDownLatch使用起来非常简单，但是就是这个简单的工具类，可以帮助我们很优雅地解决主任务等待所有子任务都执行结束之后再进行下一步工作的场景。&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;CountDownLatch的构造非常简单，需要给定一个不能小于0的int数字&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;countDown()方法，该方法的主要作用是使得构造CountDownLatch指定的count计数器减一。如果此时CountDownLatch中的计数器已经是0，这种情况下如果再次调用countDown()方法，则会被忽略，也就是说count的值最小只能为0&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;await()方法会使得当前的调用线程进入阻塞状态，直到count为0，当然其他线程可以将当前线程中断。同样，当count的值为0的时候，调用await方法将会立即返回，当前线程将不再被阻塞&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;await（long timeout, TimeUnit unit）是一个具备超时能力的阻塞方法，当时间达到给定的值以后，计数器count的值若还大于0，则当前线程会退出阻塞&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;getCount()方法，该方法将返回CountDownLatch当前的计数器数值，该返回值的最小值为0&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&#34;2-cyclicbarrier工具详解&#34;&gt;2 CyclicBarrier工具详解&lt;/h2&gt;
+&lt;p&gt;CyclicBarrier（循环屏障），它也是一个同步助手工具，它允许多个线程在执行完相应的操作之后彼此等待共同到达一个障点（barrier point）。CyclicBarrier也非常适合用于某个串行化任务被分拆成若干个并行执行的子任务，当所有的子任务都执行结束之后再继续接下来的工作。从这一点来看，Cyclic Barrier与CountDownLatch非常类似，但是它们之间的运行方式以及原理还是存在着比较大的差异的，并且CyclicBarrier所能支持的功能CountDownLatch是不具备的。比如，CyclicBarrier可以被重复使用，而CountDownLatch当计数器为0的时候就无法再次利用。&lt;/p&gt;
+&lt;p&gt;【note】在构造CyclicBarrier的时候，如果给定一个Runnable作为回调，那么待所有的任务线程都到达barrier point之后，该Runnable接口的run方法将会被调用。&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;int getParties()方法：获取CyclicBarrier在构造时的parties，该值一经CyclicBarrier创建将不会被改变&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;await()方法：我们使用最多的一个方法，调用该方法之后，当前线程将会进入阻塞状态，等待其他线程执行await()方法进入barrier point，进而全部退出阻塞状态&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;await(long timeout, TimeUnit unit)方法：该方法与无参的await方法类似，只不过增加了超时的功能，当其他线程在设定的时间内没有到达barrier point时，当前线程也会退出阻塞状态&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;isBroken()：返回barrier的broken状态，某个线程由于执行await方法而进入阻塞状态，如果该线程被执行了中断操作，那么isBroken()方法将会返回true&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;getNumberWaiting()方法： 该方法返回当前barrier有多少个线程执行了await方法而不是还有多少个线程未到达barrier point，这一点需要注意&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;reset()方法：前面已经详细地介绍过这个方法，其主要作用是中断当前barrier，并且重新生成一个generation，还有将barrier内部的计数器count设置为parties值，但是需要注意的是，如果还有未到达barrier point的线程，则所有的线程将会被中断并且退出阻塞，此时isBroken()方法将返回false而不是true&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;CyclicBarrier会被broken这一点我们已经通过上面的代码证明过了，但是需要注意如下几点（非常重要）&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;当一个线程由于在执行CyclicBarrier的await方法而进入阻塞状态时，这个时候对该线程执行中断操作会导致CyclicBarrier被broken&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;被broken的CyclicBarrier此时已经不能再直接使用了，如果想要使用就必须使用reset方法对其重置&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;如果有其他线程此时也由于执行了await方法而进入阻塞状态，那么该线程会被唤醒并且抛出BrokenBarrierException异常&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;cyclicbarrier-vs-countdownlatch&#34;&gt;CyclicBarrier VS. CountDownLatch&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;CoundDownLatch的await方法会等待计数器被count down到0，而执行CyclicBarrier的await方法的线程将会等待其他线程到达barrier point&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;CyclicBarrier内部的计数器count是可被重置的，进而使得CyclicBarrier也可被重复使用，而CoundDownLatch则不能&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;CyclicBarrier是由Lock和Condition实现的，而CountDownLatch则是由同步控制器AQS（AbstractQueuedSynchronizer）来实现的&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;在构造CyclicBarrier时不允许parties为0，而CountDownLatch则允许count为0&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&#34;3-exchanger工具详解&#34;&gt;3 Exchanger工具详解&lt;/h2&gt;
+&lt;p&gt;Exchanger（交换器），Exchanger简化了两个线程之间的数据交互，并且提供了两个线程之间的数据交换点，Exchanger等待两个线程调用其exchange()方法。调用此方法时，交换机会交换两个线程提供给对方的数据。&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;public V exchange(V x) throws InterruptedException：数据交换方法，该方法的作用是将数据x交换至搭档线程，执行该方法后，当前线程会进入阻塞状态，只有当搭档线程也执行了exchange方法之后，该当前线程才会退出阻塞状态进行下一步的工作，与此同时，该方法的返回值代表着搭档线程所传递过来的交换数据&lt;/li&gt;
+&lt;li&gt;public V exchange(V x, long timeout, TimeUnit unit) throws InterruptedException, TimeoutException：该方法的作用与前者类似，只不过增加了超时的功能，也就是说在指定的时间内搭档线程没有执行exchange方法，当前线程会退出阻塞，并且返回值为null&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&#34;4-semaphore工具详解&#34;&gt;4 Semaphore工具详解&lt;/h2&gt;
+&lt;p&gt;Semaphore（信号量）是一个线程同步工具，主要用于在一个时刻允许多个线程对共享资源进行并行操作的场景。通常情况下，使用Semaphore的过程实际上是多个线程获取访问共享资源许可证的过程，下面是Semaphore的内部处理逻辑。&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;Semaphore（信号量）是一个线程同步工具，主要用于在一个时刻允许多个线程对共享资源进行并行操作的场景。通常情况下，使用Semaphore的过程实际上是多个线程获取访问共享资源许可证的过程，下面是Semaphore的内部处理逻辑。&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Semaphore（信号量）是一个线程同步工具，主要用于在一个时刻允许多个线程对共享资源进行并行操作的场景。通常情况下，使用Semaphore的过程实际上是多个线程获取访问共享资源许可证的过程，下面是Semaphore的内部处理逻辑。&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Semaphore（信号量）是一个线程同步工具，主要用于在一个时刻允许多个线程对共享资源进行并行操作的场景。通常情况下，使用Semaphore的过程实际上是多个线程获取访问共享资源许可证的过程，下面是Semaphore的内部处理逻辑。&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;tryacquire方法&#34;&gt;tryAcquire方法&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;tryAcquire()：尝试获取Semaphore的许可证，该方法只会向Semaphore申请一个许可证，在Semaphore内部的可用许可证数量大于等于1的情况下，许可证将会获取成功，反之获取许可证则会失败，并且返回结果为false。&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;boolean tryAcquire(long timeout, TimeUnit unit) throws InterruptedException：该方法与tryAcquire无参方法类似，同样也是尝试获取一个许可证，但是增加了超时参数。如果在超时时间内还是没有可用的许可证，那么线程就会进入阻塞状态，直到到达超时时间或者在超时时间内有可用的证书（被其他线程释放的证书），或者阻塞中的线程被其他线程执行了中断&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;boolean tryAcquire(int permits)：在使用无参的tryAcquire时只会向Semaphore尝试获取一个许可证，但是该方法会向Semaphore尝试获取指定数目的许可证&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;boolean tryAcquire(int permits, long timeout, TimeUnit unit)：该方法与第二个方法类似，只不过其可以指定尝试获取许可证数量的参数&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;void acquire()：该方法会向Semaphore获取一个许可证，如果获取不到就会一直等待，直到Semaphore有可用的许可证为止，或者被其他线程中断。当然，如果有可用的许可证则会立即返回&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;void acquire(int permits)：该方法会向Semaphore获取指定数量的许可证，如果获取不到就会一直等待，直到Semaphore有可用的相应数量的许可证为止，或者被其他线程中断。同样，如果有可用的permits个许可证则会立即返回&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;void acquireUninterruptibly()：该方法会向Semaphore获取一个许可证，如果获取不到就会一直等待，与此同时对该线程的任何中断操作都会被无视，直到Semaphore有可用的许可证为止。当然，如果有可用的许可证则会立即返回&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;void acquireUninterruptibly(int permits)：该方法会向Semaphore获取指定数量的许可证，如果获取不到就会一直等待，与此同时对该线程的任何中断操作都会被无视，直到Semaphore有可用的许可证为止，或者被其他线程中断。同样，如果有可用的permits个许可证则会立即返回&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;void release()：释放一个许可证，并且在Semaphore的内部，可用许可证的计数器会随之加一，表明当前有一个新的许可证可被使用&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;void release(int permits)：释放指定数量（permits）的许可证，并且在Semaphore内部，可用许可证的计数器会随之增加permits个，表明当前又有permits个许可证可被使用&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;boolean isFair()：对Semaphore许可证的争抢采用公平还是非公平的方式，对应到内部的实现类为FairSync（公平）和NonfairSync（非公平）&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;int availablePermits()：当前的Semaphore还有多少个可用的许可证&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;int drainPermits()：排干Semaphore的所有许可证，以后的线程将无法获取到许可证，已经获取到许可证的线程将不受影响&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;boolean hasQueuedThreads()：当前是否有线程由于要获取Semaphore许可证而进入阻塞？（该值为预估值。）&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;int getQueueLength()：如果有线程由于获取Semaphore许可证而进入阻塞，那么它们的个数是多少呢？（该值为预估值。）&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&#34;5-phaser的基本用法&#34;&gt;5 Phaser的基本用法&lt;/h2&gt;
+&lt;p&gt;CountDownLatch可以很好地控制等待多个线程执行完子任务，但是它有一个缺点，那就是内部的计数器无法重置，也就是说CountDownLatch属于一次性的，使用结束后就不能再次使用。CyclicBarrier倒是可以重复使用，但是一旦parties在创建的时候被指定，就无法再改变。Phaser则取百（两）家之所长于一身引入了两者的特性。&lt;/p&gt;
+&lt;p&gt;在Phaser中可以有多个Phase（阶段），为了更好地对每一个Phase进行管理和监控，Phaser为每一个Phase都提供了对应的编号，这一点与CyclicBarrier是不一样的，后者更加注重的是循环。CyclicBarrier在所有的线程都到达barrier point之后，它才会重新开始，而Phaser则不然，只要某一个Phase的所有关联parties都arrive（到达）了，它就会从下一个Phase继续开始，除非Phaser本身已经被终止或者销毁。&lt;/p&gt;
+&lt;h2 id=&#34;6-lock接口方法&#34;&gt;6 Lock接口方法&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;lock()方法：尝试获取锁，如果此刻该锁未被其他线程持有，则会立即返回，并且设置锁的hold计数为1；如果当前线程已经持有该锁则会再次尝试申请，hold计数将会增加一个，并且立即返回；如果该锁当前被另外一个线程持有，那么当前线程会进入阻塞，直到获取该锁，由于调用lock方法而进入阻塞状态的线程同样不会被中断，这一点与进入synchronized同步方法或者代码块被阻塞类似&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;lockInterruptibly()方法：该方法的作用与前者类似，但是使用该方法试图获取锁而进入阻塞操作的线程则是可被中断的，也就说线程可以获得中断信号&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;tryLock()方法：调用该方法获取锁，无论成功与否都会立即返回，线程不会进入阻塞状态，若成功获取锁则返回true，若获取锁失败则返回false。使用该方法时请务必注意进行结果的判断，否则会出现获取锁失败却仍旧操作共享资源而导致数据不一致等问题的出现&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;tryLock(long time, TimeUnit unit)方法：该方法与tryLock()方法类似，只不过多了单位时间设置，如果在单位时间内未获取到锁，则返回结果为false，如果在单位时间内获取到了锁，则返回结果为true，同样hold计数也会被设置为1&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;unlock()方法：当某个线程对锁的使用结束之后，应该确保对锁资源的释放，以便其他线程能够继续争抢，unlock()方法的作用正在于此&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;newCondition()方法：创建一个与该lock相关联的Condition对象&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&#34;7-reentrantlock扩展方法&#34;&gt;7 ReentrantLock扩展方法&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;getHoldCount()方法：查询当前线程在某个Lock上的数量，如果当前线程成功获取了Lock，那么该值大于等于1；如果没有获取到Lock的线程调用该方法，则返回值为0&lt;/li&gt;
+&lt;li&gt;isHeldByCurrentThread()方法：判断当前线程是否持有某个Lock，由于Lock的排他性，因此在某个时刻只有一个线程调用该方法返回true&lt;/li&gt;
+&lt;li&gt;isLocked()方法：判断Lock是否已经被线程持有&lt;/li&gt;
+&lt;li&gt;isFair()方法：创建的ReentrantLock是否为公平锁&lt;/li&gt;
+&lt;li&gt;hasQueuedThreads()方法：在多个线程试图获取Lock的时候，只有一个线程能够正常获得，其他线程可能（如果使用tryLock()方法失败则不会进入阻塞）会进入阻塞，该方法的作用就是查询是否有线程正在等待获取锁&lt;/li&gt;
+&lt;li&gt;hasQueuedThread(Thread thread)方法：在等待获取锁的线程中是否包含某个指定的线程&lt;/li&gt;
+&lt;li&gt;getQueueLength()方法：返回当前有多少个线程正在等待获取锁&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&#34;8-readwritelockreentrantreadwritelock详解&#34;&gt;8 ReadWriteLock&amp;amp;ReentrantReadWriteLock详解&lt;/h2&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;2
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;3
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;4
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;5
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;6
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-java&#34; data-lang=&#34;java&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;c1&#34;&gt;// 定义ReadWriteLock锁
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;c1&#34;&gt;&lt;/span&gt;&lt;span class=&#34;kd&#34;&gt;private&lt;/span&gt; &lt;span class=&#34;kd&#34;&gt;final&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;ReadWriteLock&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;readWriteLock&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;k&#34;&gt;new&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;ReentrantReadWriteLock&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;();&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;c1&#34;&gt;// 创建读锁
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;c1&#34;&gt;&lt;/span&gt;&lt;span class=&#34;kd&#34;&gt;private&lt;/span&gt; &lt;span class=&#34;kd&#34;&gt;final&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;Lock&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;readLock&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;readWriteLock&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;na&#34;&gt;readLock&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;();&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;c1&#34;&gt;// 创建写锁
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;c1&#34;&gt;&lt;/span&gt;&lt;span class=&#34;kd&#34;&gt;private&lt;/span&gt; &lt;span class=&#34;kd&#34;&gt;final&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;Lock&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;writeLock&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;readWriteLock&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;na&#34;&gt;writeLock&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;();&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;p&gt;在没有任何写操作的情况下，读锁的效率反倒是最差的，这的确令人感到失望和惊讶，实际上，ReadWriteLock的性能表现确实不尽如人意，这也是在JDK1.8版本中引入StampedLock的原因之一&lt;/p&gt;
+&lt;h2 id=&#34;9-condition详解&#34;&gt;9 Condition详解&lt;/h2&gt;
+&lt;p&gt;如果说显式锁Lock可以用来替代synchronized关键字，那么Condition接口将会很好地替代传统的、通过对象监视器调用wait()、notify()、notifyAll()线程间的通信方式。Condition对象是由某个显式锁Lock创建的，一个显式锁Lock可以创建多个Condition对象与之关联，Condition的作用在于控制锁并且判断某个条件（临界值）是否满足，如果不满足，那么使用该锁的线程将会被挂起等待另外的线程将其唤醒，与此同时被挂起的线程将会进入阻塞队列中并且释放对显式锁Lock的持有，这一点与对象监视器的wait()方法非常类似。&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;void await() throws InterruptedException：当前线程调用该方法会进入阻塞状态直到有其他线程对其进行唤醒，或者对当前线程执行中断操作。当线程执行了await()方法进入阻塞时；当前线程会被加入到阻塞队列中，并且释放对显式锁的持有，object monitor的wait()方法被执行后同样会加入一个虚拟的容器waitset（线程休息室）中，waitset是一个虚拟的概念，JVM（虚拟机）规范并未强制要求其采用什么样的数据结构，Condition的wait队列则是由Java程序实现的FiFO队列&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;void awaitUninterruptibly()：该方法与await()方法类似，只不过该方法比较固执，它会忽略对它的中断操作，一直等待有其他线程将它唤醒&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;long awaitNanos(long nanosTimeout) throws InterruptedException：调用该方法同样会使得当前线程进入阻塞状态，但是可以设定阻塞的最大等待时间，如果在设定的时间内没有其他线程将它唤醒或者被执行中断操作，那么当前线程将会等到设定的纳秒时间后退出阻塞状态&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;boolean await(long time, TimeUnit unit) throws InterruptedException：执行方法awaitNanos(),如果到达设定的纳秒数则当前线程会退出阻塞，并且返回实际等待的纳秒数，但是程序很难判断线程是否被正常唤醒，因此该方法的作用除了可以指定等待的最大的单位时间，另外，还可以返回在单位时间内被正常唤醒而且还是由于超时而退出的阻塞&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;boolean awaitUntil(Date deadline) throws InterruptedException：调用该方法同样会导致当前线程进入阻塞状态直到被唤醒、被中断或者到达指定的Date&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;void signal()：唤醒Condition阻塞队列中的一个线程，Condition的wait队列采用FiFO的方式，因此在wait队列中，第一个进入阻塞队列的线程将会被首先唤醒，下面我们来设计一个case对其进行测试&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;void signalAll()：唤醒Condition wait队列中的所有线程&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&#34;10-stampedlock详解&#34;&gt;10 StampedLock详解&lt;/h2&gt;
+&lt;p&gt;StampedLock被JDK1.8版本引入之后，成为了Lock家族的新宠，它几乎具备了ReentrantLock、ReentrantReadWriteLock这两种类型锁的所有功能&lt;/p&gt;
+&lt;p&gt;与ReentrantReadWriteLock锁一样，StampedLock也提供了读锁和写锁这两种模式，因此StampedLock天生就支持读写分离锁的使用方式&lt;/p&gt;
+&lt;p&gt;StampedLock还提供了一个模式，即乐观读模式，使用tryOptimisticRead()方法获取一个非排他锁并且不会进入阻塞状态，与此同时该模式依然会返回一个long型的数据戳用于接下来的验证（该验证主要用来判断共享资源是否有写操作发生 lock.validate）&lt;/p&gt;
+&lt;h2 id=&#34;11-guava之monitor详解&#34;&gt;11 Guava之Monitor详解&lt;/h2&gt;
+&lt;p&gt;Monitor以及Monitor Guard则很好地将类似的一系列动作进行了抽象，隐藏了锁的获取、临界值判断、线程挂起、阻塞线程唤醒、锁的释放等操作。&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;对x进行操作之前先调用monitor.enterWhen()方法，该方法除了具备锁的功能之外还具备临界值判断的操作，因此只有当x满足临界值判断时当前线程才会对x进行自增运算，否则当前线程将会进入阻塞队列（其实在Guard内部使用的也是Condition）&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;调用leave()方法，注释③处，该方法除了释放当前的锁之外，还会通知唤醒与Guard关联的Condition阻塞队列中的某个阻塞线程&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;enter()：该方法完全等价于Lock的lock()方法&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;enterIf(Guard guard)：该方法主要用于判断当前的Guard是否满足临界值的判断，也是使用比较多的一个操作，调用该方法，当前线程并不会进入阻塞之中&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;tryEnter()：等价于Lock的tryLock()方法&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;waitFor(Guard guard)：当前线程将会阻塞等待，直到Guard的条件满足当前线程才会退出阻塞状态&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&#34;12-guava之ratelimiter详解&#34;&gt;12 Guava之RateLimiter详解&lt;/h2&gt;
+&lt;p&gt;RateLimiter，顾名思义就是速率（Rate）限流器（Limiter），事实上它的作用正如名字描述的那样，经常用于进行流量、访问等的限制，这一点与3.4节中介绍过的Semaphore非常类似，但是它们的关注点却完全不同，RateLimiter关注的是在单位时间里对资源的操作速率（在RateLimiter内部也存在许可证（permits）的概念，因此可以理解为在单位时间内允许颁发的许可证数量），而Semaphore则关注的是在同一时间内最多允许多少个许可证可被使用，它不关心速率而只关心个数&lt;/p&gt;
+&lt;p&gt;虽然说RateLimiter主要是用于控制速率的，但是在其内部也有许可证（permits）的概念，你甚至可以将其理解为单位时间内颁发的许可证数量，RateLimiter不仅允许每次获取一个许可证的操作，还允许获取超出剩余许可证数量的行为，只不过后者的操作将使得下一次请求为提前的透支付出代价。&lt;/p&gt;
+</description>
+        </item>
+        <item>
+        <title>第四章 java并发包之并发容器详解</title>
+        <link>https://lyoshur.github.io/stack/p/java%E9%AB%98%E5%B9%B6%E5%8F%91%E7%BC%96%E7%A8%8B%E8%AF%A6%E8%A7%A3%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E5%B9%B6%E5%8F%91%E6%A0%B8%E5%BF%83%E5%BA%93%E6%B1%AA%E6%96%87%E5%90%9B-%E7%AC%AC%E5%9B%9B%E7%AB%A0-java%E5%B9%B6%E5%8F%91%E5%8C%85%E4%B9%8B%E5%B9%B6%E5%8F%91%E5%AE%B9%E5%99%A8%E8%AF%A6%E8%A7%A3/</link>
+        <pubDate>Wed, 17 Aug 2022 10:14:00 +0000</pubDate>
+        
+        <guid>https://lyoshur.github.io/stack/p/java%E9%AB%98%E5%B9%B6%E5%8F%91%E7%BC%96%E7%A8%8B%E8%AF%A6%E8%A7%A3%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E5%B9%B6%E5%8F%91%E6%A0%B8%E5%BF%83%E5%BA%93%E6%B1%AA%E6%96%87%E5%90%9B-%E7%AC%AC%E5%9B%9B%E7%AB%A0-java%E5%B9%B6%E5%8F%91%E5%8C%85%E4%B9%8B%E5%B9%B6%E5%8F%91%E5%AE%B9%E5%99%A8%E8%AF%A6%E8%A7%A3/</guid>
+        <description>&lt;h1 id=&#34;第四章-java并发包之并发容器详解&#34;&gt;第四章 java并发包之并发容器详解&lt;/h1&gt;
+&lt;h2 id=&#34;1-blockingqueue阻塞队列&#34;&gt;1 BlockingQueue（阻塞队列）&lt;/h2&gt;
+&lt;h3 id=&#34;11-arrayblockingqueue&#34;&gt;1.1 ArrayBlockingQueue&lt;/h3&gt;
+&lt;p&gt;ArrayBlockingQueue是一个基于数组结构实现的FIFO阻塞队列，在构造该阻塞队列时需要指定队列中最大元素的数量（容量）。当队列已满时，若再次进行数据写入操作，则线程将会进入阻塞，一直等待直到其他线程对元素进行消费。当队列为空时，对该队列的消费线程将会进入阻塞，直到有其他线程写入数据。该阻塞队列中提供了不同形式的读写方法&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;阻塞式写方法&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;void put(E e)：向队列的尾部插入新的数据，当队列已满时调用该方法的线程会进入阻塞，直到有其他线程对该线程执行了中断操作，或者队列中的元素被其他线程消费&lt;/li&gt;
+&lt;li&gt;boolean offer(E e, long timeout, TimeUnit unit)：向队列尾部写入新的数据，当队列已满时执行该方法的线程在指定的时间单位内将进入阻塞，直到到了指定的超时时间后，或者在此期间有其他线程对队列数据进行了消费。当然了，对由于执行该方法而进入阻塞的线程执行中断操作也可以使当前线程退出阻塞。该方法的返回值boolean为true时表示写入数据成功，为false时表示写入数据失败&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;非阻塞式写方法&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;boolean add(E e)：向队列尾部写入新的数据，当队列已满时不会进入阻塞，但是该方法会抛出队列已满的异常&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;boolean offer(E e)：向队列尾部写入新的数据，当队列已满时不会进入阻塞，并且会立即返回false&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;阻塞时读方法&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;E take()：从队列头部获取数据，并且该数据会从队列头部移除，当队列为空时执行take方法的线程将进入阻塞，直到有其他线程写入新的数据，或者当前线程被执行了中断操作&lt;/li&gt;
+&lt;li&gt;E take()：从队列头部获取数据，并且该数据会从队列头部移除，当队列为空时执行take方法的线程将进入阻塞，直到有其他线程写入新的数据，或者当前线程被执行了中断操作&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;非阻塞式读方法&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;E take()：从队列头部获取数据，并且该数据会从队列头部移除，当队列为空时执行take方法的线程将进入阻塞，直到有其他线程写入新的数据，或者当前线程被执行了中断操作&lt;/li&gt;
+&lt;li&gt;E peek()：peek的操作类似于debug操作（仅仅debug队列头部元素，本书的第6章将讲解针对Stream的操作，大家将从中学习到针对整个Stream数据元素的peek操作），它直接从队列头部获取一个数据，但是并不能从队列头部移除数据，当队列为空时，该方法不会使得当前线程进入阻塞，而是返回null值&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;12-priorityblockingqueue&#34;&gt;1.2 PriorityBlockingQueue&lt;/h3&gt;
+&lt;p&gt;PriorityBlockingQueue优先级阻塞队列是一个“无边界”阻塞队列，与4.1.2节所讲的优先级链表类似的是，该队列会根据某种规则（Comparator）对插入队列尾部的元素进行排序，因此该队列将不会遵循FIFO（first-in-first-out）的约束。虽然PriorityBlockingQueue同ArrayBlockingQueue都实现自同样的接口，拥有同样的方法，但是大多数方法的实现确实具有很大的差别，PriorityBlockingQueue也是线程安全的类，适用于高并发多线程的情况下。&lt;/p&gt;
+&lt;h3 id=&#34;13-linkedblockingqueue&#34;&gt;1.3 LinkedBlockingQueue&lt;/h3&gt;
+&lt;p&gt;ArrayBlockingQueue是基于数组实现的FIFO“有边界”队列，PriorityBlockingQueue也是基于数组实现的，但它是“无边界”的优先级队列，由于存在对数据元素的排序规则，因此PriorityBlockingQueue并不能提供FIFO的约束担保（当然，如果想要使其具备FIFO的特性，需要约束PriorityBlockingQueue的排序规则为R，并且对其写入数据的顺序也为R，这样就可以保证FIFO），本节将要介绍的LinkedBlockingQueue是“可选边界”基于链表实现的FIFO队列。截至目前，本章所学习到阻塞队列都是通过显式锁Lock进行共享数据的同步，以及与Lock关联的Condition进行线程间通知，因此该队列也适用于高并发的多线程环境中，是线程安全的类。&lt;/p&gt;
+&lt;p&gt;LinkedBlockingQueue队列的边界可选性是通过构造函数来决定的，当我们在创建LinkedBlockingQueue对象时，使用的是默认的构造函数，那么该队列的最大容量将为Integer的最大值（所谓的“无边界”），当然开发者可以通过指定队列最大容量（有边界）的方式创建队列。&lt;/p&gt;
+&lt;h3 id=&#34;14-delayqueue&#34;&gt;1.4 DelayQueue&lt;/h3&gt;
+&lt;p&gt;DelayQueue也是一个实现了BlockingQueue接口的“无边界”阻塞队列，但是该队列却是非常有意思和特殊的一个队列（存入DelayQueue中的数据元素会被延迟单位时间后才能消费），在DelayQueue中，元素也会根据优先级进行排序，这种排序可以是基于数据元素过期时间而进行的（比如，你可以将最快过期的数据元素排到队列头部，最晚过期的数据元素排到队尾）。&lt;/p&gt;
+&lt;p&gt;【note】这里没看懂，暂时略过&lt;/p&gt;
+&lt;h3 id=&#34;15-synchronousqueue&#34;&gt;1.5 SynchronousQueue&lt;/h3&gt;
+&lt;p&gt;SynchronousQueue也是实现自BlockingQueue的一个阻塞队列，每一次对其的写入操作必须等待（阻塞）其他线程进行对应的移除操作，SynchronousQueue的内部并不会涉及容量、获取size，就连peek方法的返回值永远都将会是null，除此之外还有更多的方法在SynchronousQueue中也都未提供对应的支持。&lt;/p&gt;
+&lt;p&gt;尽管SynchronousQueue是一个队列，但是它的主要作用在于在两个线程之间进行数据交换，区别于Exchanger的主要地方在于（站在使用的角度）SynchronousQueue所涉及的一对线程一个更加专注于数据的生产，另一个更加专注于数据的消费（各司其职），而Exchanger则更加强调一对线程数据的交换。&lt;/p&gt;
+&lt;h3 id=&#34;16-linkedblockingdeque&#34;&gt;1.6 LinkedBlockingDeque&lt;/h3&gt;
+&lt;p&gt;LinkedBlockingDeque是一个基于链表实现的双向（Double Ended Queue，Deque）阻塞队列，双向队列支持在队尾写入数据，读取移除数据；在队头写入数据，读取移除数据。LinkedBlockingDeque实现自BlockingDeque（BlockingDeque又是BlockingQueue的子接口），并且支持可选“边界”，与LinkedBlockingQueue一样，对边界的指定在构造LinkedBlockingDeque时就已经确定了。&lt;/p&gt;
+&lt;h3 id=&#34;17-linkedtransferqueue&#34;&gt;1.7 LinkedTransferQueue&lt;/h3&gt;
+&lt;p&gt;TransferQueue是一个继承了BlockingQueue的接口，并且增加了若干新的方法。LinkedTransferQueue是TransferQueue接口的实现类，其定义为一个无界的队列，具有FIFO的特性。&lt;/p&gt;
+&lt;p&gt;继承自BlockingQueue的方法在使用方法上与本节中学过的其他BlockingQueue并没有太大的区别（SynchronousQueue除外），因此我们只介绍继承自TransferQueue的方法，看看TransferQueue为其赋予了怎样的新特性。&lt;/p&gt;
+&lt;h2 id=&#34;2-concurrentqueue并发队列&#34;&gt;2 ConcurrentQueue（并发队列）&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;ConcurrentLinkedQueue 单向队列&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;ConcurrentLinkedDeque 双向队列&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;本节介绍了ConcurrentLinkedQueue（先进先出FIFO队列）和ConcurrentLinkedDeque（双向队列），对于队列的使用前文中做了很多介绍，因此本节并未对每种方法都展开详细的介绍。并发队列在实现上采用了无锁（Lock Free）算法，因此在多线程高并发的环境中其拥有更出色的性能表现，但是ConcurrentLinkedQueue并不是在任何情景下都会保持高效，比如执行size()方法时，甚至本身在对元素进行删除操作时都存在着性能隐患和内存溢出的问题，关于这些，本节中都做了非常详细的介绍。当然了，这并不妨碍你在开发中使用它，但是使用得当的前提是你必须搞清楚它在什么情况下会出现问题，只有这样才能对其驾驭得当、运用自如。&lt;/p&gt;
+&lt;h2 id=&#34;3-concurrentmap并发映射&#34;&gt;3 ConcurrentMap（并发映射）&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;ConcurrentHashMap&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;ConcurrentSkipListMap&lt;/p&gt;
+&lt;p&gt;ConcurrentSkipListMap提供了一种线程安全的并发访问的排序映射表。内部是SkipList（跳表）结构实现，在理论上，其能够在O(log(n))时间内完成查找、插入、删除操作。调用ConcurrentSkipListMap的size时，由于多个线程可以同时对映射表进行操作，所以映射表需要遍历整个链表才能返回元素的个数，这个操作是个O(log(n))的操作。&lt;/p&gt;
+&lt;p&gt;在读取性能上，虽然ConcurrentSkipListMap不能与ConcurrentHashMap相提并论，但是ConcurrentSkipListMap存在着如下两大天生的优越性是ConcurrentSkipListMap所不具备的。&lt;/p&gt;
+&lt;p&gt;第一，由于基于跳表的数据结构，因此ConcurrentSkipListMap的key是有序的。&lt;/p&gt;
+&lt;p&gt;第二，ConcurrentSkipListMap支持更高的并发，ConcurrentSkipListMap的存取时间复杂度是O（log（n）），与线程数几乎无关，也就是说，在数据量一定的情况下，并发的线程越多，ConcurrentSkipListMap越能体现出它的优势。&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&#34;4-写时拷贝算法copy-on-write&#34;&gt;4 写时拷贝算法（Copy On Write）&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;CopyOnWriteArrayList&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;CopyOnWriteArraySet&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+</description>
+        </item>
+        <item>
+        <title>第五章 java并发包之ExecutorService</title>
+        <link>https://lyoshur.github.io/stack/p/java%E9%AB%98%E5%B9%B6%E5%8F%91%E7%BC%96%E7%A8%8B%E8%AF%A6%E8%A7%A3%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E5%B9%B6%E5%8F%91%E6%A0%B8%E5%BF%83%E5%BA%93%E6%B1%AA%E6%96%87%E5%90%9B-%E7%AC%AC%E4%BA%94%E7%AB%A0-java%E5%B9%B6%E5%8F%91%E5%8C%85%E4%B9%8Bexecutorservice/</link>
+        <pubDate>Wed, 17 Aug 2022 10:14:00 +0000</pubDate>
+        
+        <guid>https://lyoshur.github.io/stack/p/java%E9%AB%98%E5%B9%B6%E5%8F%91%E7%BC%96%E7%A8%8B%E8%AF%A6%E8%A7%A3%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E5%B9%B6%E5%8F%91%E6%A0%B8%E5%BF%83%E5%BA%93%E6%B1%AA%E6%96%87%E5%90%9B-%E7%AC%AC%E4%BA%94%E7%AB%A0-java%E5%B9%B6%E5%8F%91%E5%8C%85%E4%B9%8Bexecutorservice/</guid>
+        <description>&lt;h1 id=&#34;第五章-java并发包之executorservice&#34;&gt;第五章 java并发包之ExecutorService&lt;/h1&gt;
+&lt;h2 id=&#34;1-executorexecutorservice详解&#34;&gt;1 Executor&amp;amp;ExecutorService详解&lt;/h2&gt;
+&lt;h3 id=&#34;11-threadpoolexecutor详解&#34;&gt;1.1 ThreadPoolExecutor详解&lt;/h3&gt;
+&lt;p&gt;构造ThreadPoolExecutor所需要的参数是比较多的&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;corePoolSize：用于指定在线程池中维护的核心线程数量，即使当前线程池中的核心线程不工作，核心线程的数量也不会减少（在JDK1.6版本及以后可以通过设置允许核心线程超时的方法allowCoreThreadTimeOut来改变这种情况）&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;maximumPoolSize：用于设置线程池中允许的线程数量的最大值&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;keepAliveTime：当线程池中的线程数量超过核心线程数并且处于空闲时，线程池将回收一部分线程让出系统资源，该参数可用于设置超过corePoolSize数量的线程在多长时间后被回收，与unit配合使用&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;TimeUnit：用于设定keepAliveTime的时间单位&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;workQueue：用于存放已提交至线程池但未被执行的任务&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;ThreadFactory：用于创建线程的工厂，开发者可以通过自定义ThreadFactory来创建线程，比如，根据业务名为线程命名、设置线程优先级、设置线程是否为守护线程等、设置线程所属的线程组等&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;RejectedExecutionHandler：当任务数量超过阻塞队列边界时，这个时候线程池就会拒绝新增的任务，该参数主要用于设置拒绝策略&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;ExecutorService允许一次性提交一批任务invokeAny，但是其只关心第一个完成的任务和结果&lt;/p&gt;
+&lt;p&gt;invokeAll方法同样可用于异步处理批量的任务，但是该方法关心所有异步任务的运行&lt;/p&gt;
+&lt;h3 id=&#34;12-scheduledexecutorservice&#34;&gt;1.2 ScheduledExecutorService&lt;/h3&gt;
+&lt;p&gt;ScheduledExecutorService既具有ThreadPoolExecutor的所有方法，同时又具备定时执行任务的方法，在ScheduledExecutorService中定义了4个与schedule相关的方法，用于定时执行任务&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;!-- raw HTML omitted --&gt; ScheduledFuture&lt;!-- raw HTML omitted --&gt; schedule(Callable&lt;!-- raw HTML omitted --&gt; callable,long delay,TimeUnit unit)：该方法是一个one-shot方法（只执行一次），任务（callable）会在单位（unit）时间（delay）后被执行，并且立即返回ScheduledFuture，在稍后的程序中可以通过Future获取异步任务的执行结果。&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;ScheduledFuture&lt;!-- raw HTML omitted --&gt; schedule(Runnable command,long delay, TimeUnit unit)：该方法同样是一个one-shot方法（只执行一次），任务（runnable）会在单位（unit）时间（delay）后被执行，虽然也会返回ScheduledFuture，但是并不会包含任何执行结果，因为Runnable接口的run方法本身就是无返回值类型的接口方法，不过可以通过该Future判断任务是否执行结束。&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;ScheduledFuture&lt;!-- raw HTML omitted --&gt; scheduleAtFixedRate(Runnable command,long initialDelay, long period, TimeUnit unit)：任务（command）会根据固定的速率（period，时间单位为unit）在时间（initialDelay，时间单位为unit）后不断地被执行。&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;ScheduledFuture&lt;!-- raw HTML omitted --&gt; scheduleWithFixedDelay(Runnable command, long initialDelay,long delay,TimeUnit unit)：该方法与前一个方法比较类似，只不过该方法将以固定延迟单位时间的方式执行任务&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;13-executors详解&#34;&gt;1.3 Executors详解&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;FixedThreadPool&lt;/p&gt;
+&lt;p&gt;线程池的核心线程数和最大线程数是相等的，因此该线程池中的工作线程数将始终是固定的。任务队列为LinkedBlockingQueue（无边界），所以理论上提交至线程池的任务始终都会被执行，只有显式地执行线程池的关闭方法才能关闭线程池&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;SingleThreadPool&lt;/p&gt;
+&lt;p&gt;SingleThreadPool是只有一个核心线程的线程池，但是Finalizable代理了该线程池，因此当线程池引用可被垃圾回收器回收时，线程池的shutdown方法会被执行，当然我们还是建议显式地调用线程池的关闭方法&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;CachedThreadPool&lt;/p&gt;
+&lt;p&gt;CachedThreadPool根据需要创建新线程，但会重用以前构造的可用线程。该线程池通常会用于提高执行量大的、耗时较短的、异步任务程序的运行性能，在该线程池中，如果有可用的线程将被直接重用。如果没有可用的线程，则会创建一个新线程并将其添加到池中。未被使用且空闲时间超过60秒的线程将被终止并从线程池中移除，因此长时间空闲的线程不会消耗任何资源&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;ScheduledThreadPool&lt;/p&gt;
+&lt;p&gt;创建指定核心线程数量的ScheduledExecutorService&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;WorkStealingPool&lt;/p&gt;
+&lt;p&gt;与其他线程池不同的是，WorkStealingPool中的工作线程会处理任务队列中与之对应的任务分片（Divide and conquer：分而治之），如果某个线程处理的任务执行比较耗时，那么它所负责的任务将会被其他线程“窃取”执行，进而提高并发处理的效率。&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&#34;2-future和callback&#34;&gt;2 Future和Callback&lt;/h2&gt;
+&lt;p&gt;Future代表着一个异步任务在未来的执行结果，这个结果可以在最终的某个时间节点通过Future的get方法来获得&lt;/p&gt;
+&lt;p&gt;获取异步执行任务的结果：当异步任务被正常执行完毕，可以通过get方法或者其重载方法（指定超时单位时间）获取最终的结果。&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;Callable接口：该接口与Runnable接口非常相似，但是Runnable作为任务接口最大的问题就是无法返回最终的计算结果，因此在JDK1.5版本中引入了Callable泛型接口，它允许任务执行结束后返回结果&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;任务执行错误：Runnable类型的任务中，run（）方法抛出的异常（运行时异常）只能被运行它的线程捕获（有可能会导致运行线程死亡），但是启动运行线程的主线程却很难获得Runnable任务运行时出现的异常信息。在《Java高并发编程详解：多线程与架构设计》一书的第7章“Hook线程以及捕获线程执行异常”中有讲到，我们可以通过设置UncaughtExceptionHandler的方式来捕获异常，但是这种方式的确不够优雅，并且也无法精确地知道是执行哪个任务时出现的错误，Future则是通过捕获get方法异常的方式来获取异步任务执行的错误信息的，如下面的示例代码所示。&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Future的不足之处&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;无法被动接收异步任务的计算结果：虽然我们可以主动将异步任务提交给线程池中的线程来执行，但是待异步任务结束后，主（当前）线程无法得到任务完成与否的通知（关于这一点，5.2.4节中将会给出解决方案），它需要通过get方法主动获取计算结果&lt;/li&gt;
+&lt;li&gt;Future间彼此孤立：有时某一个耗时很长的异步任务执行结束以后，你还想利用它返回的结果再做进一步的运算，该运算也会是一个异步任务，两者之间的关系需要程序开发人员手动进行绑定赋予，Future并不能将其形成一个任务流（pipeline），每一个Future彼此之间都是孤立的，但5.5节将要介绍的CompletableFuture就可以将多个Future串联起来形成任务流（pipeline）&lt;/li&gt;
+&lt;li&gt;Future没有很好的错误处理机制：截至目前，如果某个异步任务在执行的过程中发生了异常错误，调用者无法被动获知，必须通过捕获get方法的异常才能知道异步任务是否出现了错误，从而再做进一步的处理&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;21-google-guava的future&#34;&gt;2.1 Google Guava的Future&lt;/h3&gt;
+&lt;p&gt;Future虽然为我们提供了一个凭据，但是在未来某个时间节点进行get()操作时仍然会使当前线程进入阻塞，显然这种操作方式并不是十分完美，因此在Google Guava并发包中提供了对异步任务执行的回调支持，它允许你注册回调函数而不用再通过get()方法苦苦等待异步任务的最终计算结果（Don&amp;rsquo;t Call Us, We&amp;rsquo;ll Call You!）&lt;/p&gt;
+&lt;h4 id=&#34;211-listenablefuture&#34;&gt;2.1.1 ListenableFuture&lt;/h4&gt;
+&lt;p&gt;Guava提供了ListneningExecutorService，使用该ExecutorService提交执行异步任务时将返回ListenableFuture，通过该Future，我们可以注册回调接口&lt;/p&gt;
+&lt;h4 id=&#34;212-futurecallback&#34;&gt;2.1.2 FutureCallback&lt;/h4&gt;
+&lt;p&gt;除了ListenableFuture之外，还可以注册FutureCallback，相比前者用Runnable接口作为回调接口，FutureCallback提供的回调方式则更为直观。&lt;/p&gt;
+&lt;h2 id=&#34;3-forkjoinpool详解&#34;&gt;3 ForkJoinPool详解&lt;/h2&gt;
+&lt;p&gt;Fork/Join框架是在JDK1.7版本中被Doug Lea引入的，Fork/Join计算模型旨在充分利用多核CPU的并行运算能力，将一个复杂的任务拆分（fork）成若干个并行计算，然后将结果合并（join）&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;RecursiveTask&lt;/p&gt;
+&lt;p&gt;RecursiveTask任务类型除了进行子任务的运算之外，还会将最终子任务的计算结果返回，下面通过一个简单的实例来认识一下RecursiveTask。&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;RecursiveAction&lt;/p&gt;
+&lt;p&gt;RecursiveAction类型的任务与RecursiveTask比较类似，只不过它更关注于子任务是否运行结束，下面来看一个将数组中的每一个元素并行增加10倍&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&#34;4-completionservice详解&#34;&gt;4 CompletionService详解&lt;/h2&gt;
+&lt;p&gt;CompletionService并不是ExecutorService的子类，因此它并不具备执行异步任务的能力（异步任务的执行是由CompletionService内部的ExecutorService来完成的），它只是对Executor-Service的一个封装，在其内部提供了阻塞队列用于Future的消费&lt;/p&gt;
+&lt;p&gt;CompletionService很好地解决了异步任务的问题，在CompletionService中提供了提交异步任务的方法（真正的异步任务执行还是由其内部的ExecutorService完成的），任务提交之后调用者不再关注Future，而是从BlockingQueue中获取已经执行完成的Future，在异步任务完成之后Future才会被插入阻塞队列，也就是说调用者从阻塞队列中获取的Future是已经完成了的异步执行任务，所以再次通过Future的get方法获取结果时，调用者所在的当前线程将不会被阻塞。&lt;/p&gt;
+&lt;h2 id=&#34;5-completablefuture详解&#34;&gt;5 CompletableFuture详解&lt;/h2&gt;
+&lt;p&gt;CompletableFuture是自JDK1.8版本中引入的新的Future，常用于异步编程之中，所谓异步编程，简单来说就是：“程序运算与应用程序的主线程在不同的线程上完成，并且程序运算的线程能够向主线程通知其进度，以及成功失败与否的非阻塞式编码方式”，这句话听起来与前文中学习的ExecutorService提交异步执行任务并没有多大的区别，但是别忘了，无论是ExecutorService还是CompletionService，都需要主线程主动地获取异步任务执行的最终计算结果，如此看来，Google Guava所提供的ListenableFuture更符合这段话的描述，但是ListenableFuture无法将计算的结果进行异步任务的级联并行运算，甚至构成一个异步任务并行运算的pipeline，但是这一切在CompletableFuture中都得到了很好的支持。&lt;/p&gt;
+&lt;p&gt;CompletableFuture实现自CompletionStage接口，可以简单地认为，该接口是同步或者异步任务完成的某个阶段，它可以是整个任务管道中的最后一个阶段，甚至可以是管道中的某一个阶段，这就意味着可以将多个CompletionStage链接在一起形成一个异步任务链，前置任务执行结束之后会自动触发下一个阶段任务的执行。另外，CompletableFuture还实现了Future接口，所以你可以像使用Future一样使用它。&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;thenApply：以同步的方式继续处理上一个异步任务的结果。&lt;/li&gt;
+&lt;li&gt;thenApplyAsync：以异步的方式继续处理上一个异步任务的结果。&lt;/li&gt;
+&lt;li&gt;thenAccept：以同步的方式消费上一个异步任务的结果。&lt;/li&gt;
+&lt;li&gt;thenAcceptAsync：以异步的方式消费上一个异步任务的结果。&lt;/li&gt;
+&lt;li&gt;thenRun：以同步的方式执行Runnable任务。&lt;/li&gt;
+&lt;li&gt;thenRunAsync：以异步的方式执行Runnable任务。&lt;/li&gt;
+&lt;/ul&gt;
+</description>
+        </item>
+        <item>
+        <title>第一章 JCF中的List集合</title>
+        <link>https://lyoshur.github.io/stack/p/java%E9%AB%98%E5%B9%B6%E5%8F%91%E4%B8%8E%E9%9B%86%E5%90%88%E6%A1%86%E6%9E%B6jcf%E5%92%8Cjuc%E6%BA%90%E7%A0%81%E5%88%86%E6%9E%90%E4%B8%8E%E5%AE%9E%E7%8E%B0%E9%93%B6%E6%96%87%E6%9D%B0-%E7%AC%AC%E4%B8%80%E7%AB%A0-jcf%E4%B8%AD%E7%9A%84list%E9%9B%86%E5%90%88/</link>
+        <pubDate>Wed, 17 Aug 2022 10:14:00 +0000</pubDate>
+        
+        <guid>https://lyoshur.github.io/stack/p/java%E9%AB%98%E5%B9%B6%E5%8F%91%E4%B8%8E%E9%9B%86%E5%90%88%E6%A1%86%E6%9E%B6jcf%E5%92%8Cjuc%E6%BA%90%E7%A0%81%E5%88%86%E6%9E%90%E4%B8%8E%E5%AE%9E%E7%8E%B0%E9%93%B6%E6%96%87%E6%9D%B0-%E7%AC%AC%E4%B8%80%E7%AB%A0-jcf%E4%B8%AD%E7%9A%84list%E9%9B%86%E5%90%88/</guid>
+        <description>&lt;h1 id=&#34;第一章--jcf中的list集合&#34;&gt;第一章  JCF中的List集合&lt;/h1&gt;
+&lt;h2 id=&#34;1-list集合概要和重要接口介绍&#34;&gt;1 List集合概要和重要接口介绍&lt;/h2&gt;
+&lt;p&gt;JCF中的List集合涉及的部分重要接口&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;java.util.ArrayList&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;java.util.LinkedList&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;java.util.Vector&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;java.util.Stack&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;其中java.util.Stack继承自java.util.Vector。不过在jdk1.7+已经推荐使用性能更好的java.util.ArrayDeque集合作为替代方案。&lt;/p&gt;
+&lt;p&gt;要理解java.util包中关于java.util.List接口的重要实现类，需要理清楚其涉及的&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;主要接口&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;java.lang.Iterable (可迭代接口)&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;java.util.Collection(集合接口)&lt;/p&gt;
+&lt;p&gt;有些集合类，并不一定会实现这个接口&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;主要抽象类&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;java.util.AbstractList(抽象列表)&lt;/p&gt;
+&lt;p&gt;支持随机访问&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;java.util.AbstractSequentialList(抽象连续列表)&lt;/p&gt;
+&lt;p&gt;不支持随机访问&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;在JCF中，可以根据List集合在各维度表现出来的工作特点对其进行分类：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;是否支持随机访问&lt;/li&gt;
+&lt;li&gt;数据是否支持修改&lt;/li&gt;
+&lt;li&gt;集合容量是否可变&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;【插入】标识接口：是指Java中用于标识某个类是否具备某种操作特性、功能类型的接口。标识接口通常不需要下层类实现任何方法。&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;java.util.RandomAccess&lt;/li&gt;
+&lt;li&gt;java.lang.Cloneable&lt;/li&gt;
+&lt;li&gt;java.io.Serializable&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;java.util.ArrayList、java.util.Vector集合和java.util.concurrent.CopyOnWriteArrayList集合都实现了java.util.RandomAccess接口，表示它们支持集合中数据对象的随机访问。实现java.util.RandomAccess接口的还有很多第三方类库，如一些厂商封装的JSON工具中的JSONArray类。这些实现了java.util.RandomAccess标识接口的List集合在工作时也会被区别对待。&lt;/p&gt;
+&lt;p&gt;JDK14+ instanceof 模式匹配 Girraffe&lt;/p&gt;
+&lt;p&gt;LinkedList集合的内部结构是一个双向链表，要寻找链表中某个索引位上的数据对象，只能从头部或尾部依次查询.&lt;/p&gt;
+&lt;h2 id=&#34;2-vector&#34;&gt;2 Vector&lt;/h2&gt;
+&lt;p&gt;Vector集合的工作特性除了支持数据对象的随机访问，还有集合的大小可变、保证线程安全的运行环境&lt;/p&gt;
+&lt;h2 id=&#34;3-arraylist&#34;&gt;3 ArrayList&lt;/h2&gt;
+&lt;p&gt;ArrayList集合是JCF中非常重要的集合之一，也是实际工作中最常使用的集合之一。ArrayList集合拥有与Vector集合类似的接口和操作逻辑（从JDK 1.2开始提供），但它不支持线程安全操作（Vector集合支持线程安全操作，但是基于线程安全的多线程操作性能不高）。ArrayList集合也支持随机访问，也就是说，ArrayList集合在单线程下对指定索引位上的数据读取操作的时间复杂度为O(1)。&lt;/p&gt;
+&lt;p&gt;ArrayList集合是程序员在单线程操作场景中最常使用的List集合之一。该集合的内部结构是一个数组，并且这个数组在需要的时候可以进行扩容操作，所以理论上ArrayList集合能存储任意数量的数据对象（但实际上受各种客观因素限制而无法实现）。ArrayList集合允许将数据对象添加到数组的任意有效索引位上，并且允许从数组的任意有效索引位上获取数据对象。&lt;/p&gt;
+&lt;h3 id=&#34;31-集合内部结构&#34;&gt;3.1 集合内部结构&lt;/h3&gt;
+&lt;p&gt;ArrayList集合中数组的默认初始化容量值也为10，也可以指定集合中数组的初始化容量值，但如果使用者没有指定初始化容量值，那么ArrayList集合中的elementData数组会被初始化为一个容量值为0的空数组。&lt;/p&gt;
+&lt;h3 id=&#34;32-扩容逻辑&#34;&gt;3.2 扩容逻辑&lt;/h3&gt;
+&lt;p&gt;ArrayList集合在进行扩容操作时会将当前容量增大50%，并且扩容逻辑不能干预，除非扩容前容量值小于10（如果发生这样的情况，则首先扩容到10）。ArrayList集合的扩容逻辑相对动态，这保证了在扩容操作频率和扩容大小之间更好的平衡性。&lt;/p&gt;
+&lt;h2 id=&#34;4-stack&#34;&gt;4 Stack&lt;/h2&gt;
+&lt;p&gt;顾名思义，Stack集合的工作效果符合栈结构的定义。栈结构是指能使集合中的数据对象具有后进先出（LIFO）操作特性的集合结构。Stack集合同样有线程安全操作特性（但同样不适合在高并发场景中使用），Stack集合的扩容增量通常也是当前容量的1倍；Stack集合也不会对集合的序列化过程和反序列化过程进行特殊优化处理。&lt;/p&gt;
+&lt;h2 id=&#34;5-linkedlist&#34;&gt;5 LinkedList&lt;/h2&gt;
+&lt;p&gt;java.util.LinkedList集合是本书讲解的最后一种主要的List集合，也是本书讲解的第一种Queue集合。换句话说，LinkedList集合同时具有List集合和Queue集合的基本特性。&lt;/p&gt;
+&lt;p&gt;LinkedList集合的主要结构是双向链表。双向链表中的节点不要求有连续的内存存储地址，因此在向双向链表中插入新节点时，无须申请一块连续的存储空间，只需按需申请存储空间。LinkedList集合中的链表的每个节点都使用一个java.util.LinkedList.Node类的对象进行描述。&lt;/p&gt;
+</description>
+        </item>
+        <item>
+        <title>第十三章 深入volatile关键字</title>
+        <link>https://lyoshur.github.io/stack/p/java%E9%AB%98%E5%B9%B6%E5%8F%91%E7%BC%96%E7%A8%8B%E8%AF%A6%E8%A7%A3%E5%A4%9A%E7%BA%BF%E7%A8%8B%E4%B8%8E%E6%9E%B6%E6%9E%84%E8%AE%BE%E8%AE%A1%E6%B1%AA%E6%96%87%E5%90%9B-%E7%AC%AC%E5%8D%81%E4%B8%89%E7%AB%A0-%E6%B7%B1%E5%85%A5volatile%E5%85%B3%E9%94%AE%E5%AD%97/</link>
+        <pubDate>Tue, 16 Aug 2022 15:22:00 +0000</pubDate>
+        
+        <guid>https://lyoshur.github.io/stack/p/java%E9%AB%98%E5%B9%B6%E5%8F%91%E7%BC%96%E7%A8%8B%E8%AF%A6%E8%A7%A3%E5%A4%9A%E7%BA%BF%E7%A8%8B%E4%B8%8E%E6%9E%B6%E6%9E%84%E8%AE%BE%E8%AE%A1%E6%B1%AA%E6%96%87%E5%90%9B-%E7%AC%AC%E5%8D%81%E4%B8%89%E7%AB%A0-%E6%B7%B1%E5%85%A5volatile%E5%85%B3%E9%94%AE%E5%AD%97/</guid>
+        <description>&lt;h1 id=&#34;第十三章-深入volatile关键字&#34;&gt;第十三章 深入volatile关键字&lt;/h1&gt;
+&lt;h2 id=&#34;1-并发编程的三个重要特性&#34;&gt;1 并发编程的三个重要特性&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;原子性&lt;/p&gt;
+&lt;p&gt;原子性指在一个操纵或多次操作中，要么所有操作得到执行，要么所有操作都不执行&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;可见性&lt;/p&gt;
+&lt;p&gt;当一个线程对共享变量进行了修改，那么另外的线程可以立即看到修改后的最新值&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;有序性&lt;/p&gt;
+&lt;p&gt;所谓有序性，是指程序代码在执行过程中的先后顺序&lt;/p&gt;
+&lt;p&gt;【note】这里其实是说，在多线程情况下，并不能保证像单线程一样严格的顺序执行，因为有可能线程1在执行过判断后，放弃了CPU时间片，线程2开始执行。&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;JVM采用内存模型的机制，来屏蔽各个平台和操作系统之间内存访问的差异，以实现让Java程序在各种平台下达到一致的内存访问效果。（比如java中的Int固定为4字节，这就是所谓的一致内存访问效果）&lt;/p&gt;
+&lt;h2 id=&#34;2-jmm与原子性&#34;&gt;2 JMM与原子性&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;多个原子性操作在一起就不再是原子性操作了&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;简单的读取和赋值是原子性的，但将一个变量赋值给另一个变量不是原子性的&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;JMM只保证了基本读取和赋值的原子性，其他不再保证了。如果想使某些代码片段具备原子性，需要使用关键子synchronized或者JUC的lock。如果想使int等类型自增操作具备原子性，可以使用JUC.atomic&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;volatile不具备原子性&lt;/p&gt;
+&lt;h2 id=&#34;3-jmm与可见性&#34;&gt;3 JMM与可见性&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;使用关键字volatile来保证可见性&lt;/li&gt;
+&lt;li&gt;使用synchronized保证可见性&lt;/li&gt;
+&lt;li&gt;使用JUC的lock保证可见性&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;volatile具备可见性&lt;/p&gt;
+&lt;h2 id=&#34;4-jmm与有序性&#34;&gt;4 JMM与有序性&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;使用关键字volatile来保证有序性&lt;/li&gt;
+&lt;li&gt;使用synchronized保证有序性&lt;/li&gt;
+&lt;li&gt;使用JUC的lock保证有序性&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;volatile具备有序性&lt;/p&gt;
+&lt;p&gt;此外JMM具备一些天生的有序性规则，不需要任何同步手段就能保持有序性。（Happens-before原则）&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;程序次序规则&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;锁定规则&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;volatile变量规则&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;传递规则&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;线程启动规则&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;线程中断规则&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;线程的终结规则&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;对象的终结规则&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&#34;5-volatile关键字深入解析&#34;&gt;5 volatile关键字深入解析&lt;/h2&gt;
+&lt;h3 id=&#34;51-volatile关键字的语义&#34;&gt;5.1 volatile关键字的语义&lt;/h3&gt;
+&lt;p&gt;被volatile修饰的实例变量或者类变量具备如下两层语义&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;保证了不同线程之间对共享变量操作时的可见性&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;禁止对指令进行重排序（直接禁止JVM和处理器对volailte关键字修饰的指令进行重排序）&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;52-volatile的原理和实现机制&#34;&gt;5.2 volatile的原理和实现机制&lt;/h3&gt;
+&lt;p&gt;通过对unsafe.cpp源码的阅读，会发现被volatile修饰的变量存在与一个“lock;”前缀&lt;/p&gt;
+&lt;p&gt;lock;前缀实际上相当于一个内存屏障，该内存屏障会为指令的执行提供如下几个保障。&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;确保指令重排序时不会将后面的代码排到内存屏障之前。&lt;/li&gt;
+&lt;li&gt;确保指令重排序时不会将前面的代码排到内存屏障之后。&lt;/li&gt;
+&lt;li&gt;确保执行到内存屏障修饰的指令时，前面的代码全部执行完成。&lt;/li&gt;
+&lt;li&gt;强制将工作线程中的值，修改刷新到主内存&lt;/li&gt;
+&lt;li&gt;如果是写操作，则会强制其他线程的工作内存中的缓存数据全部失效&lt;/li&gt;
+&lt;/ul&gt;
+</description>
+        </item>
+        <item>
+        <title>第十四章 7种单例模式的设计</title>
+        <link>https://lyoshur.github.io/stack/p/java%E9%AB%98%E5%B9%B6%E5%8F%91%E7%BC%96%E7%A8%8B%E8%AF%A6%E8%A7%A3%E5%A4%9A%E7%BA%BF%E7%A8%8B%E4%B8%8E%E6%9E%B6%E6%9E%84%E8%AE%BE%E8%AE%A1%E6%B1%AA%E6%96%87%E5%90%9B-%E7%AC%AC%E5%8D%81%E5%9B%9B%E7%AB%A0-7%E7%A7%8D%E5%8D%95%E4%BE%8B%E6%A8%A1%E5%BC%8F%E7%9A%84%E8%AE%BE%E8%AE%A1/</link>
+        <pubDate>Tue, 16 Aug 2022 15:22:00 +0000</pubDate>
+        
+        <guid>https://lyoshur.github.io/stack/p/java%E9%AB%98%E5%B9%B6%E5%8F%91%E7%BC%96%E7%A8%8B%E8%AF%A6%E8%A7%A3%E5%A4%9A%E7%BA%BF%E7%A8%8B%E4%B8%8E%E6%9E%B6%E6%9E%84%E8%AE%BE%E8%AE%A1%E6%B1%AA%E6%96%87%E5%90%9B-%E7%AC%AC%E5%8D%81%E5%9B%9B%E7%AB%A0-7%E7%A7%8D%E5%8D%95%E4%BE%8B%E6%A8%A1%E5%BC%8F%E7%9A%84%E8%AE%BE%E8%AE%A1/</guid>
+        <description>&lt;h1 id=&#34;第十四章-7种单例模式的设计&#34;&gt;第十四章 7种单例模式的设计&lt;/h1&gt;
+&lt;h2 id=&#34;1-饿汉式&#34;&gt;1 饿汉式&lt;/h2&gt;
+&lt;p&gt;不支持懒加载&lt;/p&gt;
+&lt;h2 id=&#34;2-懒汉式&#34;&gt;2 懒汉式&lt;/h2&gt;
+&lt;p&gt;多线程情况下不能保证唯一一次的实例化&lt;/p&gt;
+&lt;h3 id=&#34;3-懒汉式--同步方法&#34;&gt;3 懒汉式 + 同步方法&lt;/h3&gt;
+&lt;p&gt;性能较低&lt;/p&gt;
+&lt;h2 id=&#34;4-double-check&#34;&gt;4 Double-Check&lt;/h2&gt;
+&lt;p&gt;可能会抛出空指针异常&lt;/p&gt;
+&lt;h2 id=&#34;5-volatile--double-check&#34;&gt;5 Volatile + Double-Check&lt;/h2&gt;
+&lt;p&gt;略&lt;/p&gt;
+&lt;h2 id=&#34;6-holder方式&#34;&gt;6 Holder方式&lt;/h2&gt;
+&lt;p&gt;利用了类加载机制，是目前最好的设计之一，也是目前使用比较广泛的设计&lt;/p&gt;
+&lt;h2 id=&#34;7-使用枚举实现单例&#34;&gt;7 使用枚举实现单例&lt;/h2&gt;
+&lt;p&gt;不支持懒加载&lt;/p&gt;
+</description>
+        </item>
+        <item>
+        <title>第十二章 volatile关键字介绍</title>
+        <link>https://lyoshur.github.io/stack/p/java%E9%AB%98%E5%B9%B6%E5%8F%91%E7%BC%96%E7%A8%8B%E8%AF%A6%E8%A7%A3%E5%A4%9A%E7%BA%BF%E7%A8%8B%E4%B8%8E%E6%9E%B6%E6%9E%84%E8%AE%BE%E8%AE%A1%E6%B1%AA%E6%96%87%E5%90%9B-%E7%AC%AC%E5%8D%81%E4%BA%8C%E7%AB%A0-volatile%E5%85%B3%E9%94%AE%E5%AD%97%E4%BB%8B%E7%BB%8D/</link>
+        <pubDate>Tue, 16 Aug 2022 14:30:00 +0000</pubDate>
+        
+        <guid>https://lyoshur.github.io/stack/p/java%E9%AB%98%E5%B9%B6%E5%8F%91%E7%BC%96%E7%A8%8B%E8%AF%A6%E8%A7%A3%E5%A4%9A%E7%BA%BF%E7%A8%8B%E4%B8%8E%E6%9E%B6%E6%9E%84%E8%AE%BE%E8%AE%A1%E6%B1%AA%E6%96%87%E5%90%9B-%E7%AC%AC%E5%8D%81%E4%BA%8C%E7%AB%A0-volatile%E5%85%B3%E9%94%AE%E5%AD%97%E4%BB%8B%E7%BB%8D/</guid>
+        <description>&lt;h1 id=&#34;第十二章-volatile关键字介绍&#34;&gt;第十二章 volatile关键字介绍&lt;/h1&gt;
+&lt;h2 id=&#34;1-机器硬件cpu&#34;&gt;1 机器硬件CPU&lt;/h2&gt;
+&lt;p&gt;在计算机，所有的运算操作都是由CPU的寄存器来完成的，CPU指令的执行过程需要涉及到数据的读取和写入操作。Cpu访问的数据只能是计算机的主存。&lt;/p&gt;
+&lt;p&gt;由于两边数据的严重不对等，通过传统FSB直连内存的访问方式很明显会导致CPU资源收到大量限制，降低CPU整体的吞吐量。于是就有了在CPU和主存之间做缓存的限制。最靠近CPU的缓存称之为L1，然后依次是L2,L3和主内存。&lt;/p&gt;
+&lt;p&gt;由于程序指令和程序数据的行为和热点分布差异很大，因此L1 Cache又被划分为了 L1i （instrucgtion）和 L1d (data)&lt;/p&gt;
+&lt;p&gt;CPU Cache又是由很多 Cache Line构成的，Cache Line是CPU Cache的最小组成单位。目前主流的Cache Line都是64字节。&lt;/p&gt;
+&lt;p&gt;Cache的出现是为了解决CPU直接访问内存效率低下的问题，所以程序在运行时，会将运算所需的一部分数据从主存复制到Cache，当运算结束后再将数据刷回到主存。&lt;/p&gt;
+&lt;h2 id=&#34;2-cpu缓存一致性问题&#34;&gt;2 CPU缓存一致性问题&lt;/h2&gt;
+&lt;p&gt;每个线程都有自己的工作内存，变量会在多个线程的本地内存都存一份副本。&lt;/p&gt;
+&lt;p&gt;为了解决缓存一致性问题，通常主流的解决办法有两种：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;通过总线加锁的方式&lt;/p&gt;
+&lt;p&gt;常见于早期的CPU，而且是一种悲观的实现方式，CPU和其他组件通信，都是通过总线来进行的，通过对总线进行加锁，会阻塞其他CPU的访问，从而使得只有一个CPU能够访问这个变量的内存。&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;通过缓存一致性协议&lt;/p&gt;
+&lt;p&gt;最为出名的是Intel的MESI协议，它保证了每个缓存中使用的变量副本都是一致的。&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;读取操作，将缓存中的数据读取到寄存器&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;写入操作，发出信号通知其他CPU将变量的Cache Line置为无效的状态，其他的CPU在进行变量读取时，不得不去主内存再次读取。&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&#34;3-java内存模型jmm&#34;&gt;3 Java内存模型（JMM）&lt;/h2&gt;
+&lt;p&gt;Java内存模型定义了线程和主内存之间的抽象关系：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;共享变量储存于主内存之中，每个线程都可以访问。&lt;/li&gt;
+&lt;li&gt;每个线程都有私有的工作内存或者称为本地内存。&lt;/li&gt;
+&lt;li&gt;工作内存只储存该线程对共享变量的副本。&lt;/li&gt;
+&lt;li&gt;线程不能直接操作主内存，只有操作工作内存，再写入主内存。&lt;/li&gt;
+&lt;li&gt;工作内存和JMM一样，是一个抽象的概念，它其实并不存在。它涵盖了缓存、编译器优化、寄存器、和硬件。&lt;/li&gt;
+&lt;/ul&gt;
+</description>
+        </item>
+        <item>
+        <title>第十一章 线程上下文类加载器</title>
+        <link>https://lyoshur.github.io/stack/p/java%E9%AB%98%E5%B9%B6%E5%8F%91%E7%BC%96%E7%A8%8B%E8%AF%A6%E8%A7%A3%E5%A4%9A%E7%BA%BF%E7%A8%8B%E4%B8%8E%E6%9E%B6%E6%9E%84%E8%AE%BE%E8%AE%A1%E6%B1%AA%E6%96%87%E5%90%9B-%E7%AC%AC%E5%8D%81%E4%B8%80%E7%AB%A0-%E7%BA%BF%E7%A8%8B%E4%B8%8A%E4%B8%8B%E6%96%87%E7%B1%BB%E5%8A%A0%E8%BD%BD%E5%99%A8/</link>
+        <pubDate>Tue, 16 Aug 2022 14:30:00 +0000</pubDate>
+        
+        <guid>https://lyoshur.github.io/stack/p/java%E9%AB%98%E5%B9%B6%E5%8F%91%E7%BC%96%E7%A8%8B%E8%AF%A6%E8%A7%A3%E5%A4%9A%E7%BA%BF%E7%A8%8B%E4%B8%8E%E6%9E%B6%E6%9E%84%E8%AE%BE%E8%AE%A1%E6%B1%AA%E6%96%87%E5%90%9B-%E7%AC%AC%E5%8D%81%E4%B8%80%E7%AB%A0-%E7%BA%BF%E7%A8%8B%E4%B8%8A%E4%B8%8B%E6%96%87%E7%B1%BB%E5%8A%A0%E8%BD%BD%E5%99%A8/</guid>
+        <description>&lt;h1 id=&#34;第十一章-线程上下文类加载器&#34;&gt;第十一章 线程上下文类加载器&lt;/h1&gt;
+&lt;h2 id=&#34;1-为什么需要线程上下文类加载器&#34;&gt;1 为什么需要线程上下文类加载器&lt;/h2&gt;
+&lt;p&gt;Thread类提供了API用来获取以及设置当前线程的上下文类加载器，如果当前线程没有设置上下文类加载器，那么它将与父线程抱持同样的类加载器。&lt;/p&gt;
+&lt;p&gt;JDK核心库中提供了很多SPI (Service Provider Interface)。常见的包括JDBC、JCE、JNDI、JAXP、JBI等，JDK只提供了这些接口之间的逻辑关系，但不提供具体的实现。Java使用 JDBC这个SPI完全透明了应用程序和第三方厂商数据库驱动的具体实现。不管数据库类型如何切换，应用程序只需要更新JDBC的驱动jar包和驱动名称，而不需要进行任何更新。&lt;/p&gt;
+&lt;p&gt;由于JDK定义了SPI的标准接口，加之这些接口作为JDK核心标准类库的一部分，即想要完全透明标准接口的实现，又想与JDK核心库进行捆绑，由于JVM双亲委托机制的限制，根加载器不可能加载的到第三方厂商提供的具体实现。为了解决这个困境，JDK只好提供一个不太优雅的设计，线程上下文类加载器，有了线程上下文类加载器，根加载器反而需要委托子类加载器去加载厂商提供的SPI具体实现。&lt;/p&gt;
+</description>
+        </item>
+        <item>
+        <title>第十章 JVM类加载器</title>
+        <link>https://lyoshur.github.io/stack/p/java%E9%AB%98%E5%B9%B6%E5%8F%91%E7%BC%96%E7%A8%8B%E8%AF%A6%E8%A7%A3%E5%A4%9A%E7%BA%BF%E7%A8%8B%E4%B8%8E%E6%9E%B6%E6%9E%84%E8%AE%BE%E8%AE%A1%E6%B1%AA%E6%96%87%E5%90%9B-%E7%AC%AC%E5%8D%81%E7%AB%A0-jvm%E7%B1%BB%E5%8A%A0%E8%BD%BD%E5%99%A8/</link>
+        <pubDate>Tue, 16 Aug 2022 14:00:00 +0000</pubDate>
+        
+        <guid>https://lyoshur.github.io/stack/p/java%E9%AB%98%E5%B9%B6%E5%8F%91%E7%BC%96%E7%A8%8B%E8%AF%A6%E8%A7%A3%E5%A4%9A%E7%BA%BF%E7%A8%8B%E4%B8%8E%E6%9E%B6%E6%9E%84%E8%AE%BE%E8%AE%A1%E6%B1%AA%E6%96%87%E5%90%9B-%E7%AC%AC%E5%8D%81%E7%AB%A0-jvm%E7%B1%BB%E5%8A%A0%E8%BD%BD%E5%99%A8/</guid>
+        <description>&lt;h1 id=&#34;第十章-jvm类加载器&#34;&gt;第十章 JVM类加载器&lt;/h1&gt;
+&lt;p&gt;类的加载器负责类的加载职责，对于任意一个class都需要由加载它的类加载器和这个类本身确定其在JVM中的唯一性，这也就是运行时包。&lt;/p&gt;
+&lt;h2 id=&#34;1-jvm内置三大类加载器&#34;&gt;1 JVM内置三大类加载器&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;Bootstrap ClassLoader&lt;/p&gt;
+&lt;p&gt;根加载器又称为Bootstrap类加载器，是最为顶层的加载器，其没有任何父加载器，是由C++编写的，主要负责核心类库的加载。&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Ext ClassLoader&lt;/p&gt;
+&lt;p&gt;拓展类加载器的父加载器是根加载器，主要用于加载 JAVA_HOME下的 jre/lib/ext 目录里面的类库，拓展类加载器是由纯Java语言实现的，它是java.lang.URLClassLoader的子类。&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Application ClassLoader&lt;/p&gt;
+&lt;p&gt;系统类加载器是一种常见的加载器，其负责加载classpath下的类库资源，我们在进行项目开发的时候引入的第三方jar包，系统类加载器的父加载器是拓展类加载器，同时他也是自定义类加载器的默认父加载器。&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;不同的类加载器负责将不同的类加载到JVM内存之中，并且他们之间严格遵守着父委托的机制。&lt;/p&gt;
+&lt;h2 id=&#34;2-自定义类加载器&#34;&gt;2 自定义类加载器&lt;/h2&gt;
+&lt;p&gt;自定义类加载器必须是ClassLoader的直接或间接子类，然后重写findClass方法。&lt;/p&gt;
+&lt;p&gt;【note】这里注意，自定义类加载器需要重写findClass方法，但是破坏双亲委托机制需要重写loadClass方法。&lt;/p&gt;
+&lt;h2 id=&#34;3-双亲委托机制详细介绍&#34;&gt;3 双亲委托机制详细介绍&lt;/h2&gt;
+&lt;p&gt;双亲委托机制，有时候也称父委托机制。当一个类加载器被调用loadClass后，他并不会直接进行加载，而是交给当前类加载器的父加载器尝试加载，直到最顶层的加载器，然后再依次向下进行加载。&lt;/p&gt;
+&lt;p&gt;loadClass的执行流程&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;从当前类的已加载类缓存中根据类的全路径名查询是否存在该类，如果存在则直接返回。&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;如果当前类存在父类，则调用父类加载器的loadClass方法对其进行加载。&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;如果当前类不存在父类，则直接调用根加载器对其进行加载。&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;如果当前类的父类没有加载成功，则调用当前类加载器的findClass方法对其进行加载。&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;如果类最后被成功加载，则做一些性能数据的统计。&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;由于loadClass指定了resolve，所以不会进行连接阶段的继续执行，这也解释了为什么类加载器不会导致类的初始化。&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;4 破坏双亲委托机制&lt;/p&gt;
+&lt;p&gt;重写loadClass，改为如下流程&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;根据类的全路径名称进行加锁，确保每一个类在多线程的情况下只被加载一次。&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;从当前类的已加载类缓存中根据类的全路径名查询是否存在该类，如果存在则直接返回。&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;若缓存中没有被加载的类，则需要对其进行首次加载，如果类的全路径名称以 java/javax 开头，则直接委托给系统类加载器进行加载。&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;如果不是以 java/javax开头，则尝试使用自己的类加载器对其进行加载。&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;若自定义的加载器没有完成对类的加载，则委托给其父类加载器或系统加载器进行加载。&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;若干次尝试后，仍没有对类进行加载，则抛出无法找到类的异常。&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&#34;4-类加载器命名空间运行时包类的卸载&#34;&gt;4 类加载器命名空间、运行时包、类的卸载&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;每个类加载器实例都有各自的命名空间，命名空间是由该加载器以及其所有的父加载器所构成的。因此在每个类加载器中同一个class都是独一无二的。&lt;/p&gt;
+&lt;p&gt;在类加载器进行类加载的时候，首先会到加载记录表也就是缓存中，查看该类是否已经加载过了，如果已经加载过了就不会重复加载。否则会认为其是第一次加载&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;运行时包&lt;/p&gt;
+&lt;p&gt;我们在编写代码时，通常会给一个类指定一个包名，包的作用是为了组织类，防止不同包下的同样名称的class起冲突。包名和类名构成了类的全限定名称。&lt;/p&gt;
+&lt;p&gt;比如&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-fallback&#34; data-lang=&#34;fallback&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;BootstrapClassLoader.ExtClassLoader.ApplicationClassLoader.MyClassLoader.com.xxzzz.Demo	
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;p&gt;这样做的好处是处于安全和封装的考虑，这样自定义的类和系统类拥有不同的运行时包。&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;初始类加载器&lt;/p&gt;
+&lt;p&gt;由于运行时包的存在，JVM规定了不同的运行时包下的类彼此之间是不可以互相访问的。&lt;/p&gt;
+&lt;p&gt;根据JVM规范的规定，在类的加载过程中，所有参与的类加载器，即使没有亲自加载过该类，也会标识为该类的初始类加载器。&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;类的卸载&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;该类的所有实例都已经被GC&lt;/li&gt;
+&lt;li&gt;该类对应的类加载器被GC&lt;/li&gt;
+&lt;li&gt;该类的class实例没有在其他地方被引用&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+</description>
+        </item>
+        <item>
+        <title>第九章 类的加载过程</title>
+        <link>https://lyoshur.github.io/stack/p/java%E9%AB%98%E5%B9%B6%E5%8F%91%E7%BC%96%E7%A8%8B%E8%AF%A6%E8%A7%A3%E5%A4%9A%E7%BA%BF%E7%A8%8B%E4%B8%8E%E6%9E%B6%E6%9E%84%E8%AE%BE%E8%AE%A1%E6%B1%AA%E6%96%87%E5%90%9B-%E7%AC%AC%E4%B9%9D%E7%AB%A0-%E7%B1%BB%E7%9A%84%E5%8A%A0%E8%BD%BD%E8%BF%87%E7%A8%8B/</link>
+        <pubDate>Tue, 16 Aug 2022 10:21:00 +0000</pubDate>
+        
+        <guid>https://lyoshur.github.io/stack/p/java%E9%AB%98%E5%B9%B6%E5%8F%91%E7%BC%96%E7%A8%8B%E8%AF%A6%E8%A7%A3%E5%A4%9A%E7%BA%BF%E7%A8%8B%E4%B8%8E%E6%9E%B6%E6%9E%84%E8%AE%BE%E8%AE%A1%E6%B1%AA%E6%96%87%E5%90%9B-%E7%AC%AC%E4%B9%9D%E7%AB%A0-%E7%B1%BB%E7%9A%84%E5%8A%A0%E8%BD%BD%E8%BF%87%E7%A8%8B/</guid>
+        <description>&lt;h1 id=&#34;第九章-类的加载过程&#34;&gt;第九章 类的加载过程&lt;/h1&gt;
+&lt;p&gt;ClassLoader的主要职责就是负责加载各种class文件到JVM中，ClassLoader是一个抽象的class，给定一个class的二进制文件名，ClassLoader会尝试加载并且在JVM中生成构成这个类的各个数据结构，然后使其分布在JVM对应的内存区域中。&lt;/p&gt;
+&lt;h2 id=&#34;1-类的加载过程简介&#34;&gt;1 类的加载过程简介&lt;/h2&gt;
+&lt;p&gt;类的加载过程一般分为三个比较大的阶段，分别是加载阶段，连接阶段和初始化阶段。&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;加载阶段：主要负责查找并且加载类的二进制数据文件，其实就是class文件。&lt;/li&gt;
+&lt;li&gt;连接阶段：连接阶段做的工作比较多
+&lt;ul&gt;
+&lt;li&gt;验证：主要确保类文件的正确性，比如class的版本，class文件的魔术因子是否正确&lt;/li&gt;
+&lt;li&gt;准备：为类的静态变量分配内存，并为其初始化默认值&lt;/li&gt;
+&lt;li&gt;解析：把类的符号引用转化为直接引用&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;初始化阶段：为类的静态变量赋予正确的初始化值&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;JVM对类的初始化是一个延迟的机制。当一个类在首次使用时才会被初始化，在同一个运行时包下，一个class只会被初始化一次。&lt;/p&gt;
+&lt;h2 id=&#34;2-类的主动使用和被动使用&#34;&gt;2 类的主动使用和被动使用&lt;/h2&gt;
+&lt;p&gt;JVM虚拟机规范规定，每个类或者接口被Java程序首次主动使用时才会对其进行初始化。当然随着JIT技术的越来越成熟，JVM运行期间的编译也越来越智能，不排除JVM在运行期间提前预判并且初始化某个类。&lt;/p&gt;
+&lt;p&gt;JVM同时规定了6种主动使用类的场景。&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;通过new关键字会导致类的初始化&lt;/li&gt;
+&lt;li&gt;访问类的静态变量&lt;/li&gt;
+&lt;li&gt;访问类的静态方法&lt;/li&gt;
+&lt;li&gt;对某个类进行反射操作&lt;/li&gt;
+&lt;li&gt;初始化子类会导致父类的初始化&lt;/li&gt;
+&lt;li&gt;启动类&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;被动使用&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;构造某个类的数组时&lt;/li&gt;
+&lt;li&gt;引用类的静态常量&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&#34;3-类的加载过程详解&#34;&gt;3 类的加载过程详解&lt;/h2&gt;
+&lt;p&gt;简单来说类的加载就是将class文件中的二进数据读取到内存之中，然后将该字节流所代表的静态存储结构转换为方法区中运行时的数据结构。并且在堆中生成一个该类的java.lang.Class对象，作为访问方法区数据结构的入口。&lt;/p&gt;
+&lt;p&gt;类加载的最终产物就是堆内存中的class对象，对同一个ClassLoader来讲，不管一个类被加载了多少次，对应到堆内存中的class对象始终是一个。&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;验证
+&lt;ul&gt;
+&lt;li&gt;验证文件格式&lt;/li&gt;
+&lt;li&gt;验证元数据&lt;/li&gt;
+&lt;li&gt;验证字节码&lt;/li&gt;
+&lt;li&gt;验证符号引用&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;准备
+&lt;ul&gt;
+&lt;li&gt;当一个class的字节流通过了验证过程之后,就开始为该对象的类变量(静态变量)分配内存并设置初始值了。类变量的内存会被分配到方法区，不同与实例变量会被分配到堆内存。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;2
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;3
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;4
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-java&#34; data-lang=&#34;java&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;kd&#34;&gt;public&lt;/span&gt; &lt;span class=&#34;kd&#34;&gt;class&lt;/span&gt; &lt;span class=&#34;nc&#34;&gt;Demo&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;{&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    &lt;span class=&#34;kd&#34;&gt;private&lt;/span&gt; &lt;span class=&#34;kd&#34;&gt;static&lt;/span&gt; &lt;span class=&#34;kt&#34;&gt;int&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;a&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;10&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    &lt;span class=&#34;kd&#34;&gt;private&lt;/span&gt; &lt;span class=&#34;kd&#34;&gt;final&lt;/span&gt; &lt;span class=&#34;kd&#34;&gt;static&lt;/span&gt; &lt;span class=&#34;kt&#34;&gt;int&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;b&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;10&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;o&#34;&gt;}&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;p&gt;其中a在准备阶段不是10，而是初始值0。当然b还是10，因为final修饰的静态变量不会导致类的初始化，是一种被动引用。&lt;/p&gt;
+&lt;p&gt;【note】这里的b应该是属于静态常量，也就是被动使用的第二种情况，所以跟Demo类无关所以不需要走连接&lt;/p&gt;
+&lt;p&gt;当然更严谨的解释是b在类的编译阶段javac会将其value生成一个ConstantValue，直接赋予10；&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;解析
+&lt;ul&gt;
+&lt;li&gt;类接口解析&lt;/li&gt;
+&lt;li&gt;字段的解析&lt;/li&gt;
+&lt;li&gt;类方法的解析&lt;/li&gt;
+&lt;li&gt;接口方法的解析&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+</description>
+        </item>
+        <item>
+        <title>第八章 线程池原理以及自定义线程池</title>
+        <link>https://lyoshur.github.io/stack/p/java%E9%AB%98%E5%B9%B6%E5%8F%91%E7%BC%96%E7%A8%8B%E8%AF%A6%E8%A7%A3%E5%A4%9A%E7%BA%BF%E7%A8%8B%E4%B8%8E%E6%9E%B6%E6%9E%84%E8%AE%BE%E8%AE%A1%E6%B1%AA%E6%96%87%E5%90%9B-%E7%AC%AC%E5%85%AB%E7%AB%A0-%E7%BA%BF%E7%A8%8B%E6%B1%A0%E5%8E%9F%E7%90%86%E4%BB%A5%E5%8F%8A%E8%87%AA%E5%AE%9A%E4%B9%89%E7%BA%BF%E7%A8%8B%E6%B1%A0/</link>
+        <pubDate>Mon, 15 Aug 2022 17:00:00 +0000</pubDate>
+        
+        <guid>https://lyoshur.github.io/stack/p/java%E9%AB%98%E5%B9%B6%E5%8F%91%E7%BC%96%E7%A8%8B%E8%AF%A6%E8%A7%A3%E5%A4%9A%E7%BA%BF%E7%A8%8B%E4%B8%8E%E6%9E%B6%E6%9E%84%E8%AE%BE%E8%AE%A1%E6%B1%AA%E6%96%87%E5%90%9B-%E7%AC%AC%E5%85%AB%E7%AB%A0-%E7%BA%BF%E7%A8%8B%E6%B1%A0%E5%8E%9F%E7%90%86%E4%BB%A5%E5%8F%8A%E8%87%AA%E5%AE%9A%E4%B9%89%E7%BA%BF%E7%A8%8B%E6%B1%A0/</guid>
+        <description>&lt;h1 id=&#34;第八章-线程池原理以及自定义线程池&#34;&gt;第八章 线程池原理以及自定义线程池&lt;/h1&gt;
+&lt;p&gt;一个完整的线程池应该具备如下要素：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;任务队列&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;线程数量管理功能&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;任务拒绝策略&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;线程工厂&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;QueueSize&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Keepedalive&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&#34;1-拒绝策略&#34;&gt;1 拒绝策略&lt;/h2&gt;
+&lt;p&gt;DenyPolicy主要用于当Queue的runnable达到了limit上限时，通过那种策略来通知提交者。&lt;/p&gt;
+&lt;p&gt;默认包含三种实现：&lt;/p&gt;
+&lt;p&gt;DiscardDenyPolicy 该拒绝策略会直接将任务丢弃&lt;/p&gt;
+&lt;p&gt;AbortDenyPolicy 该拒绝策略会向任务提出者抛出异常&lt;/p&gt;
+&lt;p&gt;RunnerDenyPolicy 该拒绝策略会在任务提交者所在的线程中执行任务&lt;/p&gt;
+&lt;h2 id=&#34;2-internaltask&#34;&gt;2 InternalTask&lt;/h2&gt;
+&lt;p&gt;InternalTask是Runnable的一个实现，主要用于线程池内部，该类会使用到RunnableQueue,然后从queue中取出某个Runnable,并运行runnable的run方法。&lt;/p&gt;
+&lt;p&gt;这部分作者直接手写了一个线程池，可怕 = =、&lt;/p&gt;
+</description>
+        </item>
+        <item>
+        <title>第七章 捕获线程异常以及Hook线程</title>
+        <link>https://lyoshur.github.io/stack/p/java%E9%AB%98%E5%B9%B6%E5%8F%91%E7%BC%96%E7%A8%8B%E8%AF%A6%E8%A7%A3%E5%A4%9A%E7%BA%BF%E7%A8%8B%E4%B8%8E%E6%9E%B6%E6%9E%84%E8%AE%BE%E8%AE%A1%E6%B1%AA%E6%96%87%E5%90%9B-%E7%AC%AC%E4%B8%83%E7%AB%A0-%E6%8D%95%E8%8E%B7%E7%BA%BF%E7%A8%8B%E5%BC%82%E5%B8%B8%E4%BB%A5%E5%8F%8Ahook%E7%BA%BF%E7%A8%8B/</link>
+        <pubDate>Mon, 15 Aug 2022 16:50:00 +0000</pubDate>
+        
+        <guid>https://lyoshur.github.io/stack/p/java%E9%AB%98%E5%B9%B6%E5%8F%91%E7%BC%96%E7%A8%8B%E8%AF%A6%E8%A7%A3%E5%A4%9A%E7%BA%BF%E7%A8%8B%E4%B8%8E%E6%9E%B6%E6%9E%84%E8%AE%BE%E8%AE%A1%E6%B1%AA%E6%96%87%E5%90%9B-%E7%AC%AC%E4%B8%83%E7%AB%A0-%E6%8D%95%E8%8E%B7%E7%BA%BF%E7%A8%8B%E5%BC%82%E5%B8%B8%E4%BB%A5%E5%8F%8Ahook%E7%BA%BF%E7%A8%8B/</guid>
+        <description>&lt;h1 id=&#34;第七章-捕获线程异常以及hook线程&#34;&gt;第七章 捕获线程异常以及Hook线程&lt;/h1&gt;
+&lt;h2 id=&#34;1-捕获线程异常&#34;&gt;1 捕获线程异常&lt;/h2&gt;
+&lt;p&gt;线程在执行单元中是不允许抛出checked异常的，在线程运行的上下文中，父线程无法直接获得它运行时出现的异常信息，对此java给我们提供了一个UncaughtExceptionHandler接口。当线程在运行过程中出现异常时，会回调该接口。从而得知是哪个线程出错，以及出现了什么样的错误。&lt;/p&gt;
+&lt;p&gt;线程出现问题，但没有给线程指定UncaughtExceptionHandler接口时，会向上寻找Group的UEH接口，如果还没找到，会继续向上查找Group的接口。最后走到System.err&lt;/p&gt;
+&lt;h2 id=&#34;2-hook线程&#34;&gt;2 Hook线程&lt;/h2&gt;
+&lt;p&gt;Hook线程只有在收到退出信号时会被执行，如果在kill的时候使用了-9 那么Hook线程也不会被执行，Hook线程也可以用来执行资源释放，但不要再Hook中执行一些耗时非常长的操作，以为会导致程序无法退出。&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-java&#34; data-lang=&#34;java&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;n&#34;&gt;Runtime&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;na&#34;&gt;getRuntime&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;().&lt;/span&gt;&lt;span class=&#34;na&#34;&gt;addShutdownHook&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;()&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;</description>
+        </item>
+        <item>
+        <title>第六章 ThreadGroup详细讲解</title>
+        <link>https://lyoshur.github.io/stack/p/java%E9%AB%98%E5%B9%B6%E5%8F%91%E7%BC%96%E7%A8%8B%E8%AF%A6%E8%A7%A3%E5%A4%9A%E7%BA%BF%E7%A8%8B%E4%B8%8E%E6%9E%B6%E6%9E%84%E8%AE%BE%E8%AE%A1%E6%B1%AA%E6%96%87%E5%90%9B-%E7%AC%AC%E5%85%AD%E7%AB%A0-threadgroup%E8%AF%A6%E7%BB%86%E8%AE%B2%E8%A7%A3/</link>
+        <pubDate>Mon, 15 Aug 2022 16:10:00 +0000</pubDate>
+        
+        <guid>https://lyoshur.github.io/stack/p/java%E9%AB%98%E5%B9%B6%E5%8F%91%E7%BC%96%E7%A8%8B%E8%AF%A6%E8%A7%A3%E5%A4%9A%E7%BA%BF%E7%A8%8B%E4%B8%8E%E6%9E%B6%E6%9E%84%E8%AE%BE%E8%AE%A1%E6%B1%AA%E6%96%87%E5%90%9B-%E7%AC%AC%E5%85%AD%E7%AB%A0-threadgroup%E8%AF%A6%E7%BB%86%E8%AE%B2%E8%A7%A3/</guid>
+        <description>&lt;h1 id=&#34;第六章-threadgroup详细讲解&#34;&gt;第六章 ThreadGroup详细讲解&lt;/h1&gt;
+&lt;p&gt;新的线程默认会被加入父线程所在的group中，如同线程存在父子关系一样ThreadGroup同样也存在父子关系。&lt;/p&gt;
+&lt;h2 id=&#34;1-threadgroup-api&#34;&gt;1 ThreadGroup API&lt;/h2&gt;
+&lt;p&gt;在一个ThreadGroup中会加入若干线程以及子线程ThreadGroup,ThreadGroup为我们提供了若干个方法可以复制出线程和线程组。&lt;/p&gt;
+&lt;h3 id=&#34;11-复制-thread-数组&#34;&gt;1.1 复制 Thread 数组&lt;/h3&gt;
+&lt;p&gt;public int enumerate(Thread[] list)&lt;/p&gt;
+&lt;p&gt;public int enumerate(Thread[] list, boolean recurse)&lt;/p&gt;
+&lt;h3 id=&#34;12-复制threadgroup数组&#34;&gt;1.2 复制ThreadGroup数组&lt;/h3&gt;
+&lt;p&gt;public int enumerate(ThreadGroup[] list)&lt;/p&gt;
+&lt;p&gt;public int enumerate(ThreadGroup[] list, boolean recurse)&lt;/p&gt;
+</description>
+        </item>
+        <item>
+        <title>第五章 线程间通信</title>
+        <link>https://lyoshur.github.io/stack/p/java%E9%AB%98%E5%B9%B6%E5%8F%91%E7%BC%96%E7%A8%8B%E8%AF%A6%E8%A7%A3%E5%A4%9A%E7%BA%BF%E7%A8%8B%E4%B8%8E%E6%9E%B6%E6%9E%84%E8%AE%BE%E8%AE%A1%E6%B1%AA%E6%96%87%E5%90%9B-%E7%AC%AC%E4%BA%94%E7%AB%A0-%E7%BA%BF%E7%A8%8B%E9%97%B4%E9%80%9A%E4%BF%A1/</link>
+        <pubDate>Mon, 15 Aug 2022 15:10:00 +0000</pubDate>
+        
+        <guid>https://lyoshur.github.io/stack/p/java%E9%AB%98%E5%B9%B6%E5%8F%91%E7%BC%96%E7%A8%8B%E8%AF%A6%E8%A7%A3%E5%A4%9A%E7%BA%BF%E7%A8%8B%E4%B8%8E%E6%9E%B6%E6%9E%84%E8%AE%BE%E8%AE%A1%E6%B1%AA%E6%96%87%E5%90%9B-%E7%AC%AC%E4%BA%94%E7%AB%A0-%E7%BA%BF%E7%A8%8B%E9%97%B4%E9%80%9A%E4%BF%A1/</guid>
+        <description>&lt;h1 id=&#34;第五章-线程间通信&#34;&gt;第五章 线程间通信&lt;/h1&gt;
+&lt;p&gt;与网络通信等进程间通信方式不一样,线程间通信又称为进程内通信,多个线程实现互斥访问共享资源时会互相发送信号和等待信号。比如线程等待数据到来的信号。线程收到变量改变的信号。&lt;/p&gt;
+&lt;h2 id=&#34;1-初始wait和notify&#34;&gt;1 初始wait和notify&lt;/h2&gt;
+&lt;p&gt;wait()  导致当前线程等待，直到其他线程调用此对象的 &lt;a class=&#34;link&#34; href=&#34;https://so.csdn.net/so/search?q=notify&amp;amp;spm=1001.2101.3001.7020&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;notify&lt;/a&gt;()方法或 notifyAll()方法前，导致当前线程等待。&lt;/p&gt;
+&lt;p&gt;notify() 唤醒在此同步监视器上等待的单个线程，如果有多个线程在此同步监视器上等待，则会唤醒其中的一个，&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt; 1
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 2
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 3
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 4
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 5
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 6
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 7
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 8
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 9
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;10
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;11
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;12
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;13
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;14
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;15
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;16
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;17
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;18
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;19
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;20
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;21
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;22
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;23
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;24
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;25
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;26
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;27
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;28
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;29
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;30
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;31
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;32
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;33
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;34
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;35
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;36
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;37
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;38
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;39
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;40
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;41
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;42
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;43
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;44
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;45
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;46
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;47
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;48
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;49
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;50
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;51
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-java&#34; data-lang=&#34;java&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;kn&#34;&gt;package&lt;/span&gt; &lt;span class=&#34;nn&#34;&gt;lyoshur&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;kn&#34;&gt;import&lt;/span&gt; &lt;span class=&#34;nn&#34;&gt;java.util.LinkedList&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;kd&#34;&gt;public&lt;/span&gt; &lt;span class=&#34;kd&#34;&gt;class&lt;/span&gt; &lt;span class=&#34;nc&#34;&gt;EventQueue&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;{&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    &lt;span class=&#34;kd&#34;&gt;private&lt;/span&gt; &lt;span class=&#34;kd&#34;&gt;final&lt;/span&gt; &lt;span class=&#34;kt&#34;&gt;int&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;max&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    &lt;span class=&#34;kd&#34;&gt;static&lt;/span&gt; &lt;span class=&#34;kd&#34;&gt;class&lt;/span&gt; &lt;span class=&#34;nc&#34;&gt;Event&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;{}&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    &lt;span class=&#34;kd&#34;&gt;private&lt;/span&gt; &lt;span class=&#34;kd&#34;&gt;final&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;LinkedList&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;Event&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;&amp;gt;&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;eventQueue&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;k&#34;&gt;new&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;LinkedList&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;&amp;lt;&amp;gt;();&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    &lt;span class=&#34;kd&#34;&gt;private&lt;/span&gt; &lt;span class=&#34;kd&#34;&gt;final&lt;/span&gt; &lt;span class=&#34;kd&#34;&gt;static&lt;/span&gt; &lt;span class=&#34;kt&#34;&gt;int&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;DEFAULT_MAX_EVENT&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;10&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    &lt;span class=&#34;kd&#34;&gt;public&lt;/span&gt; &lt;span class=&#34;nf&#34;&gt;EventQueue&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;()&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;{&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;        &lt;span class=&#34;k&#34;&gt;this&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;DEFAULT_MAX_EVENT&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;);&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    &lt;span class=&#34;o&#34;&gt;}&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    &lt;span class=&#34;kd&#34;&gt;public&lt;/span&gt; &lt;span class=&#34;nf&#34;&gt;EventQueue&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;kt&#34;&gt;int&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;max&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;)&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;{&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;        &lt;span class=&#34;k&#34;&gt;this&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;na&#34;&gt;max&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;max&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    &lt;span class=&#34;o&#34;&gt;}&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    &lt;span class=&#34;kd&#34;&gt;public&lt;/span&gt; &lt;span class=&#34;kt&#34;&gt;void&lt;/span&gt; &lt;span class=&#34;nf&#34;&gt;offer&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;Event&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;event&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;)&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;{&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;        &lt;span class=&#34;kd&#34;&gt;synchronized&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;eventQueue&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;)&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;{&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;            &lt;span class=&#34;k&#34;&gt;if&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;eventQueue&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;na&#34;&gt;size&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;()&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;&amp;gt;=&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;max&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;)&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;{&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;                &lt;span class=&#34;k&#34;&gt;try&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;{&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;                    &lt;span class=&#34;n&#34;&gt;eventQueue&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;na&#34;&gt;wait&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;();&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;                &lt;span class=&#34;o&#34;&gt;}&lt;/span&gt; &lt;span class=&#34;k&#34;&gt;catch&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;InterruptedException&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;e&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;)&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;{&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;                    &lt;span class=&#34;n&#34;&gt;e&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;na&#34;&gt;printStackTrace&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;();&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;                &lt;span class=&#34;o&#34;&gt;}&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;            &lt;span class=&#34;o&#34;&gt;}&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;            &lt;span class=&#34;n&#34;&gt;eventQueue&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;na&#34;&gt;addLast&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;event&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;);&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;            &lt;span class=&#34;n&#34;&gt;eventQueue&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;na&#34;&gt;notify&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;();&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;        &lt;span class=&#34;o&#34;&gt;}&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    &lt;span class=&#34;o&#34;&gt;}&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    &lt;span class=&#34;kd&#34;&gt;public&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;Event&lt;/span&gt; &lt;span class=&#34;nf&#34;&gt;take&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;()&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;{&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;        &lt;span class=&#34;kd&#34;&gt;synchronized&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;eventQueue&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;)&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;{&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;            &lt;span class=&#34;k&#34;&gt;if&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;eventQueue&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;na&#34;&gt;isEmpty&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;())&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;{&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;                &lt;span class=&#34;k&#34;&gt;try&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;{&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;                    &lt;span class=&#34;n&#34;&gt;eventQueue&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;na&#34;&gt;wait&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;();&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;                &lt;span class=&#34;o&#34;&gt;}&lt;/span&gt; &lt;span class=&#34;k&#34;&gt;catch&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;InterruptedException&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;e&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;)&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;{&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;                    &lt;span class=&#34;n&#34;&gt;e&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;na&#34;&gt;printStackTrace&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;();&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;                &lt;span class=&#34;o&#34;&gt;}&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;            &lt;span class=&#34;o&#34;&gt;}&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;            &lt;span class=&#34;n&#34;&gt;Event&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;event&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;eventQueue&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;na&#34;&gt;removeFirst&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;();&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;            &lt;span class=&#34;k&#34;&gt;this&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;na&#34;&gt;eventQueue&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;na&#34;&gt;notify&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;();&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;            &lt;span class=&#34;k&#34;&gt;return&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;event&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;        &lt;span class=&#34;o&#34;&gt;}&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    &lt;span class=&#34;o&#34;&gt;}&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;o&#34;&gt;}&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;p&gt;当eventQueue满时，会调用eventQueue.wait。这时offer会释放掉锁资源，并将当前线程添加到 wait set。&lt;/p&gt;
+&lt;p&gt;当消费掉数据后，this.eventQueue.notify(); 会通知某个wait set的线程启动，但不会立即执行，需要当前take释放掉锁。而offer会重新获取锁，并从上次wait的地方继续运行。&lt;/p&gt;
+&lt;h2 id=&#34;2-多线程间通信&#34;&gt;2 多线程间通信&lt;/h2&gt;
+&lt;p&gt;多线程间通信需要用到Object的notifyAll方法。&lt;/p&gt;
+&lt;p&gt;这个队列在多线程同时并发的情况下会出现数据不一致的问题，大致可以被分为两部分，一个是超过了最大数量仍在执行add，另一个是没有元素了仍调用remove。&lt;/p&gt;
+&lt;p&gt;改进：需要将临界值的判断if更改为while，将notify更改为notifyAll&lt;/p&gt;
+&lt;h2 id=&#34;3-线程休息室&#34;&gt;3 线程休息室&lt;/h2&gt;
+&lt;p&gt;在虚拟机规范中存在一个wait set的概念，但没有定义具体的数据结构。不同的厂商有着不同的实现方式。线程调用某个对象的wait方法后，都会被加入到与该对象monitor关联的wait set中，至于是先入先出还是随机弹出，虚拟机规范也没有规定。&lt;/p&gt;
+&lt;h2 id=&#34;4-显示锁&#34;&gt;4 显示锁&lt;/h2&gt;
+&lt;p&gt;可以使用BooleanLock显示锁来控制。sync不能被打断，但是显示锁可以。&lt;/p&gt;
+</description>
+        </item>
+        <item>
+        <title>第四章 线程安全与数据同步</title>
+        <link>https://lyoshur.github.io/stack/p/java%E9%AB%98%E5%B9%B6%E5%8F%91%E7%BC%96%E7%A8%8B%E8%AF%A6%E8%A7%A3%E5%A4%9A%E7%BA%BF%E7%A8%8B%E4%B8%8E%E6%9E%B6%E6%9E%84%E8%AE%BE%E8%AE%A1%E6%B1%AA%E6%96%87%E5%90%9B-%E7%AC%AC%E5%9B%9B%E7%AB%A0-%E7%BA%BF%E7%A8%8B%E5%AE%89%E5%85%A8%E4%B8%8E%E6%95%B0%E6%8D%AE%E5%90%8C%E6%AD%A5/</link>
+        <pubDate>Mon, 15 Aug 2022 15:00:00 +0000</pubDate>
+        
+        <guid>https://lyoshur.github.io/stack/p/java%E9%AB%98%E5%B9%B6%E5%8F%91%E7%BC%96%E7%A8%8B%E8%AF%A6%E8%A7%A3%E5%A4%9A%E7%BA%BF%E7%A8%8B%E4%B8%8E%E6%9E%B6%E6%9E%84%E8%AE%BE%E8%AE%A1%E6%B1%AA%E6%96%87%E5%90%9B-%E7%AC%AC%E5%9B%9B%E7%AB%A0-%E7%BA%BF%E7%A8%8B%E5%AE%89%E5%85%A8%E4%B8%8E%E6%95%B0%E6%8D%AE%E5%90%8C%E6%AD%A5/</guid>
+        <description>&lt;h1 id=&#34;第四章-线程安全与数据同步&#34;&gt;第四章 线程安全与数据同步&lt;/h1&gt;
+&lt;h2 id=&#34;概念&#34;&gt;概念&lt;/h2&gt;
+&lt;p&gt;在《操作系统同步原语》 这篇文章中，介绍了操作系统在面对 进程/线程 间同步的时候，所支持的一些同步原语，其中 semaphore 信号量 和 mutex 互斥量是最重要的同步原语。&lt;/p&gt;
+&lt;p&gt;semaphore 信号量 和 mutex 互斥量 monitor 管程&lt;/p&gt;
+&lt;p&gt;在使用基本的 mutex 进行并发控制时，需要程序员非常小心地控制 mutex 的 down 和 up 操作，否则很容易引起死锁等问题。为了更容易地编写出正确的并发程序，所以在 mutex 和 semaphore 的基础上，提出了更高层次的同步原语 monitor，不过需要注意的是，操作系统本身并不支持 monitor 机制，实际上，monitor 是属于编程语言的范畴，当你想要使用 monitor 时，先了解一下语言本身是否支持 monitor 原语，例如 C 语言它就不支持 monitor，Java 语言支持 monitor。
+一般的 monitor 实现模式是编程语言在语法上提供语法糖，而如何实现 monitor 机制，则属于编译器的工作，Java 就是这么干的。&lt;/p&gt;
+&lt;p&gt;monitor 的重要特点是，同一个时刻，只有一个 进程/线程 能进入 monitor 中定义的临界区，这使得 monitor 能够达到互斥的效果。但仅仅有互斥的作用是不够的，无法进入 monitor 临界区的 进程/线程，它们应该被阻塞，并且在必要的时候会被唤醒。显然，monitor 作为一个同步工具，也应该提供这样的管理 进程/线程 状态的机制。想想我们为什么觉得 semaphore 和 mutex 在编程上容易出错，因为我们需要去亲自操作变量以及对 进程/线程 进行阻塞和唤醒。monitor 这个机制之所以被称为“更高级的原语”，那么它就不可避免地需要对外屏蔽掉这些机制，并且在内部实现这些机制，使得使用 monitor 的人看到的是一个简洁易用的接口。&lt;/p&gt;
+&lt;h2 id=&#34;1-synchronized关键字&#34;&gt;1 synchronized关键字&lt;/h2&gt;
+&lt;p&gt;在jdk1.5之前，要解决这个问题需要使用synchronized关键字，synchronized提供了一种排他机制，在同一时间只能有一个线程执行某些操作。&lt;/p&gt;
+&lt;p&gt;synchronized关键字可以实现一个简单的策略来防止线程干扰和内存一致性错误，如果一个对象对多个线程是可见的，那么对该对象的读写操作都将通过同步的方式来进行。&lt;/p&gt;
+&lt;p&gt;1.1 synchronized关键字提供了一种锁的机制，能够确保共享变量的互斥访问，从而防止数据不一致问题的出现。&lt;/p&gt;
+&lt;p&gt;1.2 synchronized关键字包含了monitor enter和monitor exit 两个JVM指令，它能够保证在任何时候执行到monitor enter之前都必须从主内存获取数据，而不是从缓存中。在monitor exit运行成功后，共享变量被更新的值必须输入主内存。&lt;/p&gt;
+&lt;p&gt;1.3 synchronized的指令严格遵守java happends-before规则，一个monitor exit指令之前必定要有一个monitor enter。&lt;/p&gt;
+&lt;h2 id=&#34;2-this-monitor-和-class-monitor&#34;&gt;2 This Monitor 和 Class Monitor&lt;/h2&gt;
+&lt;p&gt;This Monitor锁定的是对象实例&lt;/p&gt;
+&lt;p&gt;Class Monitor锁定的是对象.class&lt;/p&gt;
+</description>
+        </item>
+        <item>
+        <title>第三章 ThreadAPI的详细介绍</title>
+        <link>https://lyoshur.github.io/stack/p/java%E9%AB%98%E5%B9%B6%E5%8F%91%E7%BC%96%E7%A8%8B%E8%AF%A6%E8%A7%A3%E5%A4%9A%E7%BA%BF%E7%A8%8B%E4%B8%8E%E6%9E%B6%E6%9E%84%E8%AE%BE%E8%AE%A1%E6%B1%AA%E6%96%87%E5%90%9B-%E7%AC%AC%E4%B8%89%E7%AB%A0-threadapi%E7%9A%84%E8%AF%A6%E7%BB%86%E4%BB%8B%E7%BB%8D/</link>
+        <pubDate>Mon, 15 Aug 2022 14:00:00 +0000</pubDate>
+        
+        <guid>https://lyoshur.github.io/stack/p/java%E9%AB%98%E5%B9%B6%E5%8F%91%E7%BC%96%E7%A8%8B%E8%AF%A6%E8%A7%A3%E5%A4%9A%E7%BA%BF%E7%A8%8B%E4%B8%8E%E6%9E%B6%E6%9E%84%E8%AE%BE%E8%AE%A1%E6%B1%AA%E6%96%87%E5%90%9B-%E7%AC%AC%E4%B8%89%E7%AB%A0-threadapi%E7%9A%84%E8%AF%A6%E7%BB%86%E4%BB%8B%E7%BB%8D/</guid>
+        <description>&lt;h1 id=&#34;第三章-threadapi的详细介绍&#34;&gt;第三章 ThreadAPI的详细介绍&lt;/h1&gt;
+&lt;h2 id=&#34;1-线程sleep&#34;&gt;1 线程sleep&lt;/h2&gt;
+&lt;p&gt;sleep是一个静态方法，并有两个重载方法，其中一个需要传入毫秒数，另一个既需要毫秒数也需要纳秒数。&lt;/p&gt;
+&lt;p&gt;sleep方法会使当前线程进入指定毫秒数的休眠，暂停执行，虽然给定了一个休眠的时间，但是最终还是要以系统的定时器以及调度器的精度为准，休眠有一个重要的特性就是不会放弃monitor锁的所有权。&lt;/p&gt;
+&lt;p&gt;JDK1.5以后JDK引入了一个枚举TimeUtil，其对sleep提供了很好的封装。使用它可以省去很多时间单位的换算步骤。&lt;/p&gt;
+&lt;h2 id=&#34;2-线程yield&#34;&gt;2 线程yield&lt;/h2&gt;
+&lt;p&gt;yieId方法属于一种启发式的方法，其会提醒调度器我愿意放弃当前CPU资源，如果CPU资源不紧张，则会忽略这种提醒。&lt;/p&gt;
+&lt;p&gt;2.1 JDK1.5之前的版本中 yieId的方法事实上是调用了sleep(0)，但是他们之间存在本质的区别&lt;/p&gt;
+&lt;p&gt;2.2 yield只是对CPU调度器的一个提示，如果CPU调度器没有忽略这个提示，他会导致线程上下文的切换。&lt;/p&gt;
+&lt;p&gt;2.3 sleep会使线程短暂block，会在给定时间内释放CPU资源。&lt;/p&gt;
+&lt;p&gt;2.4 yield会使RUNNING状态的Thread进入RUNNABLE状态（如果CPU调度器没有忽略这个提示的话）&lt;/p&gt;
+&lt;p&gt;2.5 sleep几乎百分之百的完成了给定时间的休眠，而yield的提示不一定能担保&lt;/p&gt;
+&lt;p&gt;2.6 一个线程sleep另一个线程调用interrupt会捕获到中断信号，而yield不会&lt;/p&gt;
+&lt;h2 id=&#34;3-线程优先级setpriority&#34;&gt;3 线程优先级（setPriority）&lt;/h2&gt;
+&lt;p&gt;理论上优先级比较高的线程会获取优先被CPU调度的机会。如果CPU比较忙，优先级高的可能会获得更多的CPU时间片。但是闲事优先级的高低几乎不会有任何作用。&lt;/p&gt;
+&lt;p&gt;线程的优先级不能小于1，也不会大于10。如果指定的线程优先级大于线程所在Group的优先级，那么指定的优先级将会失效。取而代之的是group的最大优先级。一般都是5。&lt;/p&gt;
+&lt;h2 id=&#34;4-获取线程id&#34;&gt;4 获取线程ID&lt;/h2&gt;
+&lt;p&gt;public long getId() 获取线程的唯一ID，线程ID在整个JVM进程中都会是唯一的。&lt;/p&gt;
+&lt;h2 id=&#34;5-获取当前线程&#34;&gt;5 获取当前线程&lt;/h2&gt;
+&lt;p&gt;public static Thread currentThread() 用于返回当前线程的引用。&lt;/p&gt;
+&lt;h2 id=&#34;6-设置线程上下文类加载器&#34;&gt;6 设置线程上下文类加载器&lt;/h2&gt;
+&lt;p&gt;public ClassLoader getContextClassLoader&lt;/p&gt;
+&lt;p&gt;public void setContextClassLoader&lt;/p&gt;
+&lt;p&gt;设置该线程的类加载器，这个方法可以打破JAVA类加载器的父类委托机制，有时候该方法也成为JAVA类加载器的后门。&lt;/p&gt;
+&lt;h2 id=&#34;7-线程interrrupt&#34;&gt;7 线程interrrupt&lt;/h2&gt;
+&lt;p&gt;wait、sleep、join等方法会使当前线程进入阻塞状态，若另一个线程调用被阻塞线程的interrrupt方法，则会打断这种阻塞。&lt;/p&gt;
+&lt;p&gt;所以是用来打断阻塞继续运行的？不过打断会导致抛出一个异常InterruptedException&lt;/p&gt;
+&lt;h2 id=&#34;8-线程join&#34;&gt;8 线程join&lt;/h2&gt;
+&lt;p&gt;线程A join线程B，会使线程A进入等待，直到线程B结束生命周期或者到达给定时间，在此期间线程A是处于BLOCKED的&lt;/p&gt;
+&lt;h2 id=&#34;9-如何关闭一个线程&#34;&gt;9 如何关闭一个线程&lt;/h2&gt;
+&lt;p&gt;JDK有一个被弃用的方法，stop用来关闭线程，但这个方法在关闭线程时可能不会释放掉monitor锁，所以强烈建议不要使用该方法结束线程&lt;/p&gt;
+&lt;h3 id=&#34;91-使用中断信号退出线程&#34;&gt;9.1 使用中断信号退出线程&lt;/h3&gt;
+&lt;h3 id=&#34;92-使用volatile开关&#34;&gt;9.2 使用volatile开关&lt;/h3&gt;
+</description>
+        </item>
+        <item>
+        <title>JVM内存结构</title>
+        <link>https://lyoshur.github.io/stack/p/java%E9%AB%98%E5%B9%B6%E5%8F%91%E7%BC%96%E7%A8%8B%E8%AF%A6%E8%A7%A3%E5%A4%9A%E7%BA%BF%E7%A8%8B%E4%B8%8E%E6%9E%B6%E6%9E%84%E8%AE%BE%E8%AE%A1%E6%B1%AA%E6%96%87%E5%90%9B-jvm%E5%86%85%E5%AD%98%E7%BB%93%E6%9E%84/</link>
+        <pubDate>Mon, 15 Aug 2022 11:22:00 +0000</pubDate>
+        
+        <guid>https://lyoshur.github.io/stack/p/java%E9%AB%98%E5%B9%B6%E5%8F%91%E7%BC%96%E7%A8%8B%E8%AF%A6%E8%A7%A3%E5%A4%9A%E7%BA%BF%E7%A8%8B%E4%B8%8E%E6%9E%B6%E6%9E%84%E8%AE%BE%E8%AE%A1%E6%B1%AA%E6%96%87%E5%90%9B-jvm%E5%86%85%E5%AD%98%E7%BB%93%E6%9E%84/</guid>
+        <description>&lt;h1 id=&#34;jvm内存结构&#34;&gt;JVM内存结构&lt;/h1&gt;
+&lt;p&gt;JVM在执行java程序时会把对应的物理内存划分成不同的区域，有些分区随着JVM启动而创建，有些则是运行时才创建。&lt;/p&gt;
+&lt;h2 id=&#34;1-程序计数器&#34;&gt;1 程序计数器&lt;/h2&gt;
+&lt;p&gt;程序计数器用于存放当前线程接下来要执行的字节码指令、分支、循环、跳转、异常处理等信息。每个线程都有自己独立的程序计数器，因此这块区域是线程私有的。&lt;/p&gt;
+&lt;p&gt;这是一块比较小的内存，且不会出现任何溢出异常。&lt;/p&gt;
+&lt;h2 id=&#34;2-java虚拟机栈&#34;&gt;2 JAVA虚拟机栈&lt;/h2&gt;
+&lt;p&gt;虚拟机栈在JVM运行时建立的（这里的运行时，应该是因为程序计数器、JAVA虚拟机栈、本地方法栈都是线程私有的所以需要在线程运行起来时创建）他的生命周期与线程相同，方法在执行时，会创建一个名为栈帧（stack frame）的数据结构，主要用于存放局部变量表、操作栈、动态链接、方法出口等信息。&lt;/p&gt;
+&lt;p&gt;方法的调用与退出对应着栈帧在虚拟机栈中的压栈和弹栈过程。&lt;/p&gt;
+&lt;p&gt;栈内存的分配大小直接决定了在一个JVM进程中可以创建多少个线程。&lt;/p&gt;
+&lt;h2 id=&#34;3-本地方法栈&#34;&gt;3 本地方法栈&lt;/h2&gt;
+&lt;p&gt;在调用JNI方法时，JVM为本地方法提供的内存区域是本地方法栈，这块区域的内存自由度相当高。完全由不同的JVM厂商实现。线程私有。&lt;/p&gt;
+&lt;h2 id=&#34;4-堆内存&#34;&gt;4 堆内存&lt;/h2&gt;
+&lt;p&gt;JVM中最大的一块内存区域，被线程所共享，Java在运行期间创建的所有对象几乎都在堆内存。该内存区域也是垃圾回收重点照顾的区域。因此堆内存有时也称为GC堆。&lt;/p&gt;
+&lt;p&gt;堆内存一般会被细分为新生代和老年代。更细致的划分为Eden区（伊甸园区）、From Survivor(幸存者区 S0)、To Survivor(幸存者区 S1)。&lt;/p&gt;
+&lt;h2 id=&#34;5-方法区-17-&#34;&gt;5 方法区 （1.7-）&lt;/h2&gt;
+&lt;p&gt;主要用于存储已经被虚拟机加载的类信息，常量静态变量，JIT编译后的代码等数据。虽然在JVM规范中，将方法区划分为堆内存的一个逻辑分区。但是它经常还是被称为非堆。有时也被叫为持久代。&lt;/p&gt;
+&lt;h2 id=&#34;6-元空间-18&#34;&gt;6 元空间 （1.8）&lt;/h2&gt;
+&lt;p&gt;自从JDK1.8起，持久代被元空间取而代之（Meta Space）。元空间同样是堆内存的一部分，JVM为每个类加载器分配一块内存块列表，进行线性分配。块的大小取决于类加载器的类型，sun、反射、代理对应的类加载器会小一点。之前的版本会单独卸载回收掉某个类，而现在则是在GC的过程中发现某个类加载器已经具备回收的条件，则会将某个类加载器相关的元空间全部回收，这样可以减少内存碎片，节省GC扫描和压缩的时间。&lt;/p&gt;
+</description>
+        </item>
+        <item>
+        <title>第二章 深入理解Thread构造函数</title>
+        <link>https://lyoshur.github.io/stack/p/java%E9%AB%98%E5%B9%B6%E5%8F%91%E7%BC%96%E7%A8%8B%E8%AF%A6%E8%A7%A3%E5%A4%9A%E7%BA%BF%E7%A8%8B%E4%B8%8E%E6%9E%B6%E6%9E%84%E8%AE%BE%E8%AE%A1%E6%B1%AA%E6%96%87%E5%90%9B-%E7%AC%AC%E4%BA%8C%E7%AB%A0-%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3thread%E6%9E%84%E9%80%A0%E5%87%BD%E6%95%B0/</link>
+        <pubDate>Mon, 15 Aug 2022 10:50:00 +0000</pubDate>
+        
+        <guid>https://lyoshur.github.io/stack/p/java%E9%AB%98%E5%B9%B6%E5%8F%91%E7%BC%96%E7%A8%8B%E8%AF%A6%E8%A7%A3%E5%A4%9A%E7%BA%BF%E7%A8%8B%E4%B8%8E%E6%9E%B6%E6%9E%84%E8%AE%BE%E8%AE%A1%E6%B1%AA%E6%96%87%E5%90%9B-%E7%AC%AC%E4%BA%8C%E7%AB%A0-%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3thread%E6%9E%84%E9%80%A0%E5%87%BD%E6%95%B0/</guid>
+        <description>&lt;h1 id=&#34;第二章-深入理解thread构造函数&#34;&gt;第二章 深入理解Thread构造函数&lt;/h1&gt;
+&lt;h2 id=&#34;1-线程的命名&#34;&gt;1 线程的命名&lt;/h2&gt;
+&lt;p&gt;可以使用不同的构造函数对线程进行命名，为线程起一个有特殊意义的名字。如果没有为线程显式的指定一个名字，那么线程会以“Thread-”作为前缀与一个自增数字进行组合。&lt;/p&gt;
+&lt;p&gt;无论你使用默认的函数命名规则，还是指定了一个特殊的名字，在线程启动之前可以使用setName对其进行修改。&lt;/p&gt;
+&lt;h2 id=&#34;2-线程的父子关系&#34;&gt;2 线程的父子关系&lt;/h2&gt;
+&lt;p&gt;一个线程的创建肯定是由另一个线程完成的，创建它的线程就是它的父线程。&lt;/p&gt;
+&lt;h2 id=&#34;3-thread和threadgroup&#34;&gt;3 Thread和ThreadGroup&lt;/h2&gt;
+&lt;p&gt;如果在创建一个线程时，没有指定一个ThreadGroup,那么子线程将会被加入父线程所在的线程组。&lt;/p&gt;
+&lt;h2 id=&#34;4-thread与jvm虚拟机栈&#34;&gt;4 Thread与JVM虚拟机栈&lt;/h2&gt;
+&lt;p&gt;在线程的构造函数中，可以发现有一个特殊的参数stackSize。一般情况下，创建线程的时候不会手动指定栈内存的地址空间字节数组。统一通过xss参数进行设置即可。&lt;/p&gt;
+&lt;h2 id=&#34;5-守护线程&#34;&gt;5 守护线程&lt;/h2&gt;
+&lt;p&gt;当你希望关闭某些线程的时候，或者退出JVM进程的时候，一些线程能够自动关闭，这个时候可以考虑将一个线程设置为守护线程。&lt;/p&gt;
+</description>
+        </item>
+        <item>
+        <title>第一章 快速认识线程</title>
+        <link>https://lyoshur.github.io/stack/p/java%E9%AB%98%E5%B9%B6%E5%8F%91%E7%BC%96%E7%A8%8B%E8%AF%A6%E8%A7%A3%E5%A4%9A%E7%BA%BF%E7%A8%8B%E4%B8%8E%E6%9E%B6%E6%9E%84%E8%AE%BE%E8%AE%A1%E6%B1%AA%E6%96%87%E5%90%9B-%E7%AC%AC%E4%B8%80%E7%AB%A0-%E5%BF%AB%E9%80%9F%E8%AE%A4%E8%AF%86%E7%BA%BF%E7%A8%8B/</link>
+        <pubDate>Mon, 15 Aug 2022 10:50:00 +0000</pubDate>
+        
+        <guid>https://lyoshur.github.io/stack/p/java%E9%AB%98%E5%B9%B6%E5%8F%91%E7%BC%96%E7%A8%8B%E8%AF%A6%E8%A7%A3%E5%A4%9A%E7%BA%BF%E7%A8%8B%E4%B8%8E%E6%9E%B6%E6%9E%84%E8%AE%BE%E8%AE%A1%E6%B1%AA%E6%96%87%E5%90%9B-%E7%AC%AC%E4%B8%80%E7%AB%A0-%E5%BF%AB%E9%80%9F%E8%AE%A4%E8%AF%86%E7%BA%BF%E7%A8%8B/</guid>
+        <description>&lt;h1 id=&#34;第一章-快速认识线程&#34;&gt;第一章 快速认识线程&lt;/h1&gt;
+&lt;p&gt;对计算机来说每一个任务就是一个进程（Process）,在每一个进程内部至少要有一个线程（Thread）是在运行中，有时线程也称为轻量级的进程。&lt;/p&gt;
+&lt;p&gt;每一个线程都有自己的程序计数器、局部变量表、生命周期。&lt;/p&gt;
+&lt;p&gt;线程生命周期大体可以分为如下5个主要的阶段。NEW、RUNNABLE、RUNNING、BLOCKED、TERMINATED。&lt;/p&gt;
+&lt;h2 id=&#34;1-模板设计模式在thread中的应用&#34;&gt;1 模板设计模式在Thread中的应用&lt;/h2&gt;
+&lt;p&gt;我们可以通过 new Thread().start(); 的方式启动一个线程，start方法的源码如下&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt; 1
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 2
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 3
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 4
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 5
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 6
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 7
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 8
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 9
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;10
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;11
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;12
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;13
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;14
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;15
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;16
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;17
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;18
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;19
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;20
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;21
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;22
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;23
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;24
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;25
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;26
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;27
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;28
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;29
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;30
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;31
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-java&#34; data-lang=&#34;java&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;kd&#34;&gt;public&lt;/span&gt; &lt;span class=&#34;kd&#34;&gt;synchronized&lt;/span&gt; &lt;span class=&#34;kt&#34;&gt;void&lt;/span&gt; &lt;span class=&#34;nf&#34;&gt;start&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;()&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;{&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;        &lt;span class=&#34;cm&#34;&gt;/**
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;cm&#34;&gt;         * This method is not invoked for the main method thread or &amp;#34;system&amp;#34;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;cm&#34;&gt;         * group threads created/set up by the VM. Any new functionality added
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;cm&#34;&gt;         * to this method in the future may have to also be added to the VM.
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;cm&#34;&gt;         *
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;cm&#34;&gt;         * A zero status value corresponds to state &amp;#34;NEW&amp;#34;.
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;cm&#34;&gt;         */&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;        &lt;span class=&#34;k&#34;&gt;if&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;threadStatus&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;!=&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;0&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;            &lt;span class=&#34;k&#34;&gt;throw&lt;/span&gt; &lt;span class=&#34;k&#34;&gt;new&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;IllegalThreadStateException&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;();&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;        &lt;span class=&#34;cm&#34;&gt;/* Notify the group that this thread is about to be started
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;cm&#34;&gt;         * so that it can be added to the group&amp;#39;s list of threads
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;cm&#34;&gt;         * and the group&amp;#39;s unstarted count can be decremented. */&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;        &lt;span class=&#34;n&#34;&gt;group&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;na&#34;&gt;add&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;k&#34;&gt;this&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;);&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;        &lt;span class=&#34;kt&#34;&gt;boolean&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;started&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;kc&#34;&gt;false&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;        &lt;span class=&#34;k&#34;&gt;try&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;{&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;            &lt;span class=&#34;n&#34;&gt;start0&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;();&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;            &lt;span class=&#34;n&#34;&gt;started&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;kc&#34;&gt;true&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;        &lt;span class=&#34;o&#34;&gt;}&lt;/span&gt; &lt;span class=&#34;k&#34;&gt;finally&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;{&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;            &lt;span class=&#34;k&#34;&gt;try&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;{&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;                &lt;span class=&#34;k&#34;&gt;if&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;(!&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;started&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;)&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;{&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;                    &lt;span class=&#34;n&#34;&gt;group&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;na&#34;&gt;threadStartFailed&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;k&#34;&gt;this&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;);&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;                &lt;span class=&#34;o&#34;&gt;}&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;            &lt;span class=&#34;o&#34;&gt;}&lt;/span&gt; &lt;span class=&#34;k&#34;&gt;catch&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;Throwable&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;ignore&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;)&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;{&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;                &lt;span class=&#34;cm&#34;&gt;/* do nothing. If start0 threw a Throwable then
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;cm&#34;&gt;                  it will be passed up the call stack */&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;            &lt;span class=&#34;o&#34;&gt;}&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;        &lt;span class=&#34;o&#34;&gt;}&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    &lt;span class=&#34;o&#34;&gt;}&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;p&gt;最核心的是start0这个本地方法。而start0会调用run方法。&lt;/p&gt;
+&lt;p&gt;通过分析，线程的真正执行逻辑是在run方法中，通常我们会将run方法称为线程的执行单元。&lt;/p&gt;
+&lt;p&gt;默认的Thread代码如下&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;2
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;3
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;4
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;5
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;6
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;7
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;8
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;9
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-java&#34; data-lang=&#34;java&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;kd&#34;&gt;public&lt;/span&gt; &lt;span class=&#34;kd&#34;&gt;class&lt;/span&gt; &lt;span class=&#34;nc&#34;&gt;Thread&lt;/span&gt; &lt;span class=&#34;kd&#34;&gt;implements&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;Runnable&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;{&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    &lt;span class=&#34;kd&#34;&gt;private&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;Runnable&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;target&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    &lt;span class=&#34;nd&#34;&gt;@Override&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    &lt;span class=&#34;kd&#34;&gt;public&lt;/span&gt; &lt;span class=&#34;kt&#34;&gt;void&lt;/span&gt; &lt;span class=&#34;nf&#34;&gt;run&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;()&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;{&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;        &lt;span class=&#34;k&#34;&gt;if&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;target&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;!=&lt;/span&gt; &lt;span class=&#34;kc&#34;&gt;null&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;)&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;{&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;            &lt;span class=&#34;n&#34;&gt;target&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;na&#34;&gt;run&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;();&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;        &lt;span class=&#34;o&#34;&gt;}&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    &lt;span class=&#34;o&#34;&gt;}&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;o&#34;&gt;}&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;p&gt;所以我们可以有两种方式来实现Thread的执行单元，一种是直接重写现成的run方法。另一种是使用构造传递一个Runnable给Thread。&lt;/p&gt;
+&lt;p&gt;【NOTE】这里插入一下，这里作者将这种Thread和Runnable之间的关系归类为模板设计模式，然后举了一个数据库查询Handler的例子。但是感觉没有解释清楚模板设计模式和策略模式的区别。个人感觉模板设计模式更侧重于，将模板类的一部分功能，延迟到接口类来进行实现。而策略模式侧重于为了完成某个功能，提供不同的接口类，切换使用。&lt;/p&gt;
+</description>
+        </item>
+        <item>
+        <title>设计模式设计原则</title>
+        <link>https://lyoshur.github.io/stack/p/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F%E8%AE%BE%E8%AE%A1%E5%8E%9F%E5%88%99/</link>
+        <pubDate>Fri, 12 Aug 2022 14:00:00 +0000</pubDate>
+        
+        <guid>https://lyoshur.github.io/stack/p/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F%E8%AE%BE%E8%AE%A1%E5%8E%9F%E5%88%99/</guid>
+        <description>&lt;h1 id=&#34;设计模式设计原则&#34;&gt;设计模式设计原则&lt;/h1&gt;
+&lt;ol&gt;
+&lt;li&gt;找出应用中可能需要变化之处，把他们独立出来，不要和那些不需要变化的代码混在一起。&lt;/li&gt;
+&lt;li&gt;针对接口编程，而不是针对实现编程。&lt;/li&gt;
+&lt;li&gt;多用组合，少用继承。&lt;/li&gt;
+&lt;li&gt;类应该对拓展开放，对修改关闭。&lt;/li&gt;
+&lt;li&gt;要依赖抽象，不要依赖具体类。&lt;/li&gt;
+&lt;li&gt;最少知识原则：只和你的密友谈话。&lt;/li&gt;
+&lt;li&gt;好莱坞原则，别调用我们，我们会调用你。&lt;/li&gt;
+&lt;li&gt;一个类应该只有一个引起变化的原因。&lt;/li&gt;
+&lt;/ol&gt;
+</description>
+        </item>
+        <item>
+        <title>javadoc注释规范</title>
+        <link>https://lyoshur.github.io/stack/p/javadoc%E6%B3%A8%E9%87%8A%E8%A7%84%E8%8C%83/</link>
+        <pubDate>Thu, 11 Aug 2022 16:00:00 +0000</pubDate>
+        
+        <guid>https://lyoshur.github.io/stack/p/javadoc%E6%B3%A8%E9%87%8A%E8%A7%84%E8%8C%83/</guid>
+        <description>&lt;h1 id=&#34;javadoc注释规范&#34;&gt;javadoc注释规范&lt;/h1&gt;
+&lt;p&gt;暂无&lt;/p&gt;
+</description>
+        </item>
+        <item>
+        <title>JDK工具一览表</title>
+        <link>https://lyoshur.github.io/stack/p/jdk%E5%B7%A5%E5%85%B7%E4%B8%80%E8%A7%88%E8%A1%A8/</link>
+        <pubDate>Thu, 11 Aug 2022 15:31:00 +0000</pubDate>
+        
+        <guid>https://lyoshur.github.io/stack/p/jdk%E5%B7%A5%E5%85%B7%E4%B8%80%E8%A7%88%E8%A1%A8/</guid>
+        <description>&lt;h1 id=&#34;jdk工具一览表&#34;&gt;JDK工具一览表&lt;/h1&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;工具名称&lt;/th&gt;
+&lt;th&gt;功能描述&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;appletviewer.exe&lt;/td&gt;
+&lt;td&gt;用于运行并浏览applet小程序。&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;apt.exe&lt;/td&gt;
+&lt;td&gt;注解处理工具(Annotation Processing Tool)，主要用于注解处理。&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;extcheck.exe&lt;/td&gt;
+&lt;td&gt;扩展检测工具，主要用于检测指定jar文件与当前已安装的Java SDK扩展之间是否存在版本冲突。&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;idlj.exe&lt;/td&gt;
+&lt;td&gt;IDL转Java编译器(IDL-to-Java Compiler)，用于为指定的IDL文件生成Java绑定。IDL意即接口定义语言(Interface Definition Language)。&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;jabswitch.exe&lt;/td&gt;
+&lt;td&gt;Java访问桥开关(Java Access Bridge switch)，用于启用/禁用Java访问桥。Java访问桥内置于Java 7 Update 6及以上版本，主要为Windows系统平台提供一套访问Java应用的API。&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;jar.exe&lt;/td&gt;
+&lt;td&gt;jar文件管理工具，主要用于打包压缩、解压jar文件。&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;jarsigner.exe&lt;/td&gt;
+&lt;td&gt;jar密匙签名工具。&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;java.exe&lt;/td&gt;
+&lt;td&gt;Java运行工具，用于运行.class字节码文件或.jar文件。&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;javac.exe&lt;/td&gt;
+&lt;td&gt;Java编译工具(Java Compiler)，用于编译Java源代码文件。&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;javadoc.exe&lt;/td&gt;
+&lt;td&gt;Java文档工具，主要用于根据Java源代码中的注释信息生成HTML格式的API帮助文档。&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;javafxpackager.exe&lt;/td&gt;
+&lt;td&gt;JavaFX包装器，用于执行与封装或签名JavaFX应用有关的任务。&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;javah.exe&lt;/td&gt;
+&lt;td&gt;Java头文件工具，用于根据Java类生成C/C++头文件和源文件(主要用于JNI开发领域)。&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;javap.exe&lt;/td&gt;
+&lt;td&gt;Java反编译工具，主要用于根据Java字节码文件反汇编为Java源代码文件。&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;java-rmi.exe&lt;/td&gt;
+&lt;td&gt;Java远程方法调用(Java Remote Method Invocation)工具，主要用于在客户机上调用远程服务器上的对象。&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;javaw.exe&lt;/td&gt;
+&lt;td&gt;Java运行工具，用于运行.class字节码文件或.jar文件，但不会显示控制台输出信息，适用于运行图形化程序。&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;javaws.exe&lt;/td&gt;
+&lt;td&gt;Java Web Start，使您可以从Web下载和运行Java应用程序，下载、安装、运行、更新Java应用程序都非常简单方便。&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;jcmd.exe&lt;/td&gt;
+&lt;td&gt;Java 命令行(Java Command)，用于向正在运行的JVM发送诊断命令请求。&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;jconsole.exe&lt;/td&gt;
+&lt;td&gt;图形化用户界面的监测工具，主要用于监测并显示运行于Java平台上的应用程序的性能和资源占用等信息。&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;jdb.exe&lt;/td&gt;
+&lt;td&gt;Java调试工具(Java Debugger)，主要用于对Java应用进行断点调试。&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;jhat.exe&lt;/td&gt;
+&lt;td&gt;Java堆分析工具(Java Heap Analysis Tool)，用于分析Java堆内存中的对象信息。&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;jinfo.exe&lt;/td&gt;
+&lt;td&gt;Java配置信息工具(Java Configuration Information)，用于打印指定Java进程、核心文件或远程调试服务器的配置信息。&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;jmap.exe&lt;/td&gt;
+&lt;td&gt;Java内存映射工具(Java Memory Map)，主要用于打印指定Java进程、核心文件或远程调试服务器的共享对象内存映射或堆内存细节。&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;jmc.exe&lt;/td&gt;
+&lt;td&gt;Java任务控制工具(Java Mission Control)，主要用于HotSpot JVM的生产时间监测、分析、诊断。&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;jps.exe&lt;/td&gt;
+&lt;td&gt;JVM进程状态工具(JVM Process Status Tool)，用于显示目标系统上的HotSpot JVM的Java进程信息。&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;jrunscript.exe&lt;/td&gt;
+&lt;td&gt;Java命令行脚本外壳工具(command line script shell)，主要用于解释执行javascript、groovy、ruby等脚本语言。&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;jsadebugd.exe&lt;/td&gt;
+&lt;td&gt;Java可用性代理调试守护进程(Java Serviceability Agent Debug Daemon)，主要用于附加到指定的Java进程、核心文件，或充当一个调试服务器。&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;jstack.exe&lt;/td&gt;
+&lt;td&gt;Java堆栈跟踪工具，主要用于打印指定Java进程、核心文件或远程调试服务器的Java线程的堆栈跟踪信息。&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;jstat.exe&lt;/td&gt;
+&lt;td&gt;JVM统计监测工具(JVM Statistics Monitoring Tool)，主要用于监测并显示JVM的性能统计信息。&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;jstatd.exe&lt;/td&gt;
+&lt;td&gt;jstatd(VM jstatd Daemon)工具是一个RMI服务器应用，用于监测HotSpot JVM的创建和终止，并提供一个接口，允许远程监测工具附加到运行于本地主机的JVM上。&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;jvisualvm.exe&lt;/td&gt;
+&lt;td&gt;JVM监测、故障排除、分析工具，主要以图形化界面的方式提供运行于指定虚拟机的Java应用程序的详细信息。&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;keytool.exe&lt;/td&gt;
+&lt;td&gt;密钥和证书管理工具，主要用于密钥和证书的创建、修改、删除等。&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;kinit.exe&lt;/td&gt;
+&lt;td&gt;主要用于获取或缓存Kerberos协议的票据授权票据。&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;klist.exe&lt;/td&gt;
+&lt;td&gt;允许用户查看本地凭据缓存和密钥表中的条目(用于Kerberos协议)。&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;ktab.exe&lt;/td&gt;
+&lt;td&gt;Kerberos密钥表管理工具，允许用户管理存储于本地密钥表中的主要名称和服务密钥。&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;native2ascii.exe&lt;/td&gt;
+&lt;td&gt;本地编码到ASCII编码的转换器(Native-to-ASCII Converter)，用于&amp;quot;任意受支持的字符编码&amp;quot;和与之对应的&amp;quot;ASCII编码和(或)Unicode转义&amp;quot;之间的相互转换。&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;orbd.exe&lt;/td&gt;
+&lt;td&gt;对象请求代理守护进程(Object Request Broker Daemon)，它使客户端能够透明地定位和调用位于CORBA环境的服务器上的持久对象。&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;pack200.exe&lt;/td&gt;
+&lt;td&gt;JAR文件打包压缩工具，它可以利用Java类特有的结构，对普通JAR文件进行高效压缩，以便于能够更快地进行网络传输。&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;packager.exe&lt;/td&gt;
+&lt;td&gt;这是微软提供的对象包装程序，用于对象安装包。&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;policytool.exe&lt;/td&gt;
+&lt;td&gt;策略工具，用于管理用户策略文件(.java.policy)。&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;rmic.exe&lt;/td&gt;
+&lt;td&gt;Java RMI 编译器，为使用JRMP或IIOP协议的远程对象生成stub、skeleton、和tie类，也用于生成OMG IDL。&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;rmid.exe&lt;/td&gt;
+&lt;td&gt;Java RMI 激活系统守护进程，rmid启动激活系统守护进程，允许在虚拟机中注册或激活对象。&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;rmiregistry.exe&lt;/td&gt;
+&lt;td&gt;Java 远程对象注册表，用于在当前主机的指定端口上创建并启动一个远程对象注册表。&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;schemagen.exe&lt;/td&gt;
+&lt;td&gt;XML schema生成器，用于生成XML schema文件。&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;serialver.exe&lt;/td&gt;
+&lt;td&gt;序列版本命令，用于生成并返回serialVersionUID。&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;servertool.exe&lt;/td&gt;
+&lt;td&gt;Java IDL 服务器工具，用于注册、取消注册、启动和终止持久化的服务器。&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;tnameserv.exe&lt;/td&gt;
+&lt;td&gt;Java IDL瞬时命名服务。&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;unpack200.exe&lt;/td&gt;
+&lt;td&gt;JAR文件解压工具，将一个由pack200打包的文件解压提取为JAR文件。&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;wsgen.exe&lt;/td&gt;
+&lt;td&gt;XML Web Service 2.0的Java API，生成用于JAX-WS Web Service的JAX-WS便携式产物。&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;wsimport.exe&lt;/td&gt;
+&lt;td&gt;XML Web Service 2.0的Java API，主要用于根据服务端发布的wsdl文件生成客户端存根及框架&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;xjc.exe&lt;/td&gt;
+&lt;td&gt;主要用于根据XML schema文件生成对应的Java类。&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+</description>
+        </item>
+        <item>
+        <title>jconsole使用说明</title>
+        <link>https://lyoshur.github.io/stack/p/jconsole%E4%BD%BF%E7%94%A8%E8%AF%B4%E6%98%8E/</link>
+        <pubDate>Thu, 11 Aug 2022 13:31:00 +0000</pubDate>
+        
+        <guid>https://lyoshur.github.io/stack/p/jconsole%E4%BD%BF%E7%94%A8%E8%AF%B4%E6%98%8E/</guid>
+        <description>&lt;h1 id=&#34;jconsole使用说明&#34;&gt;jconsole使用说明&lt;/h1&gt;
+&lt;p&gt;JConsole 是一个内置 Java 性能分析器，可以从命令行（直接输入jconsole）或在 GUI shell （jdk\bin下打开）中运行。&lt;/p&gt;
+&lt;p&gt;它用于对JVM中内存，线程和类等的监控。可使用JTop插件。它可以监控本地的jvm，也可以监控远程的jvm，也可以同时监控几个jvm。&lt;/p&gt;
+&lt;p&gt;这款工具的好处在于，占用系统资源少，而且结合Jstat，可以有效监控到java内存的变动情况，以及引起变动的原因。在项目追踪内存泄露问题时，很实用。&lt;/p&gt;
+&lt;h2 id=&#34;1-概览&#34;&gt;1 概览&lt;/h2&gt;
+&lt;p&gt;以图标的形式显示堆内存使用量，线程使用量，类加载数量，以及CPU占用率&lt;/p&gt;
+&lt;h2 id=&#34;2-内存&#34;&gt;2 内存&lt;/h2&gt;
+&lt;p&gt;这里比jvisualvm实时性要高一点，并且可以通过切换，来展示堆内存、非堆内存、PS Old Gen、PS Eden Space、PS Survivor Space、Metaspace、Code Cache、Compressed Class Space。等内存的使用图标。&lt;/p&gt;
+&lt;h2 id=&#34;3-线程&#34;&gt;3 线程&lt;/h2&gt;
+&lt;p&gt;这里能显示活动线程数量以及峰值线程数量的变化图表。&lt;/p&gt;
+&lt;p&gt;下面的线程框，能查看每个线程的线程名称，以及线程的堆栈跟踪。还有一个按钮来支持死锁检测。&lt;/p&gt;
+&lt;h2 id=&#34;4-类&#34;&gt;4 类&lt;/h2&gt;
+&lt;p&gt;类页卡主要展示已加装当前类数量、已加载类总数、已卸载类总数等类相关信息&lt;/p&gt;
+&lt;h2 id=&#34;5-vm概要&#34;&gt;5 VM概要&lt;/h2&gt;
+&lt;p&gt;vm概要主要显示堆信息、虚拟机信息、类路径等相关信息&lt;/p&gt;
+&lt;h2 id=&#34;6-mbean&#34;&gt;6 MBean&lt;/h2&gt;
+&lt;p&gt;JMX把所有被管理的资源都成为MBean（ManagedBean），这些MBean全部由MBeanServer管理，如果要访问MBean，可以通过MBeanServer对外提供的访问接口，例如RMI或HTTP。&lt;/p&gt;
+&lt;h3 id=&#34;61-spring-boot程序接入mbean&#34;&gt;6.1 spring boot程序接入Mbean&lt;/h3&gt;
+&lt;p&gt;在启动程序添加注解@EnableMBeanExport，告知spring自动注册MBean&lt;/p&gt;
+&lt;p&gt;在Controller上，添加@ManagedResource注解 （objectName = &amp;ldquo;company:name = testName&amp;rdquo;, descriptiopn = &amp;ldquo;描述信息&amp;rdquo;）&lt;/p&gt;
+&lt;p&gt;在值添加 @ManagedAttribute（descriptiopn = &amp;ldquo;描述信息&amp;rdquo;）&lt;/p&gt;
+&lt;p&gt;在方法上添加@ManagedOperation&lt;/p&gt;
+&lt;p&gt;@ManagedOperationParameter（name= &amp;ldquo;name&amp;rdquo;, descriptiopn = &amp;ldquo;描述信息&amp;rdquo;）&lt;/p&gt;
+&lt;h2 id=&#34;7-注意事项&#34;&gt;7 注意事项&lt;/h2&gt;
+&lt;p&gt;想监控JAVA程序需要在程序启动时，添加JMX相关参数。如果是本地连接，可以不加&lt;/p&gt;
+</description>
+        </item>
+        <item>
+        <title>jvisualvm使用说明</title>
+        <link>https://lyoshur.github.io/stack/p/jvisualvm%E4%BD%BF%E7%94%A8%E8%AF%B4%E6%98%8E/</link>
+        <pubDate>Thu, 11 Aug 2022 13:31:00 +0000</pubDate>
+        
+        <guid>https://lyoshur.github.io/stack/p/jvisualvm%E4%BD%BF%E7%94%A8%E8%AF%B4%E6%98%8E/</guid>
+        <description>&lt;h1 id=&#34;jvisualvm使用说明&#34;&gt;jvisualvm使用说明&lt;/h1&gt;
+&lt;p&gt;JVisualVM是JDK自带的性能检测工具，路径在%JAVA_HOME%/bin下面。双击打开&lt;/p&gt;
+&lt;p&gt;在本地页卡下是，本地启动的java程序列表，同时能够包含显示Pid&lt;/p&gt;
+&lt;p&gt;点击某一个程序，能够从 概述、监视、线程、抽样器、Profiler 几个防线显示应用程序的信息&lt;/p&gt;
+&lt;h2 id=&#34;概述&#34;&gt;概述&lt;/h2&gt;
+&lt;p&gt;概述下主要包括应用程序的PID、主类、以及JVM相关的一些参数。系统属性这里能够显示一些java、spring、tomcat等相关属性信息&lt;/p&gt;
+&lt;h2 id=&#34;监视&#34;&gt;监视&lt;/h2&gt;
+&lt;p&gt;监视页卡主要显示CPU使用情况，堆内存使用情况，装载的类数量、以及线程活跃情况&lt;/p&gt;
+&lt;h2 id=&#34;线程&#34;&gt;线程&lt;/h2&gt;
+&lt;p&gt;线程页卡主要显示线程的活跃情况，根据不同颜色包含运行、休眠、等待、驻留、监视等几个不同的状态。&lt;/p&gt;
+&lt;p&gt;这里可以使用右上角的线程Dump,来获取每个线程的调用栈信息。&lt;/p&gt;
+&lt;h2 id=&#34;抽样器&#34;&gt;抽样器&lt;/h2&gt;
+&lt;p&gt;抽样器是这个工具比较核心的部分，主要分为CPU抽样和内存抽样。&lt;/p&gt;
+&lt;p&gt;CPU抽样能按照CPU样例显示每个java方法（这里能看到自定义的方法名）的CPU执行时间，可以通过页卡切换为每个线程的CPU占用时间。这里有些线程是类似Thread-22这种线程名称，如果需要定位到具体某个类启动的方法，可以结合线程的线程Dump来定位具体的线程。&lt;/p&gt;
+&lt;p&gt;内存抽样能按照堆内存中的不同变量类型，显示内存占用，不过因为实现原理的原因，比如说 String的底层是 []char，显示的结果并不是太直观。点击每个线程分配页卡，能看到每个线程的内存分配用量。&lt;/p&gt;
+&lt;p&gt;内存抽样还可以手动点击执行GC，来测试内存回收结果。点击堆Dump，可以导出展示当前堆内存结果，类似String之类比较简单的内存，能看到一些简单值。&lt;/p&gt;
+&lt;h2 id=&#34;profiler&#34;&gt;Profiler&lt;/h2&gt;
+&lt;p&gt;暂时不知道有什么用，点击后显示正在连接到目标VM就卡死了 = =、&lt;/p&gt;
+</description>
+        </item>
+        <item>
         <title>python-orm数据库查询框架使用教程</title>
         <link>https://lyoshur.github.io/stack/p/python-orm%E6%95%B0%E6%8D%AE%E5%BA%93%E6%9F%A5%E8%AF%A2%E6%A1%86%E6%9E%B6%E4%BD%BF%E7%94%A8%E6%95%99%E7%A8%8B/</link>
         <pubDate>Sun, 13 Mar 2022 00:00:00 +0000</pubDate>
@@ -9959,6 +12638,82 @@ flush privileges;&lt;/p&gt;
 &lt;p&gt;4.scrapy 直接 pip install scrapy&lt;/p&gt;
 &lt;p&gt;总结来说：安装scrapy的问题，在于Twisted插件需要visual C++ Build Tools 2015。&lt;/p&gt;
 &lt;p&gt;而国内的墙阻止了访问请求，导致直接安装的失败。&lt;/p&gt;
+</description>
+        </item>
+        <item>
+        <title>TCP/IP基础知识</title>
+        <link>https://lyoshur.github.io/stack/p/tcp/ip%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/</link>
+        <pubDate>Sun, 06 Mar 2022 00:00:00 +0000</pubDate>
+        
+        <guid>https://lyoshur.github.io/stack/p/tcp/ip%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/</guid>
+        <description>&lt;h1 id=&#34;tcpip基础知识&#34;&gt;TCP/IP基础知识&lt;/h1&gt;
+&lt;p&gt;这里采用广泛使用的4层模型来介绍TCP协议层次&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;网络接口层&lt;/p&gt;
+&lt;p&gt;网络接口层（Network Interface Layer）又称网络访问层（Network Access Layer），包括OSI的物理层和链路层，负责向网络物理介质发送数据包，从网络物理介质接收数据包。TCP/IP并没有对物理层和链路层进行定义，它只是支持现有的各种底层网络技术和标准。网络接口层涉及操作系统中的设备驱动程序和网络接口设备。&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;网络层&lt;/p&gt;
+&lt;p&gt;网络层又称为互联网层或IP层，负责处理IP数据包的传输、路由选择、流量控制和拥塞控制。&lt;/p&gt;
+&lt;p&gt;IP协议（Internet Protocol）既是网络层的核心协议，也是TCP/IP协议簇中的核心协议。网络互联的基本功能主要是由IP协议来完成的。&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;ARP用于根据IP地址获取物理地址。&lt;/li&gt;
+&lt;li&gt;RARP用于根据物理地址查找其IP地址。&lt;/li&gt;
+&lt;li&gt;Internet控制报文协议（Internet Control Message Protocol, ICMP）是主机和网关进行差错报告、控制和进行请求/应答的协议。&lt;/li&gt;
+&lt;li&gt;Internet组管理协议（Internet Group Management Protocol, IGMP）用于实现组播中的组成员管理。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;传输层&lt;/p&gt;
+&lt;p&gt;传输层为两台主机上的应用程序提供端到端的通信。TCP/IP的传输层包含传输控制协议TCP （Transmission Control Protocol）和用户数据报协议UDP（User Datagram Protocol）。这两种协议对应两类不同性质的服务，TCP为主机提供可靠的面向连接的传输服务；UDP为应用层提供简单高效的无连接传输服务。上层的应用进程可以根据可靠性要求或效率要求决定是使用TCP还是UDP来提供服务。&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;应用层&lt;/p&gt;
+&lt;p&gt;这个层次包括OSI的会话层、表示层和应用层，直接为特定的应用提供服务。应用层为用户提供一些常用的应用程序。TCP/IP给出了应用层的一些常用协议规范，如文件传输协议FTP、简单邮件传输协议SMTP、超文本传输协议HTTP等。&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;TCP/IP网络中的节点之间的通信也要经过一层一层的信息转换来实现。源主机向目标主机发送数据，出站数据经过TCP/IP协议栈的每一层都被打包和标识，以便交付给下一层，这个过程就是封装。目标主机接收数据后，入站数据在被交付给上层协议之前，低层协议拆除封装信息，这个过程称作解封，又称分用（Demultiplexing）。&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;传输层TCP传给IP的数据单元称作TCP报文段或简称为TCP段（TCP Segment）&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;网络层IP传给网络接口层的数据单元称作IP数据报（IP Datagram）&lt;/p&gt;
+&lt;p&gt;严格地说，IP和网络接口层之间传送的数据单元应该是分组（Packet，又译为包）。分组既可以是一个IP数据报，也可以是IP数据报的一个分片（Fragment）。&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;路层通过以太网传输的比特流称作帧（Frame）&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&#34;1-tcpip协议重要概念&#34;&gt;1 TCP/IP协议重要概念&lt;/h2&gt;
+&lt;h3 id=&#34;11-面向连接的协议与无连接的协议&#34;&gt;1.1 面向连接的协议与无连接的协议&lt;/h3&gt;
+&lt;p&gt;如果采用面向连接的协议进行通信，想通信的一方就首先要和另一方的应用程字建立连接，就像打电话，只有当连接建立之后，才能进行通信。位于传输层的TCP就是面向连接协议的一个例子。&lt;/p&gt;
+&lt;p&gt;无连接的协议在通信之前不用建立连接，就像寄信，只要有对方地址，就会正确地到达目的地。网络层的IP和传输层的UDP都是无连接协议。&lt;/p&gt;
+&lt;h3 id=&#34;12-可靠的协议与不可靠的协议&#34;&gt;1.2 可靠的协议与不可靠的协议&lt;/h3&gt;
+&lt;p&gt;可靠的协议保证数据能够传送到目的地，而且保证数据内容不会发生变化。TCP就是一个可靠的协议。&lt;/p&gt;
+&lt;p&gt;不可靠的协议不保证数据能够传送到目的地，但是它们都会尽力传送数据，而且它们可以检验出到达目的地的数据是否完整。IP和UDP就是不可靠的协议。&lt;/p&gt;
+&lt;h3 id=&#34;13-字节流协议与数据报协议&#34;&gt;1.3 字节流协议与数据报协议&lt;/h3&gt;
+&lt;p&gt;字节流协议表示发送方和接收方将传输的数据看成是一串连续的字节串流。先发出的数据将会被先接收到，TCP就是这样的一个协议。&lt;/p&gt;
+&lt;p&gt;数据报协议与字节流不同，它会将数据一个一个地传送。发送方先后向接收方发出两个数据报，接收方并不知道哪一个数据报会先被收到。IP和UDP就是这样的两个协议。如果要发送的信息不必讲求顺序，则可以选择UDP传输。而如果使用UDP发送有顺序的数据，并不是不可以，但是要对数据内容重新组合，这将加大程序复杂度。&lt;/p&gt;
+&lt;h3 id=&#34;14-ip地址&#34;&gt;1.4 IP地址&lt;/h3&gt;
+&lt;p&gt;在TCP/IP网络上，每个主机都有唯一的地址，它是通过IP协议来实现的。IP协议要求在每次与IP网络建立连接时，每台主机都必须为这个连接分配一个唯一的地址。IP地址不但可以用来识别每一台主机，而且隐含着网际间的路径信息。&lt;/p&gt;
+&lt;h3 id=&#34;15-tcpip协议号端口号及插座&#34;&gt;1.5 TCP/IP协议号、端口号及插座&lt;/h3&gt;
+&lt;p&gt;TCP/IP网络支持“多路复用”（Multiplexing），将来自许多应用程序的数据进行组合，传递给传输层（TCP或UDP），再由传输层传递给网络层（IP），其中，IP利用协议号来指定传输协议，传输层的TCP和UDP采用端口号来识别应用程序。&lt;/p&gt;
+&lt;h3 id=&#34;16-关键名词&#34;&gt;1.6 关键名词&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;MTU：（Maximum Transmission Unit, MTU）链路层的这个特性称作最大传输单元&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;前导帧：&lt;/p&gt;
+&lt;p&gt;在IP数据报被发送到传输介质之前，数据链路驱动程序将前导帧加在以太网帧上。传输介质刚开始接收来自链路层的MAC帧时，由于尚未与到达的比特（位）流达成同步，以太网帧前面的若干个比特就无法接收，结果会使整个帧成为无用的帧。如图2-4所示，为达到与比特流同步，从MAC子层向下传到物理层时还要在MAC帧的前面插入8字节的前导帧，它是由硬件自动生成的。前导帧由两个字段构成，第1字段称为前导码（Preamble），每个字节内容是十六进制数0xAA（由交替的1和0组成），使接收端在接收以太网帧时能够实现同步，又称前同步码；第2字段称为起始帧定界符（Start Frame Delimiter, SFD），值为十六进制数0xAB（10101011），标识以太网帧的开始。注意前导帧不计入以太网帧的长度。&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;帧校验&lt;/p&gt;
+&lt;p&gt;以太网帧的内容需要执行一个循环冗余校验（Cyclical Redundancy Check,CRC）过程，校验计算的结果放在帧的末尾Frame Check Sequence（帧校验序列）字段中。注意校验范围并不包括前导帧。最后，网卡发送该MAC帧，前面加上前导码，它是一个接收端用于正确地将比特（位）解释为1或0的前导位模式。&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
 </description>
         </item>
         <item>
