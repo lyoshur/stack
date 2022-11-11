@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+    <channel>
+        <title>maven on 羡鱼先生的空间</title>
+        <link>https://lyoshur.github.io/stack/tags/maven/</link>
+        <description>Recent content in maven on 羡鱼先生的空间</description>
+        <generator>Hugo -- gohugo.io</generator>
+        <language>zh-cn</language>
+        <lastBuildDate>Sun, 06 Mar 2022 00:00:00 +0000</lastBuildDate><atom:link href="https://lyoshur.github.io/stack/tags/maven/index.xml" rel="self" type="application/rss+xml" /><item>
+        <title>关于maven中的Group、Artifact、Version</title>
+        <link>https://lyoshur.github.io/stack/p/%E5%85%B3%E4%BA%8Emaven%E4%B8%AD%E7%9A%84groupartifactversion/</link>
+        <pubDate>Sun, 06 Mar 2022 00:00:00 +0000</pubDate>
+        
+        <guid>https://lyoshur.github.io/stack/p/%E5%85%B3%E4%BA%8Emaven%E4%B8%AD%E7%9A%84groupartifactversion/</guid>
+        <description>&lt;p&gt;本文非完全原创，仅仅是整理自网上博客加上一部分自己的理解。参考文章：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;aigoV &lt;a class=&#34;link&#34; href=&#34;https://blog.csdn.net/aigoV/article/details/89884501&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;https://blog.csdn.net/aigoV/article/details/89884501&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;本文仅仅作为学习maven相关内容学习笔记使用。&lt;/p&gt;
+&lt;h3 id=&#34;maven&#34;&gt;Maven&lt;/h3&gt;
+&lt;p&gt;1.GroupId(Group):&lt;br&gt;
+项目所属组织的唯一标识符，对应项目中java的包结构（main目录里java的目录结构）。一般是公司官网域名反写或组织名：比如com.baidu.项目名或com.aigov.项目名。&lt;br&gt;
+GroupID定义了项目属于哪一个组。&lt;/p&gt;
+&lt;p&gt;2.ArtifactId(Artifact):&lt;br&gt;
+项目的唯一标识符，对应项目的名字，是项目根目录的名称。&lt;br&gt;
+ArtifactID定义了一个maven项目在组中的唯一id。&lt;/p&gt;
+&lt;p&gt;3.Version&lt;br&gt;
+指定项目当前的版本，SNAPSHOT意为快照，说明该项目还处于开发中，是不稳定的版本。&lt;/p&gt;
+&lt;h4 id=&#34;整理&#34;&gt;整理&lt;/h4&gt;
+&lt;p&gt;在maven中，所有的依赖被处理成由Group、Artifact、Version三个标识所确定的坐标中。&lt;/p&gt;
+&lt;p&gt;因此在个人项目中，应尽量避免使用与已存在的maven项目相同的标识。除非他们处于同一个组织或项目。&lt;br&gt;
+另外一般包名与Group、Artifact会存在对应关系，所以起名时应注意包名起名规范。&lt;/p&gt;
+</description>
+        </item>
+        <item>
+        <title>关于maven中的relativePath</title>
+        <link>https://lyoshur.github.io/stack/p/%E5%85%B3%E4%BA%8Emaven%E4%B8%AD%E7%9A%84relativepath/</link>
+        <pubDate>Sun, 06 Mar 2022 00:00:00 +0000</pubDate>
+        
+        <guid>https://lyoshur.github.io/stack/p/%E5%85%B3%E4%BA%8Emaven%E4%B8%AD%E7%9A%84relativepath/</guid>
+        <description>&lt;p&gt;本文非完全原创，仅仅是整理自网上博客加上一部分自己的理解。参考文章：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;xinwendewen &lt;a class=&#34;link&#34; href=&#34;https://blog.csdn.net/zwt0909/article/details/52218222&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;https://blog.csdn.net/zwt0909/article/details/52218222&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;本文仅仅作为学习maven相关内容学习笔记使用。&lt;/p&gt;
+&lt;h3 id=&#34;parentrelativepath&#34;&gt;parent.relativePath&lt;/h3&gt;
+&lt;p&gt;一般出现在pom文件，存在继承关系中。例如：&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;2
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;3
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;4
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;5
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;6
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-xml&#34; data-lang=&#34;xml&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;nt&#34;&gt;&amp;lt;parent&amp;gt;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    &lt;span class=&#34;nt&#34;&gt;&amp;lt;groupId&amp;gt;&lt;/span&gt;org.springframework.boot&lt;span class=&#34;nt&#34;&gt;&amp;lt;/groupId&amp;gt;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    &lt;span class=&#34;nt&#34;&gt;&amp;lt;artifactId&amp;gt;&lt;/span&gt;spring-boot-starter-parent&lt;span class=&#34;nt&#34;&gt;&amp;lt;/artifactId&amp;gt;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    &lt;span class=&#34;nt&#34;&gt;&amp;lt;version&amp;gt;&lt;/span&gt;2.2.1.RELEASE&lt;span class=&#34;nt&#34;&gt;&amp;lt;/version&amp;gt;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    &lt;span class=&#34;nt&#34;&gt;&amp;lt;relativePath/&amp;gt;&lt;/span&gt; &lt;span class=&#34;c&#34;&gt;&amp;lt;!-- lookup parent from repository --&amp;gt;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;nt&#34;&gt;&amp;lt;/parent&amp;gt;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;p&gt;这里的relativePath表示依赖路径。默认值为../pom.xml。&lt;/p&gt;
+&lt;p&gt;也就是说，默认是从上层项目中获取父依赖，当前项目为依赖的子项目。&lt;/p&gt;
+&lt;p&gt;查找循序一般为relativePath地址–本地仓库–远程仓库。&lt;/p&gt;
+&lt;p&gt;也就是将查找父项目。父项目不存在的话，查找本地仓库。本地仓库仍然不存在，则查找远程仓库，直至查找失败。&lt;/p&gt;
+&lt;p&gt;而org.springframework.boot作为一个不存在本地的父项目。可以将relativePath的值设置为空。也就是&lt;!-- raw HTML omitted --&gt;。这样将始终从仓库中获取，不存本地路径中获取。&lt;/p&gt;
+</description>
+        </item>
+        
+    </channel>
+</rss>

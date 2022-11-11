@@ -1,0 +1,300 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+    <channel>
+        <title>消息队列 on 羡鱼先生的空间</title>
+        <link>https://lyoshur.github.io/stack/categories/%E6%B6%88%E6%81%AF%E9%98%9F%E5%88%97/</link>
+        <description>Recent content in 消息队列 on 羡鱼先生的空间</description>
+        <generator>Hugo -- gohugo.io</generator>
+        <language>zh-cn</language>
+        <lastBuildDate>Wed, 31 Aug 2022 16:47:00 +0000</lastBuildDate><atom:link href="https://lyoshur.github.io/stack/categories/%E6%B6%88%E6%81%AF%E9%98%9F%E5%88%97/index.xml" rel="self" type="application/rss+xml" /><item>
+        <title>kafka主题与分区</title>
+        <link>https://lyoshur.github.io/stack/p/kafka%E4%B8%BB%E9%A2%98%E4%B8%8E%E5%88%86%E5%8C%BA/</link>
+        <pubDate>Wed, 31 Aug 2022 16:47:00 +0000</pubDate>
+        
+        <guid>https://lyoshur.github.io/stack/p/kafka%E4%B8%BB%E9%A2%98%E4%B8%8E%E5%88%86%E5%8C%BA/</guid>
+        <description>&lt;h1 id=&#34;kafka主题与分区&#34;&gt;kafka主题与分区&lt;/h1&gt;
+&lt;p&gt;主题和分区是Kafka 的两个核心概念，前面章节中讲述的生产者和消费者的设计理念所针对的都是主题和分区层面的操作。主题作为消息的归类，可以再细分为一个或多个分区，分区也可以看作对消息的二次归类。分区的划分不仅为Kafka提供了可伸缩性、水平扩展的功能，还通过多副本机制来为Kafka提供数据冗余以提高数据可靠性。&lt;/p&gt;
+&lt;p&gt;从Kafka的底层实现来说，主题和分区都是逻辑上的概念，分区可以有一至多个副本，每个副本对应一个日志文件，每个日志文件对应一至多个日志分段（LogSegment），每个日志分段还可以细分为索引文件、日志存储文件和快照文件等。不过对于使用Kafka进行消息收发的普通用户而言，了解到分区这一层面足以应对大部分的使用场景。&lt;/p&gt;
+&lt;h2 id=&#34;1-主题的管理&#34;&gt;1 主题的管理&lt;/h2&gt;
+&lt;p&gt;如果broker端配置参数auto.create.topics.enable设置为true（默认值就是true），那么当生产者向一个尚未创建的主题发送消息时，会自动创建一个分区数为num.partitions （默认值为1）、副本因子为default.replication.factor（默认值为1）的主题。除此之外，当一个消费者开始从未知主题中读取消息时，或者当任意一个客户端向未知主题发送元数据请求时，都会按照配置参数num.partitions和default.replication.factor的值来创建一个相应的主题。很多时候，这种自动创建主题的行为都是非预期的。除非有特殊应用需求，否则不建议将auto.create.topics.enable参数设置为true，这个参数会增加主题的管理与维护的难度。&lt;/p&gt;
+</description>
+        </item>
+        <item>
+        <title>kafka生产者与消费者</title>
+        <link>https://lyoshur.github.io/stack/p/kafka%E7%94%9F%E4%BA%A7%E8%80%85%E4%B8%8E%E6%B6%88%E8%B4%B9%E8%80%85/</link>
+        <pubDate>Wed, 31 Aug 2022 11:22:00 +0000</pubDate>
+        
+        <guid>https://lyoshur.github.io/stack/p/kafka%E7%94%9F%E4%BA%A7%E8%80%85%E4%B8%8E%E6%B6%88%E8%B4%B9%E8%80%85/</guid>
+        <description>&lt;h1 id=&#34;kafka生产者与消费者&#34;&gt;kafka生产者与消费者&lt;/h1&gt;
+&lt;h2 id=&#34;1-实用的脚本工具&#34;&gt;1 实用的脚本工具&lt;/h2&gt;
+&lt;p&gt;Kafka提供了许多实用的脚本工具，存放在$KAFKA_HOME的bin目录下&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;kafka-topics.sh&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;kafka-topics.sh --zookeeper localhost:2181/kafka --create --topic topic-demo --replication-factor &lt;span class=&#34;m&#34;&gt;3&lt;/span&gt; --partitions &lt;span class=&#34;m&#34;&gt;4&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;p&gt;创建一个分区数为4，副本因子为3的主题 topic-demo&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;kafka-console-consumer.sh&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;kafka-console-consumer.sh --bootstrap-server localhost:9092 --topic topic-demo
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;p&gt;创建一个订阅主题topic-demo的消费者&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;kafka-console-producer.sh&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;kafka-console-producer.sh --broker-list localhost:9092 --topic topic-demo
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;p&gt;创建一个发布主题为topic-demo的生产者&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&#34;2-java客户端&#34;&gt;2 Java客户端&lt;/h2&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;2
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;3
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;4
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;5
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-xml&#34; data-lang=&#34;xml&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;nt&#34;&gt;&amp;lt;dependency&amp;gt;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    &lt;span class=&#34;nt&#34;&gt;&amp;lt;groupId&amp;gt;&lt;/span&gt;org.apache.kafka&lt;span class=&#34;nt&#34;&gt;&amp;lt;/groupId&amp;gt;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    &lt;span class=&#34;nt&#34;&gt;&amp;lt;artifactId&amp;gt;&lt;/span&gt;kafka-clients&lt;span class=&#34;nt&#34;&gt;&amp;lt;/artifactId&amp;gt;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    &lt;span class=&#34;nt&#34;&gt;&amp;lt;version&amp;gt;&lt;/span&gt;2.0.0&lt;span class=&#34;nt&#34;&gt;&amp;lt;/version&amp;gt;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;nt&#34;&gt;&amp;lt;/dependency&amp;gt;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;h2 id=&#34;3-生产客户端&#34;&gt;3 生产客户端&lt;/h2&gt;
+&lt;p&gt;一个正常的生产逻辑需要具备以下几个步骤：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;配置生产者客户端参数及创建相应的生产者实例。&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;构建待发送的消息。&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;发送消息。&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;关闭生产者实例&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;要往Kafka中写入消息，首先要创建一个生产者客户端实例并设置一些配置参数，然后构建消息的ProducerRecord对象，其中必须包含所要发往的主题及消息的消息体，进而再通过生产者客户端实例将消息发出，最后可以通过 close（）方法来关闭生产者客户端实例并回收相应的资源。&lt;/p&gt;
+&lt;p&gt;这里有必要单独说明的是构建的消息对象ProducerRecord，它并不是单纯意义上的消息，它包含了多个属性，原本需要发送的与业务相关的消息体只是其中的一个 value 属性，比如“Hello，Kafka！”只是ProducerRecord对象中的一个属性。ProducerRecord类的定义如下：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;topic 主题&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;partition 分区号&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;headers 消息头部&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;key 键&lt;/p&gt;
+&lt;p&gt;同一个key的消息会被划分到同一个分区中&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;value 值&lt;/p&gt;
+&lt;p&gt;value是指消息体，一般不为空，如果为空则表示特定的消息—墓碑消息&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;timestamp 消息的时间戳&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;31--生产者实例的必要参数&#34;&gt;3.1  生产者实例的必要参数&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;bootstrap.servers：该参数用来指定生产者客户端连接Kafka集群所需的broker地址清单，具体的内容格式为host1：port1，host2：port2，可以设置一个或多个地址，中间以逗号隔开，此参数的默认值为“”。注意这里并非需要所有的broker地址，因为生产者会从给定的broker里查找到其他broker的信息。不过建议至少要设置两个以上的broker 地址信息，当其中任意一个宕机时，生产者仍然可以连接到 Kafka集群上。&lt;/li&gt;
+&lt;li&gt;key.serializer 和 value.serializer：broker 端接收的消息必须以字节数组（byte[]）的形式存在。代码清单2-1中生产者使用的KafkaProducer＜String，String＞和ProducerRecord＜String，String＞中的泛型＜String，String＞对应的就是消息中key和value的类型，生产者客户端使用这种方式可以让代码具有良好的可读性，不过在发往broker之前需要将消息中对应的key和value做相应的序列化操作来转换成字节数组。key.serializer和value.serializer这两个参数分别用来指定key和value序列化操作的序列化器，这两个参数无默认值。注意这里必须填写序列化器的全限定名&lt;/li&gt;
+&lt;li&gt;client.id：这个参数用来设定KafkaProducer对应的客户端id，默认值为“”。如果客户端不设置，则KafkaProducer会自动生成一个非空字符串，内容形式如“producer-1”“producer-2”，即字符串“producer-”与数字的拼接。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;一般情况下，普通开发人员无法记住所有的参数名称，只能有个大致的印象。在实际使用过程中，诸如“key.serializer”“max.request.size”“interceptor.classes”之类的字符串经常由于人为因素而书写错误。为此，我们可以直接使用客户端中的org.apache.kafka.clients.producer.ProducerConfig类来做一定程度上的预防措施，每个参数在ProducerConfig 类中都有对应的名称&lt;/p&gt;
+&lt;h3 id=&#34;32-消息的发送&#34;&gt;3.2 消息的发送&lt;/h3&gt;
+&lt;p&gt;在创建完生产者实例之后，接下来的工作就是构建消息，即创建ProducerRecord对象。&lt;/p&gt;
+&lt;p&gt;针对不同的消息，需要构建不同的ProducerRecord对象，在实际应用中创建ProducerRecord对象是一个非常频繁的动作。&lt;/p&gt;
+&lt;p&gt;发送消息主要有三种模式：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;发后即忘（fire-and-forget）&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-fallback&#34; data-lang=&#34;fallback&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;producer.send(record)
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;同步（sync）&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-fallback&#34; data-lang=&#34;fallback&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;producer.send(record).get()
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;异步（async）&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-fallback&#34; data-lang=&#34;fallback&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;producer.send(record, new Callback(){})
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;KafkaProducer 的 send（）方法并非是 void 类型，而是 Future＜RecordMetadata＞类型。&lt;/p&gt;
+&lt;p&gt;消息发送完成后需要调用close，关闭生产者。&lt;/p&gt;
+&lt;h3 id=&#34;33-序列化&#34;&gt;3.3 序列化&lt;/h3&gt;
+&lt;p&gt;生产者需要用序列化器（Serializer）把对象转换成字节数组才能通过网络发送给Kafka。而在对侧，消费者需要用反序列化器（Deserializer）把从 Kafka 中收到的字节数组转换成相应的对象。&lt;/p&gt;
+&lt;p&gt;org.apache.kafka.common.serialization.Serializer接口，此接口有3个方法：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;public void configure(Map&amp;lt;String, ?&amp;gt; configs, boolean isKey)&lt;/li&gt;
+&lt;li&gt;public byte[] serialize(String topic, T data)&lt;/li&gt;
+&lt;li&gt;public void close()&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;如果 Kafka 客户端提供的几种序列化器都无法满足应用需求，则可以选择使用如 Avro、JSON、Thrift、ProtoBuf和Protostuff等通用的序列化工具来实现，或者使用自定义类型的序列化器来实现。&lt;/p&gt;
+&lt;h3 id=&#34;34-分区器&#34;&gt;3.4 分区器&lt;/h3&gt;
+&lt;p&gt;消息在通过send（）方法发往broker的过程中，有可能需要经过拦截器（Interceptor）、序列化器（Serializer）和分区器（Partitioner）的一系列作用之后才能被真正地发往 broker。拦截器一般不是必需的，而序列化器是必需的。消息经过序列化之后就需要确定它发往的分区，如果消息ProducerRecord中指定了partition字段，那么就不需要分区器的作用，因为partition代表的就是所要发往的分区号。&lt;/p&gt;
+&lt;p&gt;如果消息ProducerRecord中没有指定partition字段，那么就需要依赖分区器，根据key这个字段来计算partition的值。分区器的作用就是为消息分配分区。&lt;/p&gt;
+&lt;p&gt;Kafka中提供的默认分区器是org.apache.kafka.clients.producer.internals.DefaultPartitioner，它实现了org.apache.kafka.clients.producer.Partitioner接口，这个接口中定义了2个方法，具体如下所示。&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;public int partition(String topic, Object key, byte[] keyBytes, Object value, byte[] valueBytes, Cluster cluster)&lt;/li&gt;
+&lt;li&gt;public void close()&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;其中partition（）方法用来计算分区号，返回值为int类型。partition（）方法中的参数分别表示主题、键、序列化后的键、值、序列化后的值，以及集群的元数据信息，通过这些信息可以实现功能丰富的分区器。close（）方法在关闭分区器的时候用来回收一些资源。&lt;/p&gt;
+&lt;p&gt;Partitioner 接口还有一个父接口org.apache.kafka.common.Configurable，这个接口中只有一个方法,Configurable接口中的configure（）方法主要用来获取配置信息及初始化数据。&lt;/p&gt;
+&lt;h3 id=&#34;35-拦截器&#34;&gt;3.5 拦截器&lt;/h3&gt;
+&lt;h2 id=&#34;4-重要的生产者参数&#34;&gt;4 重要的生产者参数&lt;/h2&gt;
+&lt;h3 id=&#34;41-acks&#34;&gt;4.1 acks&lt;/h3&gt;
+&lt;p&gt;这个参数用来指定分区中必须要有多少个副本收到这条消息，之后生产者才会认为这条消息是成功写入的。acks 是生产者客户端中一个非常重要的参数，它涉及消息的可靠性和吞吐量之间的权衡。acks参数有3种类型的值（都是字符串类型）。&lt;/p&gt;
+&lt;p&gt;acks=1。默认值即为1。生产者发送消息之后，只要分区的leader副本成功写入消息，那么它就会收到来自服务端的成功响应。&lt;/p&gt;
+&lt;p&gt;acks=0。生产者发送消息之后不需要等待任何服务端的响应。如果在消息从发送到写入Kafka的过程中出现某些异常，导致Kafka并没有收到这条消息，那么生产者也无从得知，消息也就丢失了。在其他配置环境相同的情况下，acks 设置为 0 可以达到最大的吞吐量。&lt;/p&gt;
+&lt;p&gt;acks=-1或acks=all。生产者在消息发送之后，需要等待ISR中的所有副本都成功写入消息之后才能够收到来自服务端的成功响应。在其他配置环境相同的情况下，acks 设置为-1（all）可以达到最强的可靠性。但这并不意味着消息就一定可靠，因为ISR中可能只有leader副本，这样就退化成了acks=1的情况。要获得更高的消息可靠性需要配合 min.insync.replicas 等参数的联动，&lt;/p&gt;
+&lt;h3 id=&#34;42-maxrequestsize&#34;&gt;4.2 max.request.size&lt;/h3&gt;
+&lt;p&gt;这个参数用来限制生产者客户端能发送的消息的最大值，默认值为 1048576B，即 1MB。一般情况下，这个默认值就可以满足大多数的应用场景了。笔者并不建议读者盲目地增大这个参数的配置值，尤其是在对Kafka整体脉络没有足够把控的时候。因为这个参数还涉及一些其他参数的联动，比如broker端的message.max.bytes参数，如果配置错误可能会引起一些不必要的异常。&lt;/p&gt;
+&lt;h3 id=&#34;43-retries和retrybackoffms&#34;&gt;4.3 retries和retry.backoff.ms&lt;/h3&gt;
+&lt;p&gt;retries参数用来配置生产者重试的次数，默认值为0，即在发生异常的时候不进行任何重试动作。消息在从生产者发出到成功写入服务器之前可能发生一些临时性的异常，比如网络抖动、leader副本的选举等，这种异常往往是可以自行恢复的，生产者可以通过配置retries大于0的值，以此通过内部重试来恢复而不是一味地将异常抛给生产者的应用程序。&lt;/p&gt;
+&lt;p&gt;retry.backoff.ms，这个参数的默认值为100，它用来设定两次重试之间的时间间隔，避免无效的频繁重试。&lt;/p&gt;
+&lt;h3 id=&#34;44-compressiontype&#34;&gt;4.4 compression.type&lt;/h3&gt;
+&lt;p&gt;这个参数用来指定消息的压缩方式，默认值为“none”，即默认情况下，消息不会被压缩。该参数还可以配置为“gzip”“snappy”和“lz4”。对消息进行压缩可以极大地减少网络传输量、降低网络I/O，从而提高整体的性能。消息压缩是一种使用时间换空间的优化方式，如果对时延有一定的要求，则不推荐对消息进行压缩。&lt;/p&gt;
+&lt;h3 id=&#34;45-connectionsmaxidlems&#34;&gt;4.5 connections.max.idle.ms&lt;/h3&gt;
+&lt;p&gt;这个参数用来指定在多久之后关闭限制的连接，默认值是540000（ms），即9分钟。&lt;/p&gt;
+&lt;h3 id=&#34;46-lingerms&#34;&gt;4.6 linger.ms&lt;/h3&gt;
+&lt;p&gt;这个参数用来指定生产者发送 ProducerBatch 之前等待更多消息（ProducerRecord）加入ProducerBatch 的时间，默认值为 0。生产者客户端会在 ProducerBatch 被填满或等待时间超过linger.ms 值时发送出去。增大这个参数的值会增加消息的延迟，但是同时能提升一定的吞吐量。这个linger.ms参数与TCP协议中的Nagle算法有异曲同工之妙。&lt;/p&gt;
+&lt;h3 id=&#34;47-receivebufferbytes&#34;&gt;4.7 receive.buffer.bytes&lt;/h3&gt;
+&lt;p&gt;这个参数用来设置Socket接收消息缓冲区（SO_RECBUF）的大小，默认值为32768（B），即32KB。如果设置为-1，则使用操作系统的默认值。如果Producer与Kafka处于不同的机房，则可以适地调大这个参数值。&lt;/p&gt;
+&lt;h3 id=&#34;48-sendbufferbytes&#34;&gt;4.8 send.buffer.bytes&lt;/h3&gt;
+&lt;p&gt;这个参数用来设置Socket发送消息缓冲区（SO_SNDBUF）的大小，默认值为131072（B），即128KB。与receive.buffer.bytes参数一样，如果设置为-1，则使用操作系统的默认值。&lt;/p&gt;
+&lt;h3 id=&#34;49-requesttimeoutms&#34;&gt;4.9 request.timeout.ms&lt;/h3&gt;
+&lt;p&gt;这个参数用来配置Producer等待请求响应的最长时间，默认值为30000（ms）。请求超时之后可以选择进行重试。注意这个参数需要比broker端参数replica.lag.time.max.ms的值要大，这样可以减少因客户端重试而引起的消息重复的概率。&lt;/p&gt;
+&lt;h2 id=&#34;5-消费者与消费组&#34;&gt;5 消费者与消费组&lt;/h2&gt;
+&lt;p&gt;消费者（Consumer）负责订阅Kafka中的主题（Topic），并且从订阅的主题上拉取消息。与其他一些消息中间件不同的是：在Kafka的消费理念中还有一层消费组（Consumer Group）的概念，每个消费者都有一个对应的消费组。当消息发布到主题后，只会被投递给订阅它的每个消费组中的一个消费者。&lt;/p&gt;
+&lt;p&gt;某个主题中共有4个分区（Partition）：P0、P1、P2、P3。有两个消费组A和B都订阅了这个主题，消费组A中有4个消费者（C0、C1、C2和C3），消费组B中有2个消费者（C4和C5）。按照Kafka默认的规则，最后的分配结果是消费组A中的每一个消费者分配到1个分区，消费组B中的每一个消费者分配到2个分区，两个消费组之间互不影响。每个消费者只能消费所分配到的分区中的消息。换言之，每一个分区只能被一个消费组中的一个消费者所消费。&lt;/p&gt;
+&lt;p&gt;可以通过消费者客户端参数partition.assignment.strategy 来设置消费者与订阅主题之间的分区分配策略。&lt;/p&gt;
+&lt;p&gt;消费者与消费组这种模型可以让整体的消费能力具备横向伸缩性，我们可以增加（或减少）消费者的个数来提高（或降低）整体的消费能力。对于分区数固定的情况，一味地增加消费者并不会让消费能力一直得到提升，如果消费者过多，出现了消费者的个数大于分区个数的情况，就会有消费者分配不到任何分区。&lt;/p&gt;
+&lt;h2 id=&#34;6-消费者客户端&#34;&gt;6 消费者客户端&lt;/h2&gt;
+&lt;p&gt;一个正常的消费逻辑需要具备以下几个步骤：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;配置消费者客户端参数以及创建相应的消费者实例。&lt;/li&gt;
+&lt;li&gt;订阅主题。&lt;/li&gt;
+&lt;li&gt;拉取消息并消费。&lt;/li&gt;
+&lt;li&gt;提交消费位移。&lt;/li&gt;
+&lt;li&gt;关闭消费者实例。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;必要的参数配置：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;bootstrap.servers：该参数的释义和生产者客户端 KafkaProducer 中的相同，用来 指 定 连 接Kafka 集 群 所 需 的 broker 地 址 清 单，具 体内 容 形 式 为host1：port1，host2：post，可以设置一个或多个地址，中间用逗号隔开，此参数的默认值为“”。&lt;/li&gt;
+&lt;li&gt;group.id：消费者隶属的消费组的名称，默认值为“”。如果设置为空，则会报出异常&lt;/li&gt;
+&lt;li&gt;key.deserializer 和 value.deserializer：与生产者客户端 KafkaProducer中的key.serializer和value.serializer参数对应。消费者从broker端获取的消息格式都是字节数组（byte[]）类型，所以需要执行相应的反序列化操作才能还原成原有的对象格式。这两个参数分别用来指定消息中key和value所需反序列化操作的反序列化器，这两个参数无默认值。注意这里必须填写反序列化器类的全限定名&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;61-订阅主题与分区&#34;&gt;6.1 订阅主题与分区&lt;/h3&gt;
+&lt;p&gt;使用subscribe（）方法订阅主题&lt;/p&gt;
+&lt;p&gt;在 Kafka 中默认的消费位移的提交方式是自动提交，这个由消费者客户端参数enable.auto.commit 配置，默认值为 true。当然这个默认的自动提交不是每消费一条消息就提交一次，而是定期提交，这个定期的周期时间由客户端参数auto.commit.interval.ms配置，默认值为5秒，此参数生效的前提是enable.auto.commit参数为true&lt;/p&gt;
+&lt;p&gt;在默认的方式下，消费者每隔5秒会将拉取到的每个分区中最大的消息位移进行提交。自动位移提交的动作是在poll（）方法的逻辑里完成的，在每次真正向服务端发起拉取请求之前会检查是否可以进行位移提交，如果可以，那么就会提交上一次轮询的位移。&lt;/p&gt;
+&lt;p&gt;在Kafka消费的编程逻辑中位移提交是一大难点，自动提交消费位移的方式非常简便，它免去了复杂的位移提交逻辑，让编码更简洁。但随之而来的是重复消费和消息丢失的问题。假设刚刚提交完一次消费位移，然后拉取一批消息进行消费，在下一次自动提交消费位移之前，消费者崩溃了，那么又得从上一次位移提交的地方重新开始消费，这样便发生了重复消费的现象（对于再均衡的情况同样适用）。我们可以通过减小位移提交的时间间隔来减小重复消息的窗口大小，但这样并不能避免重复消费的发送，而且也会使位移提交更加频繁。&lt;/p&gt;
+</description>
+        </item>
+        <item>
+        <title>kafka基础</title>
+        <link>https://lyoshur.github.io/stack/p/kafka%E5%9F%BA%E7%A1%80/</link>
+        <pubDate>Wed, 31 Aug 2022 10:47:00 +0000</pubDate>
+        
+        <guid>https://lyoshur.github.io/stack/p/kafka%E5%9F%BA%E7%A1%80/</guid>
+        <description>&lt;h1 id=&#34;kafka基础&#34;&gt;kafka基础&lt;/h1&gt;
+&lt;h2 id=&#34;1-初识kafka&#34;&gt;1 初识Kafka&lt;/h2&gt;
+&lt;p&gt;Kafka起初是由LinkedIn公司采用Scala语言开发的一个多分区、多副本且基于ZooKeeper协调的分布式消息系统。目前Kafka已经定位为一个分布式流式处理平台，它以高吞吐、可持久化、可水平扩展、支持流数据处理等多种特性而被广泛使用。&lt;/p&gt;
+&lt;p&gt;目前越来越多的开源分布式处理系统如Cloudera、Storm、Spark、Flink等都支持与Kafka集成。&lt;/p&gt;
+&lt;p&gt;Kafka之所以受到越来越多的青睐，与它所“扮演”的三大角色是分不开的：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;消息系统：Kafka 和传统的消息系统（也称作消息中间件）都具备系统解耦、冗余存储、流量削峰、缓冲、异步通信、扩展性、可恢复性等功能。与此同时，Kafka 还提供了大多数消息系统难以实现的消息顺序性保障及回溯消费的功能。&lt;/li&gt;
+&lt;li&gt;存储系统：Kafka 把消息持久化到磁盘，相比于其他基于内存存储的系统而言，有效地降低了数据丢失的风险。也正是得益于Kafka 的消息持久化功能和多副本机制，我们可以把Kafka作为长期的数据存储系统来使用，只需要把对应的数据保留策略设置为“永久”或启用主题的日志压缩功能即可。&lt;/li&gt;
+&lt;li&gt;流式处理平台：Kafka 不仅为每个流行的流式处理框架提供了可靠的数据来源，还提供了一个完整的流式处理类库，比如窗口、连接、变换和聚合等各类操作。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Kafka体系结构术语：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;Producer：生产者，也就是发送消息的一方。生产者负责创建消息，然后将其投递到Kafka中。&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Consumer：消费者，也就是接收消息的一方。消费者连接到Kafka上并接收消息，进而进行相应的业务逻辑处理。&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Broker：服务代理节点。对于Kafka而言，Broker可以简单地看作一个独立的Kafka服务节点或Kafka服务实例。大多数情况下也可以将Broker看作一台Kafka服务器，前提是这台服务器上只部署了一个Kafka实例。一个或多个Broker组成了一个Kafka集群。一般而言，我们更习惯使用首字母小写的broker来表示服务代理节点。&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Topic：主题，Kafka中的消息以主题为单位进行归类，生产者负责将消息发送到特定的主题（发送到Kafka集群中的每一条消息都要指定一个主题），而消费者负责订阅主题并进行消费。&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Partition：分区，主题是一个逻辑上的概念，它还可以细分为多个分区，一个分区只属于单个主题，很多时候也会把分区称为主题分区（Topic-Partition）。同一主题下的不同分区包含的消息是不同的，分区在存储层面可以看作一个可追加的日志（Log）文件，消息在被追加到分区日志文件的时候都会分配一个特定的偏移量（offset）。offset是消息在分区中的唯一标识，Kafka通过它来保证消息在分区内的顺序性，不过offset并不跨越分区，也就是说，Kafka保证的是分区有序而不是主题有序。&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Replica：副本，Kafka 为分区引入了多副本（Replica）机制，通过增加副本数量可以提升容灾能力。同一分区的不同副本中保存的是相同的消息（在同一时刻，副本之间并非完全一样），副本之间是“一主多从”的关系，其中leader副本负责处理读写请求，follower副本只负责与leader副本的消息同步。副本处于不同的broker中，当leader副本出现故障时，从follower副本中重新选举新的leader副本对外提供服务。Kafka通过多副本机制实现了故障的自动转移，当Kafka集群中某个broker失效时仍然能保证服务可用。&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;AR（Assigned Replicas）：分区中的所有副本统称为AR（Assigned Replicas）。AR=ISR+OSR&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;ISR（In-Sync Replicas）：所有与leader副本保持一定程度同步的副本（包括leader副本在内）组成ISR（In-Sync Replicas），ISR集合是AR集合中的一个子集。&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;OSR（Out-of-Sync Replicas）：与leader副本同步滞后过多的副本（不包括leader副本）组成OSR（Out-of-Sync Replicas）。&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;HW（High Watermark）：高水位，它标识了一个特定的消息偏移量（offset），消费者只能拉取到这个offset之前的消息。&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;LEO（Log End Offset）：它标识当前日志文件中下一条待写入消息的offset，图1-4中offset为9的位置即为当前日志文件的LEO，LEO的大小相当于当前日志分区中最后一条消息的offset值加1。分区ISR集合中的每个副本都会维护自身的LEO，而ISR集合中最小的LEO即为分区的HW，对消费者而言只能消费HW之前的消息。&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+</description>
+        </item>
+        
+    </channel>
+</rss>

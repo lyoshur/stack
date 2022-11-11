@@ -1,0 +1,939 @@
+<!DOCTYPE html>
+<html lang="zh-cn" dir="ltr">
+    <head><meta charset='utf-8'>
+<meta name='viewport' content='width=device-width, initial-scale=1'><meta name='description' content='Cesium加载图层'><title>Cesium加载图层</title>
+
+<link rel='canonical' href='https://lyoshur.github.io/stack/p/cesium%E5%8A%A0%E8%BD%BD%E5%9B%BE%E5%B1%82/'>
+
+<link rel="stylesheet" href="/stack/scss/style.min.ac77dcf8b111b51da39a92990f431923f210f3876d85798a2125667f96dc33a4.css"><meta property='og:title' content='Cesium加载图层'>
+<meta property='og:description' content='Cesium加载图层'>
+<meta property='og:url' content='https://lyoshur.github.io/stack/p/cesium%E5%8A%A0%E8%BD%BD%E5%9B%BE%E5%B1%82/'>
+<meta property='og:site_name' content='羡鱼先生的空间'>
+<meta property='og:type' content='article'><meta property='article:section' content='Post' /><meta property='article:tag' content='Cesium' /><meta property='article:published_time' content='2022-03-06T00:00:00&#43;00:00'/><meta property='article:modified_time' content='2022-03-06T00:00:00&#43;00:00'/>
+<meta name="twitter:title" content="Cesium加载图层">
+<meta name="twitter:description" content="Cesium加载图层">
+    </head>
+    <body class="
+    article-page
+    ">
+    <script>
+        (function() {
+            const colorSchemeKey = 'StackColorScheme';
+            if(!localStorage.getItem(colorSchemeKey)){
+                localStorage.setItem(colorSchemeKey, "auto");
+            }
+        })();
+    </script><script>
+    (function() {
+        const colorSchemeKey = 'StackColorScheme';
+        const colorSchemeItem = localStorage.getItem(colorSchemeKey);
+        const supportDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches === true;
+
+        if (colorSchemeItem == 'dark' || colorSchemeItem === 'auto' && supportDarkMode) {
+            
+
+            document.documentElement.dataset.scheme = 'dark';
+        } else {
+            document.documentElement.dataset.scheme = 'light';
+        }
+    })();
+</script>
+<div class="container main-container flex on-phone--column extended"><aside class="sidebar left-sidebar sticky ">
+    <button class="hamburger hamburger--spin" type="button" id="toggle-menu" aria-label="切换菜单">
+        <span class="hamburger-box">
+            <span class="hamburger-inner"></span>
+        </span>
+    </button>
+
+    <header>
+        
+            
+            <figure class="site-avatar">
+                <a href="/stack">
+                
+                    
+                    
+                    
+                        
+                        <img src="/stack/img/avatar_hu2d8583d10845a885ea33cc67231edc4c_47820_300x0_resize_q75_box.jpg" width="300"
+                            height="300" class="site-logo" loading="lazy" alt="Avatar">
+                    
+                
+                </a>
+                
+                    <span class="emoji">😎</span>
+                
+            </figure>
+            
+        
+        
+        <div class="site-meta">
+            <h1 class="site-name"><a href="/stack">羡鱼先生的空间</a></h1>
+            <h2 class="site-description">来给生活找点乐子~</h2>
+        </div>
+    </header><ol class="social-menu">
+            
+                <li>
+                    <a 
+                        href='https://gitee.com/lyoshur'
+                        target="_blank"
+                        title="gitee"
+                    >
+                        
+                        
+                            <?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="16px" height="16px" viewBox="0 0 16 16" enable-background="new 0 0 16 16" xml:space="preserve">  <image id="image0" width="16" height="16" x="0" y="0"
+    href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAMAAAAoLQ9TAAAABGdBTUEAALGPC/xhBQAAACBjSFJN
+AAB6JgAAgIQAAPoAAACA6AAAdTAAAOpgAAA6mAAAF3CculE8AAAAdVBMVEUAAADbABjaABTaABPZ
+ABT/ACvZABXaABPZABTZABPjSVb2yMz9+Pj////88fLkSlf++/v3y871wcXhPErfLDvdITH++vrj
+RVLbDh/cFifhOEb++fnnX2r99vboanXhOUf0t7z1wsb+/f3iPkz99/f2xcniP003qpK8AAAACXRS
+TlMAK4/V8waU/b0v8seaAAAAAWJLR0QN9rRh9QAAAAd0SU1FB+YICAUFOzO67psAAACKSURBVBjT
+ZY9ZEsIwDEMdJ00qqEvZy1qgwP2PiJ0CM9D3Z83IkogUxz4Ez44GipiQSbHId4kvpSkRmEwrMWpE
+9SfM5E2D5IiBuSyWK2MNMHlgI1u0O6UFPAVAZI+DWSog/Ahigh8EtRzlZBY24awfu4tc7anGflJv
+vcVqsTqf98cTVmxcfTTub/4LPbIKJ1fQ5EgAAAAldEVYdGRhdGU6Y3JlYXRlADIwMjItMDgtMDhU
+MDU6MDU6NTkrMDA6MDB+AB5YAAAAJXRFWHRkYXRlOm1vZGlmeQAyMDIyLTA4LTA4VDA1OjA1OjU5
+KzAwOjAwD12m5AAAAABJRU5ErkJggg==" />
+</svg>
+
+                        
+                    </a>
+                </li>
+            
+        </ol><ol class="menu" id="main-menu">
+        
+        
+        
+
+        <li >
+            <a href='/stack/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-home" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <polyline points="5 12 3 12 12 3 21 12 19 12" />
+  <path d="M5 12v7a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-7" />
+  <path d="M9 21v-6a2 2 0 0 1 2 -2h2a2 2 0 0 1 2 2v6" />
+</svg>
+
+
+
+                
+                <span>主页</span>
+            </a>
+        </li>
+        
+        
+
+        <li >
+            <a href='/stack/archives/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-archive" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <rect x="3" y="4" width="18" height="4" rx="2" />
+  <path d="M5 8v10a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-10" />
+  <line x1="10" y1="12" x2="14" y2="12" />
+</svg>
+
+
+
+                
+                <span>笔记本</span>
+            </a>
+        </li>
+        
+        
+
+        <li >
+            <a href='/stack/search/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-search" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="10" cy="10" r="7" />
+  <line x1="21" y1="21" x2="15" y2="15" />
+</svg>
+
+
+
+                
+                <span>搜索</span>
+            </a>
+        </li>
+        
+        
+
+        <li >
+            <a href='/stack/%E5%85%B3%E4%BA%8E/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-link" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <path d="M10 14a3.5 3.5 0 0 0 5 0l4 -4a3.5 3.5 0 0 0 -5 -5l-.5 .5" />
+  <path d="M14 10a3.5 3.5 0 0 0 -5 0l-4 4a3.5 3.5 0 0 0 5 5l.5 -.5" />
+</svg>
+
+
+
+                
+                <span>关于</span>
+            </a>
+        </li>
+        
+
+        <div class="menu-bottom-section">
+            
+            
+                <li id="dark-mode-toggle">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-toggle-left" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="8" cy="12" r="2" />
+  <rect x="2" y="6" width="20" height="12" rx="6" />
+</svg>
+
+
+
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-toggle-right" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="16" cy="12" r="2" />
+  <rect x="2" y="6" width="20" height="12" rx="6" />
+</svg>
+
+
+
+                    <span>暗色模式</span>
+                </li>
+            
+        </div>
+    </ol>
+</aside>
+<main class="main full-width">
+    <article class="main-article">
+    <header class="article-header">
+
+    <div class="article-details">
+    
+    <header class="article-category">
+        
+            <a href="/stack/categories/other/" style="background-color: #2a9d8f; color: #fff;">
+                Other
+            </a>
+        
+    </header>
+    
+
+    <div class="article-title-wrapper">
+        <h2 class="article-title">
+            <a href="/stack/p/cesium%E5%8A%A0%E8%BD%BD%E5%9B%BE%E5%B1%82/">Cesium加载图层</a>
+        </h2>
+    
+        
+        <h3 class="article-subtitle">
+            Cesium加载图层
+        </h3>
+        
+    </div>
+
+    
+    <footer class="article-time">
+        
+            <div>
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-calendar-time" width="56" height="56" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <path d="M11.795 21h-6.795a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v4" />
+  <circle cx="18" cy="18" r="4" />
+  <path d="M15 3v4" />
+  <path d="M7 3v4" />
+  <path d="M3 11h16" />
+  <path d="M18 16.496v1.504l1 1" />
+</svg>
+                <time class="article-time--published">2022-03-06 00:00:00</time>
+            </div>
+        
+
+        
+            <div>
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-clock" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="12" cy="12" r="9" />
+  <polyline points="12 7 12 12 15 15" />
+</svg>
+
+
+
+                <time class="article-time--reading">
+                    阅读时长: 3 分钟
+                </time>
+            </div>
+        
+    </footer>
+    
+
+    
+</div>
+</header>
+
+    <section class="article-content">
+    
+    
+    <h2 id="cesium加载图层">Cesium加载图层</h2>
+<h2 id="1协议介绍">1.协议介绍</h2>
+<ul>
+<li>
+<p>tms 瓦片地图服务</p>
+<ul>
+<li>【大佬解释的】可以理解为一种特殊情况下的XYZ</li>
+<li>【大佬解释的】可以直接以文件的形式进行发布，用 tilemapresource.xml 来描述图层信息</li>
+<li>TMS是 Tile Map Service 的简写，是一种瓦片服务。由开源地理空间信息基金会（OSGEO）开发的平铺web地图规范。这个定义通常需要一个URL结构来尝试REST原则，TMS协议填补了OpenStreetMap使用的非常简单的标准和Web地图服务标准飞复杂性之间的空白，提供了简单的URL到分幅，同事还支持备用空间引用系统。</li>
+<li>纯RESTFUL</li>
+<li>以左下角为原点</li>
+<li>瓦片是正方形的</li>
+</ul>
+</li>
+<li>
+<p>xyz</p>
+<ul>
+<li>【大佬解释的】不同服务提供商的XYZ值可能不一样</li>
+</ul>
+</li>
+<li>
+<p>x表示横坐标  y表示纵坐标  z表示地图层级</p>
+</li>
+<li>
+<p>wms 网络地图服务</p>
+<ul>
+<li>【大佬解释的】很少用，效率不高</li>
+<li>由开发地理信息联盟（OGC）指定</li>
+</ul>
+</li>
+<li>
+<p>wmts 网络地图瓦片服务</p>
+<ul>
+<li>【大佬解释的】必须用服务进行发布</li>
+<li>由开发地理信息联盟（OGC）指定。采用缓存技术，能够缓解WebGis服务器端数据处理的压力（对比WMS）</li>
+<li>可以有KVP、SOAP和RESTFUL三种</li>
+<li>瓦片是矩形的</li>
+<li>以左上角为原点</li>
+<li>对应不同比例尺瓦片尺寸可以不同</li>
+</ul>
+</li>
+<li>
+<p>flatgis</p>
+<ul>
+<li>【大佬解释的】恒歌的私有协议</li>
+<li>【大佬解释的】如果Cesium需要加载的话，要用服务对协议进行转换解析</li>
+</ul>
+</li>
+<li>
+<p>hgbump</p>
+<ul>
+<li>【大佬解释的】恒歌的私有协议</li>
+<li>【大佬解释的】如果Cesium需要加载的话，要用服务对协议进行转换解析</li>
+</ul>
+</li>
+</ul>
+<h2 id="1加载以文件形式存在的影像数据tms">1.加载以文件形式存在的影像数据（TMS）</h2>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-javascript" data-lang="javascript"><span class="line"><span class="cl"><span class="kd">let</span> <span class="nx">layers</span> <span class="o">=</span> <span class="nx">viewer</span><span class="p">.</span><span class="nx">scene</span><span class="p">.</span><span class="nx">imageryLayers</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="nx">layers</span><span class="p">.</span><span class="nx">addImageryProvider</span><span class="p">(</span>
+</span></span><span class="line"><span class="cl">    <span class="k">new</span> <span class="nx">Cesium</span><span class="p">.</span><span class="nx">TileMapServiceImageryProvider</span><span class="p">({</span>
+</span></span><span class="line"><span class="cl">        <span class="nx">url</span><span class="o">:</span> <span class="o">&lt;</span><span class="nx">图片的路径</span><span class="o">&gt;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">        <span class="nx">fileExtension</span><span class="o">:</span> <span class="o">&lt;</span><span class="nx">图片的文件拓展名</span><span class="o">&gt;</span>
+</span></span><span class="line"><span class="cl">    <span class="p">})</span>
+</span></span><span class="line"><span class="cl"><span class="p">);</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>图片的路径指向到，包含 tilemapresource.xml 文件的文件夹，不需要指定到具体图层。</p>
+<p>指向的结构应该类似于</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="m">0</span>
+</span></span><span class="line"><span class="cl"><span class="m">1</span>
+</span></span><span class="line"><span class="cl"><span class="m">2</span>
+</span></span><span class="line"><span class="cl">tilemapresource.xml
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="2加载以接口形式存在的影像数据xyz">2.加载以接口形式存在的影像数据（XYZ）</h2>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-javascript" data-lang="javascript"><span class="line"><span class="cl"><span class="kd">let</span> <span class="nx">layers</span> <span class="o">=</span> <span class="nx">viewer</span><span class="p">.</span><span class="nx">scene</span><span class="p">.</span><span class="nx">imageryLayers</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="nx">layers</span><span class="p">.</span><span class="nx">addImageryProvider</span><span class="p">(</span>
+</span></span><span class="line"><span class="cl">    <span class="k">new</span> <span class="nx">Cesium</span><span class="p">.</span><span class="nx">UrlTemplateImageryProvider</span><span class="p">({</span>
+</span></span><span class="line"><span class="cl">        <span class="nx">url</span><span class="o">:</span> <span class="s1">&#39;http://127.0.0.1:8080/Map?x={x}&amp;y={y}&amp;z={z}&#39;</span>
+</span></span><span class="line"><span class="cl">    <span class="p">})</span>
+</span></span><span class="line"><span class="cl"><span class="p">);</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="3加载以接口形式存在的影像数据wms未验证">3.加载以接口形式存在的影像数据（WMS）未验证</h2>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-javascript" data-lang="javascript"><span class="line"><span class="cl"><span class="kd">let</span> <span class="nx">layers</span> <span class="o">=</span> <span class="nx">viewer</span><span class="p">.</span><span class="nx">scene</span><span class="p">.</span><span class="nx">imageryLayers</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="nx">layers</span><span class="p">.</span><span class="nx">addImageryProvider</span><span class="p">(</span>
+</span></span><span class="line"><span class="cl">    <span class="k">new</span> <span class="nx">Cesium</span><span class="p">.</span><span class="nx">WebMapServiceImageryProvider</span><span class="p">({</span>
+</span></span><span class="line"><span class="cl">        <span class="c1">// 图层服务的地址
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>        <span class="nx">url</span><span class="o">:</span> <span class="s1">&#39;http://127.0.0.1:8080/Map&#39;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">        <span class="c1">// 自定义图层名称
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>        <span class="nx">layers</span><span class="o">:</span> <span class="o">&lt;</span><span class="nx">自定义图层名称</span><span class="o">&gt;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">        <span class="nx">parameters</span><span class="o">:</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        	<span class="s2">&#34;service&#34;</span><span class="o">:</span> <span class="s2">&#34;WMS&#34;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">        	<span class="s2">&#34;format&#34;</span><span class="o">:</span> <span class="s2">&#34;image/png&#34;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">        	<span class="s2">&#34;transparent&#34;</span><span class="o">:</span> <span class="kc">true</span>
+</span></span><span class="line"><span class="cl">    	<span class="p">}</span>
+</span></span><span class="line"><span class="cl">    <span class="p">})</span>
+</span></span><span class="line"><span class="cl"><span class="p">);</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="4加载以接口形式存在的影像数据wmtscesium-128">4.加载以接口形式存在的影像数据（WMTS）Cesium 1.28</h2>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-javascript" data-lang="javascript"><span class="line"><span class="cl"><span class="kd">var</span> <span class="nx">gevm</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Cesium</span><span class="p">.</span><span class="nx">ProviderViewModel</span><span class="p">({</span>
+</span></span><span class="line"><span class="cl">    <span class="nx">name</span> <span class="o">:</span> <span class="s1">&#39;VMap Earth&#39;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="nx">iconUrl</span> <span class="o">:</span> <span class="nx">Cesium</span><span class="p">.</span><span class="nx">buildModuleUrl</span><span class="p">(</span><span class="s1">&#39;../images/earth.png&#39;</span><span class="p">),</span>
+</span></span><span class="line"><span class="cl">    <span class="nx">tooltip</span> <span class="o">:</span> <span class="s1">&#39;VMap Earth Image offline&#39;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="nx">creationFunction</span> <span class="o">:</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="k">return</span> <span class="k">new</span> <span class="nx">Cesium</span><span class="p">.</span><span class="nx">WebMapTileServiceImageryProvider</span><span class="p">({</span>
+</span></span><span class="line"><span class="cl">            <span class="nx">url</span> <span class="o">:</span> <span class="s1">&#39;http://&#39;</span> <span class="o">+</span> <span class="nb">document</span><span class="p">.</span><span class="nx">domain</span> <span class="o">+</span> <span class="s1">&#39;:&#39;</span>
+</span></span><span class="line"><span class="cl">            <span class="o">+</span> <span class="nb">window</span><span class="p">.</span><span class="nx">location</span><span class="p">.</span><span class="nx">port</span> <span class="o">+</span> <span class="s1">&#39;/startlvlone/wmts&#39;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">            <span class="nx">layer</span> <span class="o">:</span> <span class="s1">&#39;geearth&#39;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">            <span class="nx">style</span> <span class="o">:</span> <span class="s1">&#39;default&#39;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">            <span class="nx">format</span> <span class="o">:</span> <span class="s1">&#39;image/jpeg&#39;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">            <span class="nx">tileMatrixSetID</span> <span class="o">:</span> <span class="s1">&#39;ge&#39;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">            <span class="nx">tileMatrixLabels</span> <span class="o">:</span> <span class="p">[</span> <span class="s1">&#39;1&#39;</span><span class="p">,</span> <span class="s1">&#39;2&#39;</span><span class="p">,</span> <span class="s1">&#39;3&#39;</span><span class="p">,</span> <span class="s1">&#39;4&#39;</span><span class="p">,</span> <span class="s1">&#39;5&#39;</span><span class="p">,</span> <span class="s1">&#39;6&#39;</span><span class="p">,</span> <span class="s1">&#39;7&#39;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">                                <span class="s1">&#39;8&#39;</span><span class="p">,</span> <span class="s1">&#39;9&#39;</span><span class="p">,</span> <span class="s1">&#39;10&#39;</span><span class="p">,</span> <span class="s1">&#39;11&#39;</span><span class="p">,</span> <span class="s1">&#39;12&#39;</span><span class="p">,</span> <span class="s1">&#39;13&#39;</span><span class="p">,</span> <span class="s1">&#39;14&#39;</span><span class="p">,</span> <span class="s1">&#39;15&#39;</span><span class="p">,</span> <span class="s1">&#39;16&#39;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">                                <span class="s1">&#39;17&#39;</span><span class="p">,</span> <span class="s1">&#39;18&#39;</span><span class="p">,</span> <span class="s1">&#39;19&#39;</span><span class="p">,</span> <span class="s1">&#39;20&#39;</span><span class="p">,</span> <span class="s1">&#39;21&#39;</span><span class="p">,</span> <span class="s1">&#39;22&#39;</span><span class="p">,</span> <span class="s1">&#39;23&#39;</span><span class="p">,</span> <span class="s1">&#39;24&#39;</span> <span class="p">],</span>
+</span></span><span class="line"><span class="cl">            <span class="nx">minimumLevel</span> <span class="o">:</span> <span class="mi">1</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">            <span class="nx">maximumLevel</span> <span class="o">:</span> <span class="mi">24</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">            <span class="nx">tilingScheme</span> <span class="o">:</span> <span class="k">new</span> <span class="nx">Cesium</span><span class="p">.</span><span class="nx">GeographicTilingScheme</span><span class="p">(),</span>
+</span></span><span class="line"><span class="cl">            <span class="nx">credit</span> <span class="o">:</span> <span class="k">new</span> <span class="nx">Cesium</span><span class="p">.</span><span class="nx">Credit</span><span class="p">(</span><span class="s1">&#39;VMap Earth&#39;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        <span class="p">});</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="p">});</span>
+</span></span><span class="line"><span class="cl"><span class="kd">var</span> <span class="nx">viewer</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Cesium</span><span class="p">.</span><span class="nx">Viewer</span><span class="p">(</span><span class="s1">&#39;cesiumContainer&#39;</span><span class="p">,</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="nx">selectedImageryProviderViewModel</span> <span class="o">:</span> <span class="nx">gevm</span>
+</span></span><span class="line"><span class="cl"><span class="p">});</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>配置后，向外请求的接口地址应该类似于</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">http://10.171.136.172:3500/startlvlone/wmts?service<span class="o">=</span>WMTS<span class="p">&amp;</span><span class="nv">version</span><span class="o">=</span>1.0.0<span class="p">&amp;</span><span class="nv">request</span><span class="o">=</span>GetTile<span class="p">&amp;</span><span class="nv">tilematrix</span><span class="o">=</span>3<span class="p">&amp;</span><span class="nv">layer</span><span class="o">=</span>geearth<span class="p">&amp;</span><span class="nv">style</span><span class="o">=</span>default<span class="p">&amp;</span><span class="nv">tilerow</span><span class="o">=</span>3<span class="p">&amp;</span><span class="nv">tilecol</span><span class="o">=</span>4<span class="p">&amp;</span><span class="nv">tilematrixset</span><span class="o">=</span>ge<span class="p">&amp;</span><span class="nv">format</span><span class="o">=</span>image%2Fjpeg
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>参数列表</p>
+<div class="table-wrapper"><table>
+<thead>
+<tr>
+<th>参数名称</th>
+<th>示例参数值</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>service</strong></td>
+<td>WMTS</td>
+<td>不知道哪来的</td>
+</tr>
+<tr>
+<td><strong>version</strong></td>
+<td>1.0.0</td>
+<td>不知道哪来的</td>
+</tr>
+<tr>
+<td><strong>request</strong></td>
+<td>GetTile</td>
+<td>不知道哪来的</td>
+</tr>
+<tr>
+<td><strong>tilematrix</strong></td>
+<td>3</td>
+<td>当前层级</td>
+</tr>
+<tr>
+<td><strong>layer</strong></td>
+<td>geearth</td>
+<td>配置参数里的</td>
+</tr>
+<tr>
+<td><strong>style</strong></td>
+<td>default</td>
+<td>配置参数里的</td>
+</tr>
+<tr>
+<td><strong>tilerow</strong></td>
+<td>3</td>
+<td>当前所在的行</td>
+</tr>
+<tr>
+<td><strong>tilecol</strong></td>
+<td>4</td>
+<td>当前所在的列</td>
+</tr>
+<tr>
+<td><strong>tilematrixset</strong></td>
+<td>ge</td>
+<td>配置参数里的</td>
+</tr>
+<tr>
+<td><strong>format</strong></td>
+<td>image/jpeg</td>
+<td>配置参数里的</td>
+</tr>
+</tbody>
+</table></div>
+<h2 id="5加载以接口形式存在的影像数据wmtscesium-179">5.加载以接口形式存在的影像数据（WMTS）Cesium 1.79</h2>
+<div class="table-wrapper"><table>
+<thead>
+<tr>
+<th>参数名称</th>
+<th>参数描述</th>
+<th>备注信息</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>{layer}</td>
+<td>瓦片图层名称</td>
+<td></td>
+</tr>
+<tr>
+<td>{style}</td>
+<td>瓦片风格</td>
+<td></td>
+</tr>
+<tr>
+<td>{format}</td>
+<td>图像类别</td>
+<td></td>
+</tr>
+<tr>
+<td>{TileMatrixSetID}</td>
+<td>瓦片矩阵集合名称</td>
+<td>通常为 EPSG:4326 或 EPSG:3857</td>
+</tr>
+<tr>
+<td>{TileMatrixLabels}</td>
+<td>瓦片矩阵名称</td>
+<td>一般为瓦片层级的名称</td>
+</tr>
+<tr>
+<td>{TileRow}</td>
+<td>瓦片行编号</td>
+<td></td>
+</tr>
+<tr>
+<td>{TileCol}</td>
+<td>瓦片列编号</td>
+<td></td>
+</tr>
+</tbody>
+</table></div>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-javascript" data-lang="javascript"><span class="line"><span class="cl"><span class="kd">let</span> <span class="nx">imageryLayers</span> <span class="o">=</span> <span class="nx">viewer</span><span class="p">.</span><span class="nx">scene</span><span class="p">.</span><span class="nx">imageryLayers</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="kd">let</span> <span class="nx">wmtsImageryProvider</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Cesium</span><span class="p">.</span><span class="nx">WebMapTileServiceImageryProvider</span><span class="p">({</span>
+</span></span><span class="line"><span class="cl">    <span class="nx">url</span><span class="o">:</span> <span class="s2">&#34;http://10.171.136.172:3500/wmts&#34;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="nx">layer</span><span class="o">:</span> <span class="s1">&#39;geearth&#39;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="nx">style</span><span class="o">:</span> <span class="s1">&#39;default&#39;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="nx">format</span><span class="o">:</span> <span class="s1">&#39;image/jpeg&#39;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="nx">tileMatrixSetID</span><span class="o">:</span> <span class="s1">&#39;ge&#39;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="nx">tileMatrixLabels</span><span class="o">:</span> <span class="p">[</span> <span class="s1">&#39;1&#39;</span><span class="p">,</span> <span class="s1">&#39;2&#39;</span><span class="p">,</span> <span class="s1">&#39;3&#39;</span><span class="p">,</span> <span class="s1">&#39;4&#39;</span><span class="p">,</span> <span class="s1">&#39;5&#39;</span><span class="p">,</span> <span class="s1">&#39;6&#39;</span><span class="p">,</span> <span class="s1">&#39;7&#39;</span><span class="p">,</span> <span class="s1">&#39;8&#39;</span><span class="p">,</span> <span class="s1">&#39;9&#39;</span><span class="p">,</span> <span class="s1">&#39;10&#39;</span><span class="p">,</span> <span class="s1">&#39;11&#39;</span><span class="p">,</span> <span class="s1">&#39;12&#39;</span><span class="p">,</span> <span class="s1">&#39;13&#39;</span><span class="p">,</span> <span class="s1">&#39;14&#39;</span><span class="p">,</span> <span class="s1">&#39;15&#39;</span><span class="p">,</span> <span class="s1">&#39;16&#39;</span><span class="p">,</span> <span class="s1">&#39;17&#39;</span><span class="p">,</span> <span class="s1">&#39;18&#39;</span><span class="p">,</span> <span class="s1">&#39;19&#39;</span><span class="p">,</span> <span class="s1">&#39;20&#39;</span><span class="p">,</span> <span class="s1">&#39;21&#39;</span><span class="p">,</span> <span class="s1">&#39;22&#39;</span><span class="p">,</span> <span class="s1">&#39;23&#39;</span><span class="p">,</span> <span class="s1">&#39;24&#39;</span> <span class="p">],</span>
+</span></span><span class="line"><span class="cl">    <span class="nx">minimumLevel</span> <span class="o">:</span> <span class="mi">0</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="nx">maximumLevel</span> <span class="o">:</span> <span class="mi">24</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="nx">tilingScheme</span> <span class="o">:</span> <span class="k">new</span> <span class="nx">Cesium</span><span class="p">.</span><span class="nx">GeographicTilingScheme</span><span class="p">(),</span>
+</span></span><span class="line"><span class="cl">    <span class="nx">credit</span> <span class="o">:</span> <span class="k">new</span> <span class="nx">Cesium</span><span class="p">.</span><span class="nx">Credit</span><span class="p">(</span><span class="s1">&#39;VMap Earth&#39;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="p">});</span>
+</span></span><span class="line"><span class="cl"><span class="nx">imageryLayers</span><span class="p">.</span><span class="nx">addImageryProvider</span><span class="p">(</span><span class="nx">wmtsImageryProvider</span><span class="p">);</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>minimumLevel 这里特意写成了 0， 写成 1 在使用 new Cesium.GeographicTilingScheme()时，会导致</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">The imagery provider,s rectangle and minimumLevel indicate that there are <span class="m">8</span> tiles at the minimum level. Imagery providers with more than four tiles at the minimum level are not supported.
+</span></span></code></pre></td></tr></table>
+</div>
+</div>
+</section>
+
+
+    <footer class="article-footer">
+    
+    <section class="article-tags">
+        
+            <a href="/stack/tags/cesium/">Cesium</a>
+        
+    </section>
+
+
+    
+    <section class="article-copyright">
+        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-copyright" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="12" cy="12" r="9" />
+  <path d="M14.5 9a3.5 4 0 1 0 0 6" />
+</svg>
+
+
+
+        <span>别扯了，我是有底线的~</span>
+    </section>
+    </footer>
+
+
+    
+        <link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/katex@0.15.6/dist/katex.min.css"integrity="sha256-J&#43;iAE0sgH8QSz9hpcDxXIftnj65JEZgNhGcgReTTK9s="crossorigin="anonymous"
+            ><script 
+                src="https://cdn.jsdelivr.net/npm/katex@0.15.6/dist/katex.min.js"integrity="sha256-InsNdER1b2xUewP&#43;pKCUJpkhiqwHgqiPXDlIk7GzBu4="crossorigin="anonymous"
+                defer
+                >
+            </script><script 
+                src="https://cdn.jsdelivr.net/npm/katex@0.15.6/dist/contrib/auto-render.min.js"integrity="sha256-y39Mpg7V3D4lhBX4x6O0bUqTV4pSrfgwEfGKfxkOdgI="crossorigin="anonymous"
+                defer
+                >
+            </script><script>
+    window.addEventListener("DOMContentLoaded", () => {
+        renderMathInElement(document.querySelector(`.article-content`), {
+            delimiters: [
+                { left: "$$", right: "$$", display: true },
+                { left: "$", right: "$", display: false },
+                { left: "\\(", right: "\\)", display: false },
+                { left: "\\[", right: "\\]", display: true }
+            ]
+        });})
+</script>
+    
+</article>
+
+    
+
+    
+
+<aside class="related-content--wrapper">
+    <h2 class="section-title">相关文章</h2>
+    <div class="related-content">
+        <div class="flex article-list--tile">
+            
+                
+<article class="">
+    <a href="/stack/p/3dmax%E6%BF%80%E6%B4%BB%E6%93%8D%E4%BD%9C/">
+        
+        
+
+        <div class="article-details">
+            <h2 class="article-title">3DMAX激活操作</h2>
+        </div>
+    </a>
+</article>
+
+            
+                
+<article class="">
+    <a href="/stack/p/3dmax%E4%BD%BF%E7%94%A8babylon%E6%8F%92%E4%BB%B6%E5%AF%BC%E5%87%BAgltf%E6%A8%A1%E5%9E%8B/">
+        
+        
+
+        <div class="article-details">
+            <h2 class="article-title">3dmax使用Babylon插件导出gltf模型</h2>
+        </div>
+    </a>
+</article>
+
+            
+                
+<article class="">
+    <a href="/stack/p/chrome%E5%BC%80%E5%90%AF%E5%A4%9A%E7%BA%BF%E7%A8%8B%E4%B8%8B%E8%BD%BD/">
+        
+        
+
+        <div class="article-details">
+            <h2 class="article-title">Chrome开启多线程下载</h2>
+        </div>
+    </a>
+</article>
+
+            
+                
+<article class="">
+    <a href="/stack/p/%E4%BD%BF%E7%94%A8vm%E8%99%9A%E6%8B%9F%E6%9C%BA%E5%AE%89%E8%A3%85%E9%BB%91%E8%8B%B9%E6%9E%9C%E6%95%99%E7%A8%8B/">
+        
+        
+
+        <div class="article-details">
+            <h2 class="article-title">使用VM虚拟机安装黑苹果教程</h2>
+        </div>
+    </a>
+</article>
+
+            
+                
+<article class="">
+    <a href="/stack/p/postman%E4%BD%BF%E7%94%A8%E8%AF%B4%E6%98%8E/">
+        
+        
+
+        <div class="article-details">
+            <h2 class="article-title">Postman使用说明</h2>
+        </div>
+    </a>
+</article>
+
+            
+        </div>
+    </div>
+</aside>
+
+     
+    
+        
+    
+
+    <footer class="site-footer">
+    <section class="copyright">
+        &copy; 
+        
+        2022 羡鱼先生的空间
+    </section>
+    
+    <section class="powerby">
+        
+            不那么好过的日子里，要学会每天给自己找一个开心的理由，哪怕只是，阳光很暖，电量很满。 <br/>
+        Built with <a href="https://gohugo.io/" target="_blank" rel="noopener">Hugo</a> <br />
+        主题 <b><a href="https://github.com/CaiJimmy/hugo-theme-stack" target="_blank" rel="noopener" data-version="3.13.0">Stack</a></b> 由 <a href="https://jimmycai.com" target="_blank" rel="noopener">Jimmy</a> 设计
+    </section>
+</footer>
+
+
+    
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+    
+    <div class="pswp__bg"></div>
+
+    
+    <div class="pswp__scroll-wrap">
+
+        
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+
+        
+        <div class="pswp__ui pswp__ui--hidden">
+
+            <div class="pswp__top-bar">
+
+                
+
+                <div class="pswp__counter"></div>
+
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+
+                <button class="pswp__button pswp__button--share" title="Share"></button>
+
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+
+                
+                
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                        <div class="pswp__preloader__cut">
+                            <div class="pswp__preloader__donut"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div>
+            </div>
+
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+
+        </div>
+
+    </div>
+
+</div><script 
+                src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.js"integrity="sha256-ePwmChbbvXbsO02lbM3HoHbSHTHFAeChekF1xKJdleo="crossorigin="anonymous"
+                defer
+                >
+            </script><script 
+                src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe-ui-default.min.js"integrity="sha256-UKkzOn/w1mBxRmLLGrSeyB4e1xbrp4xylgAWb3M42pU="crossorigin="anonymous"
+                defer
+                >
+            </script><link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/default-skin/default-skin.min.css"crossorigin="anonymous"
+            ><link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.css"crossorigin="anonymous"
+            >
+
+            </main>
+    <aside class="sidebar right-sidebar sticky">
+        
+            
+                
+    <section class="widget archives">
+        <div class="widget-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-hash" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <line x1="5" y1="9" x2="19" y2="9" />
+  <line x1="5" y1="15" x2="19" y2="15" />
+  <line x1="11" y1="4" x2="7" y2="20" />
+  <line x1="17" y1="4" x2="13" y2="20" />
+</svg>
+
+
+
+        </div>
+        <h2 class="widget-title section-title">目录</h2>
+        
+        <div class="widget--toc">
+            <nav id="TableOfContents">
+  <ol>
+    <li><a href="#cesium加载图层">Cesium加载图层</a></li>
+    <li><a href="#1协议介绍">1.协议介绍</a></li>
+    <li><a href="#1加载以文件形式存在的影像数据tms">1.加载以文件形式存在的影像数据（TMS）</a></li>
+    <li><a href="#2加载以接口形式存在的影像数据xyz">2.加载以接口形式存在的影像数据（XYZ）</a></li>
+    <li><a href="#3加载以接口形式存在的影像数据wms未验证">3.加载以接口形式存在的影像数据（WMS）未验证</a></li>
+    <li><a href="#4加载以接口形式存在的影像数据wmtscesium-128">4.加载以接口形式存在的影像数据（WMTS）Cesium 1.28</a></li>
+    <li><a href="#5加载以接口形式存在的影像数据wmtscesium-179">5.加载以接口形式存在的影像数据（WMTS）Cesium 1.79</a></li>
+  </ol>
+</nav>
+        </div>
+    </section>
+
+            
+        
+    </aside>
+
+
+        </div>
+        <script 
+                src="https://cdn.jsdelivr.net/npm/node-vibrant@3.1.6/dist/vibrant.min.js"integrity="sha256-awcR2jno4kI5X0zL8ex0vi2z&#43;KMkF24hUW8WePSA9HM="crossorigin="anonymous"
+                
+                >
+            </script><script type="text/javascript" src="/stack/ts/main.js" defer></script>
+<script>
+    (function () {
+        const customFont = document.createElement('link');
+        customFont.href = "https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&display=swap";
+
+        customFont.type = "text/css";
+        customFont.rel = "stylesheet";
+
+        document.head.appendChild(customFont);
+    }());
+</script>
+
+    </body>
+</html>

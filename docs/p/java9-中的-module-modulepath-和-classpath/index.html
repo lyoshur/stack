@@ -1,0 +1,595 @@
+<!DOCTYPE html>
+<html lang="zh-cn" dir="ltr">
+    <head><meta charset='utf-8'>
+<meta name='viewport' content='width=device-width, initial-scale=1'><meta name='description' content='java9中的 Module, ModulePath 和 ClassPath 我们都知道，从 Java9 开始，引入了模块系统，提供了对大型复杂系统很重要的隔离，依赖管理等特性。 首先是个吐槽。 作为Java9的'><title>java9 中的 Module, ModulePath 和 ClassPath</title>
+
+<link rel='canonical' href='https://lyoshur.github.io/stack/p/java9-%E4%B8%AD%E7%9A%84-module-modulepath-%E5%92%8C-classpath/'>
+
+<link rel="stylesheet" href="/stack/scss/style.min.ac77dcf8b111b51da39a92990f431923f210f3876d85798a2125667f96dc33a4.css"><meta property='og:title' content='java9 中的 Module, ModulePath 和 ClassPath'>
+<meta property='og:description' content='java9中的 Module, ModulePath 和 ClassPath 我们都知道，从 Java9 开始，引入了模块系统，提供了对大型复杂系统很重要的隔离，依赖管理等特性。 首先是个吐槽。 作为Java9的'>
+<meta property='og:url' content='https://lyoshur.github.io/stack/p/java9-%E4%B8%AD%E7%9A%84-module-modulepath-%E5%92%8C-classpath/'>
+<meta property='og:site_name' content='羡鱼先生的空间'>
+<meta property='og:type' content='article'><meta property='article:section' content='Post' /><meta property='article:tag' content='JAVA' /><meta property='article:published_time' content='2022-03-09T00:00:00&#43;00:00'/><meta property='article:modified_time' content='2022-03-09T00:00:00&#43;00:00'/>
+<meta name="twitter:title" content="java9 中的 Module, ModulePath 和 ClassPath">
+<meta name="twitter:description" content="java9中的 Module, ModulePath 和 ClassPath 我们都知道，从 Java9 开始，引入了模块系统，提供了对大型复杂系统很重要的隔离，依赖管理等特性。 首先是个吐槽。 作为Java9的">
+    </head>
+    <body class="
+    article-page
+    ">
+    <script>
+        (function() {
+            const colorSchemeKey = 'StackColorScheme';
+            if(!localStorage.getItem(colorSchemeKey)){
+                localStorage.setItem(colorSchemeKey, "auto");
+            }
+        })();
+    </script><script>
+    (function() {
+        const colorSchemeKey = 'StackColorScheme';
+        const colorSchemeItem = localStorage.getItem(colorSchemeKey);
+        const supportDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches === true;
+
+        if (colorSchemeItem == 'dark' || colorSchemeItem === 'auto' && supportDarkMode) {
+            
+
+            document.documentElement.dataset.scheme = 'dark';
+        } else {
+            document.documentElement.dataset.scheme = 'light';
+        }
+    })();
+</script>
+<div class="container main-container flex on-phone--column extended"><aside class="sidebar left-sidebar sticky ">
+    <button class="hamburger hamburger--spin" type="button" id="toggle-menu" aria-label="切换菜单">
+        <span class="hamburger-box">
+            <span class="hamburger-inner"></span>
+        </span>
+    </button>
+
+    <header>
+        
+            
+            <figure class="site-avatar">
+                <a href="/stack">
+                
+                    
+                    
+                    
+                        
+                        <img src="/stack/img/avatar_hu2d8583d10845a885ea33cc67231edc4c_47820_300x0_resize_q75_box.jpg" width="300"
+                            height="300" class="site-logo" loading="lazy" alt="Avatar">
+                    
+                
+                </a>
+                
+                    <span class="emoji">😎</span>
+                
+            </figure>
+            
+        
+        
+        <div class="site-meta">
+            <h1 class="site-name"><a href="/stack">羡鱼先生的空间</a></h1>
+            <h2 class="site-description">来给生活找点乐子~</h2>
+        </div>
+    </header><ol class="social-menu">
+            
+                <li>
+                    <a 
+                        href='https://gitee.com/lyoshur'
+                        target="_blank"
+                        title="gitee"
+                    >
+                        
+                        
+                            <?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="16px" height="16px" viewBox="0 0 16 16" enable-background="new 0 0 16 16" xml:space="preserve">  <image id="image0" width="16" height="16" x="0" y="0"
+    href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAMAAAAoLQ9TAAAABGdBTUEAALGPC/xhBQAAACBjSFJN
+AAB6JgAAgIQAAPoAAACA6AAAdTAAAOpgAAA6mAAAF3CculE8AAAAdVBMVEUAAADbABjaABTaABPZ
+ABT/ACvZABXaABPZABTZABPjSVb2yMz9+Pj////88fLkSlf++/v3y871wcXhPErfLDvdITH++vrj
+RVLbDh/cFifhOEb++fnnX2r99vboanXhOUf0t7z1wsb+/f3iPkz99/f2xcniP003qpK8AAAACXRS
+TlMAK4/V8waU/b0v8seaAAAAAWJLR0QN9rRh9QAAAAd0SU1FB+YICAUFOzO67psAAACKSURBVBjT
+ZY9ZEsIwDEMdJ00qqEvZy1qgwP2PiJ0CM9D3Z83IkogUxz4Ez44GipiQSbHId4kvpSkRmEwrMWpE
+9SfM5E2D5IiBuSyWK2MNMHlgI1u0O6UFPAVAZI+DWSog/Ahigh8EtRzlZBY24awfu4tc7anGflJv
+vcVqsTqf98cTVmxcfTTub/4LPbIKJ1fQ5EgAAAAldEVYdGRhdGU6Y3JlYXRlADIwMjItMDgtMDhU
+MDU6MDU6NTkrMDA6MDB+AB5YAAAAJXRFWHRkYXRlOm1vZGlmeQAyMDIyLTA4LTA4VDA1OjA1OjU5
+KzAwOjAwD12m5AAAAABJRU5ErkJggg==" />
+</svg>
+
+                        
+                    </a>
+                </li>
+            
+        </ol><ol class="menu" id="main-menu">
+        
+        
+        
+
+        <li >
+            <a href='/stack/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-home" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <polyline points="5 12 3 12 12 3 21 12 19 12" />
+  <path d="M5 12v7a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-7" />
+  <path d="M9 21v-6a2 2 0 0 1 2 -2h2a2 2 0 0 1 2 2v6" />
+</svg>
+
+
+
+                
+                <span>主页</span>
+            </a>
+        </li>
+        
+        
+
+        <li >
+            <a href='/stack/archives/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-archive" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <rect x="3" y="4" width="18" height="4" rx="2" />
+  <path d="M5 8v10a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-10" />
+  <line x1="10" y1="12" x2="14" y2="12" />
+</svg>
+
+
+
+                
+                <span>笔记本</span>
+            </a>
+        </li>
+        
+        
+
+        <li >
+            <a href='/stack/search/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-search" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="10" cy="10" r="7" />
+  <line x1="21" y1="21" x2="15" y2="15" />
+</svg>
+
+
+
+                
+                <span>搜索</span>
+            </a>
+        </li>
+        
+        
+
+        <li >
+            <a href='/stack/%E5%85%B3%E4%BA%8E/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-link" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <path d="M10 14a3.5 3.5 0 0 0 5 0l4 -4a3.5 3.5 0 0 0 -5 -5l-.5 .5" />
+  <path d="M14 10a3.5 3.5 0 0 0 -5 0l-4 4a3.5 3.5 0 0 0 5 5l.5 -.5" />
+</svg>
+
+
+
+                
+                <span>关于</span>
+            </a>
+        </li>
+        
+
+        <div class="menu-bottom-section">
+            
+            
+                <li id="dark-mode-toggle">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-toggle-left" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="8" cy="12" r="2" />
+  <rect x="2" y="6" width="20" height="12" rx="6" />
+</svg>
+
+
+
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-toggle-right" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="16" cy="12" r="2" />
+  <rect x="2" y="6" width="20" height="12" rx="6" />
+</svg>
+
+
+
+                    <span>暗色模式</span>
+                </li>
+            
+        </div>
+    </ol>
+</aside>
+<main class="main full-width">
+    <article class="main-article">
+    <header class="article-header">
+
+    <div class="article-details">
+    
+    <header class="article-category">
+        
+            <a href="/stack/categories/java/" style="background-color: #2a9d8f; color: #fff;">
+                JAVA
+            </a>
+        
+    </header>
+    
+
+    <div class="article-title-wrapper">
+        <h2 class="article-title">
+            <a href="/stack/p/java9-%E4%B8%AD%E7%9A%84-module-modulepath-%E5%92%8C-classpath/">java9 中的 Module, ModulePath 和 ClassPath</a>
+        </h2>
+    
+        
+    </div>
+
+    
+    <footer class="article-time">
+        
+            <div>
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-calendar-time" width="56" height="56" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <path d="M11.795 21h-6.795a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v4" />
+  <circle cx="18" cy="18" r="4" />
+  <path d="M15 3v4" />
+  <path d="M7 3v4" />
+  <path d="M3 11h16" />
+  <path d="M18 16.496v1.504l1 1" />
+</svg>
+                <time class="article-time--published">2022-03-09 00:00:00</time>
+            </div>
+        
+
+        
+            <div>
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-clock" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="12" cy="12" r="9" />
+  <polyline points="12 7 12 12 15 15" />
+</svg>
+
+
+
+                <time class="article-time--reading">
+                    阅读时长: 4 分钟
+                </time>
+            </div>
+        
+    </footer>
+    
+
+    
+</div>
+</header>
+
+    <section class="article-content">
+    
+    
+    <h1 id="java9中的-module-modulepath-和-classpath">java9中的 Module, ModulePath 和 ClassPath</h1>
+<p>我们都知道，从 Java9 开始，引入了模块系统，提供了对大型复杂系统很重要的隔离，依赖管理等特性。</p>
+<p>首先是个吐槽。</p>
+<p>作为Java9的主要特性，抛开JDK本身的需求，模块系统的设计有不少可以商榷的地方，也引起了不小的争议，甚至一度被JCP否决；对用户来说，迁移成本高，收益不明显，为了这个项目花了三年半的时间，Block了其他项目的进展，让本来已经老旧的Java显得更加老旧，实在是不明智啊。</p>
+<p>下面是正文开始。</p>
+<p>一个Jar包，如果根目录下有 module-info.class 这个文件，则是一个已经包含了模块化信息的模块。在 module-info.class 中，可以指定此模块的名字和版本，哪些 Package 可以被别的模块访问，依赖于哪些模块，这些依赖是否继续传递等。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="n">module</span> <span class="n">net</span><span class="o">.</span><span class="na">dongliu</span><span class="o">.</span><span class="na">serviceimpl</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="n">requires</span> <span class="n">net</span><span class="o">.</span><span class="na">dongliu</span><span class="o">.</span><span class="na">utils</span><span class="o">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="n">requires</span> <span class="n">net</span><span class="o">.</span><span class="na">dongliu</span><span class="o">.</span><span class="na">service</span><span class="o">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="n">exports</span> <span class="n">net</span><span class="o">.</span><span class="na">dongliu</span><span class="o">.</span><span class="na">serviceimpl</span><span class="o">.</span><span class="na">api</span><span class="o">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="n">provides</span> <span class="n">net</span><span class="o">.</span><span class="na">dongliu</span><span class="o">.</span><span class="na">service</span><span class="o">.</span><span class="na">MyService</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="n">with</span> <span class="n">net</span><span class="o">.</span><span class="na">dongliu</span><span class="o">.</span><span class="na">serviceimpl</span><span class="o">.</span><span class="na">MyServiceImpl</span><span class="o">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="o">}</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>旧项目的兼容</p>
+<p>然而在此之前已经发布的Jar包，和开发的项目，都是没有模块化的，Java9 如何处理这些Jar包和项目呢? 这就要靠新引入的 ModulePath了，简单的说就是老人老办法，新人新办法，对 ClassPath 和 ModulePath 采用不同的规则。</p>
+<p>ModulePath 和 ClassPath</p>
+<p>ModulePath 的概念和ClassPath 类似，不过 ModulePath 中的 Jar 包或 Jmod 文件被当作 Module 来处理，而 ClassPath 中的的 Jar 包，无论是否模块化都会被当作传统 Jar 包处理。</p>
+<p>Java9 制定了以下规则以保证旧 Jar 包和项目可以无缝的迁移到新的 Java 版本上:</p>
+<p>所有 ClassPath 下的 Jar 包，Class，资源文件等都在一个 Unnamed Module 中</p>
+<p>Unnamed Module 的 Class 可以看到和使用所有 Module Path 中导出的 Package，所有 Class Path 中的 Package，以及所有 JDK 系统模块的 Package</p>
+<p>ModulePath 下普通模块中的 Class 只能看到 module-info 中定义的依赖模块中导出的 Package，也看不到 Unnamed Module 中的内容。</p>
+<p>根据这些规则，如果项目还是使用 ClassPath，则对项目来说没有影响，项目也不需要定义模块依赖。另外，项目的依赖可以放在 ClassPath 上，也可以放在 ModulePath 上，区别是放在 ModulePath 上的话不能使用模块中未标记为导出的 Package。</p>
+<p>这里需要解释一下 Unnamed Module。Unnamed Module 是一个特殊的，自动生成的 Module，所有 ClassPath 下的内容在 Java9 中都是挂在 Unnamed Module 名下的。对于同一个 ClassLoader，只有一个 Unnamed Module。</p>
+<p>模块化项目使用未模块化的 Jar 包</p>
+<p>现在对于未模块化的传统项目没问题了，那么，如果要创建一个模块化的项目，但是依赖的 Jar 包还没有模块化怎么办？按照上面的规则，因为这些 Jar 包没有模块信息，所以就没法在项目的 module-info 中定义这个依赖。为了保证模块化的新项目能够使用尚未模块化的旧 Jar 包，又定义了 Automatic Module 的概念。</p>
+<p>Automatic Module</p>
+<p>一个不包含 module-info.class 的传统 Jar 包，如果放到了 ModulePath 下，就变成了一个 Automatic Module。</p>
+<p>一个 Automatic Module:</p>
+<p>默认的依赖于所有 ModulePath 中的模块，可以访问所有模块中导出的 Package。</p>
+<p>默认导出此模块中的所有 Package。</p>
+<p>如果 Jar 包在 MetaInfo 文件中定义了 Automatic-Module-Name，则使用这个值作为模块的名称；如果没有定义，那么使用 Jar 包的文件名去掉扩展名的那部分作为模块名，其中包含的-要替换成.，因为模块名不允许包含-字符。</p>
+<p>按照如上规则，项目中就可以把一个未模块化的 Jar 包，当成一个模块来使用了。</p>
+<p>Automatic Module 的争议</p>
+<p>Jigsaw 这个项目，其中最有争议的是如何自动给模块命名，也就是上面的第三个规则。Jigsaw 项目的 JSR 投票第一次被否决，除了 IBM，JBoss 这样因为有自己的模块系统而处于政治原因投反对票的之外，基本上都是由于反对这个自动命名规则。现在的项目基本是采用 Maven，Gradle 等组织构建，这些项目最后生成的 Jar 包文件名只包含 artifactId，用这个做模块名明显是不合适的。更多的人希望用 groupId + artifactId 来作为模块——这个是可行的，因为 Maven 项目生成的 Jar 包会在 META-INF/maven 下保存项目的元信息。可惜的是最后仍然是没有采用这个方案。</p>
+<p>所以为了保证将来平滑的迁移，如果你是一个模块的维护者，可以在 MANIFEST.MF 中加一个Automatic-Module-Name 的值。 比如使用 Maven 的话可以这样指定:</p>
+<p>maven-jar-plugin</p>
+<p>net.dongliu.service</p>
+
+</section>
+
+
+    <footer class="article-footer">
+    
+    <section class="article-tags">
+        
+            <a href="/stack/tags/java/">java</a>
+        
+    </section>
+
+
+    
+    <section class="article-copyright">
+        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-copyright" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="12" cy="12" r="9" />
+  <path d="M14.5 9a3.5 4 0 1 0 0 6" />
+</svg>
+
+
+
+        <span>别扯了，我是有底线的~</span>
+    </section>
+    </footer>
+
+
+    
+        <link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/katex@0.15.6/dist/katex.min.css"integrity="sha256-J&#43;iAE0sgH8QSz9hpcDxXIftnj65JEZgNhGcgReTTK9s="crossorigin="anonymous"
+            ><script 
+                src="https://cdn.jsdelivr.net/npm/katex@0.15.6/dist/katex.min.js"integrity="sha256-InsNdER1b2xUewP&#43;pKCUJpkhiqwHgqiPXDlIk7GzBu4="crossorigin="anonymous"
+                defer
+                >
+            </script><script 
+                src="https://cdn.jsdelivr.net/npm/katex@0.15.6/dist/contrib/auto-render.min.js"integrity="sha256-y39Mpg7V3D4lhBX4x6O0bUqTV4pSrfgwEfGKfxkOdgI="crossorigin="anonymous"
+                defer
+                >
+            </script><script>
+    window.addEventListener("DOMContentLoaded", () => {
+        renderMathInElement(document.querySelector(`.article-content`), {
+            delimiters: [
+                { left: "$$", right: "$$", display: true },
+                { left: "$", right: "$", display: false },
+                { left: "\\(", right: "\\)", display: false },
+                { left: "\\[", right: "\\]", display: true }
+            ]
+        });})
+</script>
+    
+</article>
+
+    
+
+    
+
+<aside class="related-content--wrapper">
+    <h2 class="section-title">相关文章</h2>
+    <div class="related-content">
+        <div class="flex article-list--tile">
+            
+                
+<article class="">
+    <a href="/stack/p/stream%E6%B5%81%E6%93%8D%E4%BD%9C/">
+        
+        
+
+        <div class="article-details">
+            <h2 class="article-title">stream流操作</h2>
+        </div>
+    </a>
+</article>
+
+            
+                
+<article class="">
+    <a href="/stack/p/java9%E4%B8%AD%E7%9A%84module/">
+        
+        
+
+        <div class="article-details">
+            <h2 class="article-title">java9中的module</h2>
+        </div>
+    </a>
+</article>
+
+            
+                
+<article class="">
+    <a href="/stack/p/%E5%B8%B8%E7%94%A8jvm%E9%85%8D%E7%BD%AE%E5%8F%82%E6%95%B0/">
+        
+        
+
+        <div class="article-details">
+            <h2 class="article-title">常用JVM配置参数</h2>
+        </div>
+    </a>
+</article>
+
+            
+                
+<article class="">
+    <a href="/stack/p/spring%E4%B8%AD%E7%9A%84aop/">
+        
+        
+
+        <div class="article-details">
+            <h2 class="article-title">spring中的AOP</h2>
+        </div>
+    </a>
+</article>
+
+            
+                
+<article class="">
+    <a href="/stack/p/%E5%B8%B8%E8%A7%81%E7%9A%84%E9%99%90%E6%B5%81%E7%AE%97%E6%B3%95/">
+        
+        
+
+        <div class="article-details">
+            <h2 class="article-title">常见的限流算法</h2>
+        </div>
+    </a>
+</article>
+
+            
+        </div>
+    </div>
+</aside>
+
+     
+    
+        
+    
+
+    <footer class="site-footer">
+    <section class="copyright">
+        &copy; 
+        
+        2022 羡鱼先生的空间
+    </section>
+    
+    <section class="powerby">
+        
+            不那么好过的日子里，要学会每天给自己找一个开心的理由，哪怕只是，阳光很暖，电量很满。 <br/>
+        Built with <a href="https://gohugo.io/" target="_blank" rel="noopener">Hugo</a> <br />
+        主题 <b><a href="https://github.com/CaiJimmy/hugo-theme-stack" target="_blank" rel="noopener" data-version="3.13.0">Stack</a></b> 由 <a href="https://jimmycai.com" target="_blank" rel="noopener">Jimmy</a> 设计
+    </section>
+</footer>
+
+
+    
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+    
+    <div class="pswp__bg"></div>
+
+    
+    <div class="pswp__scroll-wrap">
+
+        
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+
+        
+        <div class="pswp__ui pswp__ui--hidden">
+
+            <div class="pswp__top-bar">
+
+                
+
+                <div class="pswp__counter"></div>
+
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+
+                <button class="pswp__button pswp__button--share" title="Share"></button>
+
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+
+                
+                
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                        <div class="pswp__preloader__cut">
+                            <div class="pswp__preloader__donut"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div>
+            </div>
+
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+
+        </div>
+
+    </div>
+
+</div><script 
+                src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.js"integrity="sha256-ePwmChbbvXbsO02lbM3HoHbSHTHFAeChekF1xKJdleo="crossorigin="anonymous"
+                defer
+                >
+            </script><script 
+                src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe-ui-default.min.js"integrity="sha256-UKkzOn/w1mBxRmLLGrSeyB4e1xbrp4xylgAWb3M42pU="crossorigin="anonymous"
+                defer
+                >
+            </script><link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/default-skin/default-skin.min.css"crossorigin="anonymous"
+            ><link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.css"crossorigin="anonymous"
+            >
+
+            </main>
+    
+
+        </div>
+        <script 
+                src="https://cdn.jsdelivr.net/npm/node-vibrant@3.1.6/dist/vibrant.min.js"integrity="sha256-awcR2jno4kI5X0zL8ex0vi2z&#43;KMkF24hUW8WePSA9HM="crossorigin="anonymous"
+                
+                >
+            </script><script type="text/javascript" src="/stack/ts/main.js" defer></script>
+<script>
+    (function () {
+        const customFont = document.createElement('link');
+        customFont.href = "https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&display=swap";
+
+        customFont.type = "text/css";
+        customFont.rel = "stylesheet";
+
+        document.head.appendChild(customFont);
+    }());
+</script>
+
+    </body>
+</html>

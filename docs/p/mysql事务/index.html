@@ -1,0 +1,703 @@
+<!DOCTYPE html>
+<html lang="zh-cn" dir="ltr">
+    <head><meta charset='utf-8'>
+<meta name='viewport' content='width=device-width, initial-scale=1'><meta name='description' content='mysql事务 1 事务的ACID 与数据库的事务同时为大众熟知的是ACID。即数据库的原子性(Atomicity)、一致性(Consistenc'><title>MySQL事务</title>
+
+<link rel='canonical' href='https://lyoshur.github.io/stack/p/mysql%E4%BA%8B%E5%8A%A1/'>
+
+<link rel="stylesheet" href="/stack/scss/style.min.ac77dcf8b111b51da39a92990f431923f210f3876d85798a2125667f96dc33a4.css"><meta property='og:title' content='MySQL事务'>
+<meta property='og:description' content='mysql事务 1 事务的ACID 与数据库的事务同时为大众熟知的是ACID。即数据库的原子性(Atomicity)、一致性(Consistenc'>
+<meta property='og:url' content='https://lyoshur.github.io/stack/p/mysql%E4%BA%8B%E5%8A%A1/'>
+<meta property='og:site_name' content='羡鱼先生的空间'>
+<meta property='og:type' content='article'><meta property='article:section' content='Post' /><meta property='article:tag' content='MySQL' /><meta property='article:published_time' content='2022-08-25T13:36:00&#43;00:00'/><meta property='article:modified_time' content='2022-08-25T13:36:00&#43;00:00'/>
+<meta name="twitter:title" content="MySQL事务">
+<meta name="twitter:description" content="mysql事务 1 事务的ACID 与数据库的事务同时为大众熟知的是ACID。即数据库的原子性(Atomicity)、一致性(Consistenc">
+    </head>
+    <body class="
+    article-page
+    ">
+    <script>
+        (function() {
+            const colorSchemeKey = 'StackColorScheme';
+            if(!localStorage.getItem(colorSchemeKey)){
+                localStorage.setItem(colorSchemeKey, "auto");
+            }
+        })();
+    </script><script>
+    (function() {
+        const colorSchemeKey = 'StackColorScheme';
+        const colorSchemeItem = localStorage.getItem(colorSchemeKey);
+        const supportDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches === true;
+
+        if (colorSchemeItem == 'dark' || colorSchemeItem === 'auto' && supportDarkMode) {
+            
+
+            document.documentElement.dataset.scheme = 'dark';
+        } else {
+            document.documentElement.dataset.scheme = 'light';
+        }
+    })();
+</script>
+<div class="container main-container flex on-phone--column extended"><aside class="sidebar left-sidebar sticky ">
+    <button class="hamburger hamburger--spin" type="button" id="toggle-menu" aria-label="切换菜单">
+        <span class="hamburger-box">
+            <span class="hamburger-inner"></span>
+        </span>
+    </button>
+
+    <header>
+        
+            
+            <figure class="site-avatar">
+                <a href="/stack">
+                
+                    
+                    
+                    
+                        
+                        <img src="/stack/img/avatar_hu2d8583d10845a885ea33cc67231edc4c_47820_300x0_resize_q75_box.jpg" width="300"
+                            height="300" class="site-logo" loading="lazy" alt="Avatar">
+                    
+                
+                </a>
+                
+                    <span class="emoji">😎</span>
+                
+            </figure>
+            
+        
+        
+        <div class="site-meta">
+            <h1 class="site-name"><a href="/stack">羡鱼先生的空间</a></h1>
+            <h2 class="site-description">来给生活找点乐子~</h2>
+        </div>
+    </header><ol class="social-menu">
+            
+                <li>
+                    <a 
+                        href='https://gitee.com/lyoshur'
+                        target="_blank"
+                        title="gitee"
+                    >
+                        
+                        
+                            <?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="16px" height="16px" viewBox="0 0 16 16" enable-background="new 0 0 16 16" xml:space="preserve">  <image id="image0" width="16" height="16" x="0" y="0"
+    href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAMAAAAoLQ9TAAAABGdBTUEAALGPC/xhBQAAACBjSFJN
+AAB6JgAAgIQAAPoAAACA6AAAdTAAAOpgAAA6mAAAF3CculE8AAAAdVBMVEUAAADbABjaABTaABPZ
+ABT/ACvZABXaABPZABTZABPjSVb2yMz9+Pj////88fLkSlf++/v3y871wcXhPErfLDvdITH++vrj
+RVLbDh/cFifhOEb++fnnX2r99vboanXhOUf0t7z1wsb+/f3iPkz99/f2xcniP003qpK8AAAACXRS
+TlMAK4/V8waU/b0v8seaAAAAAWJLR0QN9rRh9QAAAAd0SU1FB+YICAUFOzO67psAAACKSURBVBjT
+ZY9ZEsIwDEMdJ00qqEvZy1qgwP2PiJ0CM9D3Z83IkogUxz4Ez44GipiQSbHId4kvpSkRmEwrMWpE
+9SfM5E2D5IiBuSyWK2MNMHlgI1u0O6UFPAVAZI+DWSog/Ahigh8EtRzlZBY24awfu4tc7anGflJv
+vcVqsTqf98cTVmxcfTTub/4LPbIKJ1fQ5EgAAAAldEVYdGRhdGU6Y3JlYXRlADIwMjItMDgtMDhU
+MDU6MDU6NTkrMDA6MDB+AB5YAAAAJXRFWHRkYXRlOm1vZGlmeQAyMDIyLTA4LTA4VDA1OjA1OjU5
+KzAwOjAwD12m5AAAAABJRU5ErkJggg==" />
+</svg>
+
+                        
+                    </a>
+                </li>
+            
+        </ol><ol class="menu" id="main-menu">
+        
+        
+        
+
+        <li >
+            <a href='/stack/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-home" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <polyline points="5 12 3 12 12 3 21 12 19 12" />
+  <path d="M5 12v7a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-7" />
+  <path d="M9 21v-6a2 2 0 0 1 2 -2h2a2 2 0 0 1 2 2v6" />
+</svg>
+
+
+
+                
+                <span>主页</span>
+            </a>
+        </li>
+        
+        
+
+        <li >
+            <a href='/stack/archives/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-archive" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <rect x="3" y="4" width="18" height="4" rx="2" />
+  <path d="M5 8v10a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-10" />
+  <line x1="10" y1="12" x2="14" y2="12" />
+</svg>
+
+
+
+                
+                <span>笔记本</span>
+            </a>
+        </li>
+        
+        
+
+        <li >
+            <a href='/stack/search/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-search" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="10" cy="10" r="7" />
+  <line x1="21" y1="21" x2="15" y2="15" />
+</svg>
+
+
+
+                
+                <span>搜索</span>
+            </a>
+        </li>
+        
+        
+
+        <li >
+            <a href='/stack/%E5%85%B3%E4%BA%8E/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-link" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <path d="M10 14a3.5 3.5 0 0 0 5 0l4 -4a3.5 3.5 0 0 0 -5 -5l-.5 .5" />
+  <path d="M14 10a3.5 3.5 0 0 0 -5 0l-4 4a3.5 3.5 0 0 0 5 5l.5 -.5" />
+</svg>
+
+
+
+                
+                <span>关于</span>
+            </a>
+        </li>
+        
+
+        <div class="menu-bottom-section">
+            
+            
+                <li id="dark-mode-toggle">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-toggle-left" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="8" cy="12" r="2" />
+  <rect x="2" y="6" width="20" height="12" rx="6" />
+</svg>
+
+
+
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-toggle-right" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="16" cy="12" r="2" />
+  <rect x="2" y="6" width="20" height="12" rx="6" />
+</svg>
+
+
+
+                    <span>暗色模式</span>
+                </li>
+            
+        </div>
+    </ol>
+</aside>
+<main class="main full-width">
+    <article class="main-article">
+    <header class="article-header">
+
+    <div class="article-details">
+    
+    <header class="article-category">
+        
+            <a href="/stack/categories/mysql/" style="background-color: #2a9d8f; color: #fff;">
+                MySQL
+            </a>
+        
+    </header>
+    
+
+    <div class="article-title-wrapper">
+        <h2 class="article-title">
+            <a href="/stack/p/mysql%E4%BA%8B%E5%8A%A1/">MySQL事务</a>
+        </h2>
+    
+        
+    </div>
+
+    
+    <footer class="article-time">
+        
+            <div>
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-calendar-time" width="56" height="56" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <path d="M11.795 21h-6.795a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v4" />
+  <circle cx="18" cy="18" r="4" />
+  <path d="M15 3v4" />
+  <path d="M7 3v4" />
+  <path d="M3 11h16" />
+  <path d="M18 16.496v1.504l1 1" />
+</svg>
+                <time class="article-time--published">2022-08-25 13:36:00</time>
+            </div>
+        
+
+        
+            <div>
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-clock" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="12" cy="12" r="9" />
+  <polyline points="12 7 12 12 15 15" />
+</svg>
+
+
+
+                <time class="article-time--reading">
+                    阅读时长: 9 分钟
+                </time>
+            </div>
+        
+    </footer>
+    
+
+    
+</div>
+</header>
+
+    <section class="article-content">
+    
+    
+    <h2 id="mysql事务">mysql事务</h2>
+<h2 id="1-事务的acid">1 事务的ACID</h2>
+<p>与数据库的事务同时为大众熟知的是ACID。即数据库的原子性(Atomicity)、一致性(Consistency)、隔离性(Isolation)和持久性(Durability)。就像应用内为了线程之间的互斥，线程安全等，需要做大量的工作，数据库为了 ACID，也做了许多的工作。</p>
+<ul>
+<li>
+<p>原子性(Atomicity)</p>
+<p>一个事务（transaction）中的所有操作，要么全部完成，要么全部不完成，不会结束在中间某个环节。事务在执行过程中发生错误，会被恢复（Rollback）到事务开始前的状态，就像这个事务从来没有执行过一样。</p>
+</li>
+<li>
+<p>一致性(Consistency)</p>
+<p>在事务开始之前和事务结束以后，数据库的完整性没有被破坏。这表示写入的资料必须完全符合所有的预设规则，这包含资料的精确度、串联性以及后续数据库可以自发性地完成预定的工作。</p>
+</li>
+<li>
+<p>隔离性(Isolation)</p>
+<p>隔离性还有其他的称呼，如并发控制（concurrency control）、可串行化（serializability）、锁（locking）。事务的隔离性要求每个读写事务的对象与其他事务的操作对象能相互分离，即该事务提交前对其他事务都不可见，这通常使用锁来实现。当前数据库系统中都提供了一种粒度锁（granular lock）的策略，允许事务仅锁住一个实体对象的子集，以此来提高事务之间的并发度。</p>
+<p>数据库允许多个并发事务同时对其数据进行读写和修改的能力，隔离性可以防止多个事务并发执行时由于交叉执行而导致数据的不一致。事务隔离分为不同级别，包括:</p>
+<ul>
+<li>读未提交（Read uncommitted）</li>
+<li>读提交（read committed）</li>
+<li>可重复读（repeatable read）</li>
+<li>串行化（Serializable）</li>
+</ul>
+</li>
+<li>
+<p>持久性(Durability)</p>
+</li>
+</ul>
+<p>mysql默认的事务隔离级别是 可重复读（repeatable read）。</p>
+<h2 id="2-事务的分类">2 事务的分类</h2>
+<p>从理论的角度来说，可以把事务分为一下几种类型</p>
+<ul>
+<li>
+<p>扁平事务（flat transactions）</p>
+</li>
+<li>
+<p>带有保存点的扁平事务（flat transactions with savepoints）</p>
+</li>
+<li>
+<p>链事务（chained transactions）</p>
+</li>
+<li>
+<p>嵌套事务（nested transactions）</p>
+</li>
+<li>
+<p>分布式事务（distributed transactions）</p>
+</li>
+</ul>
+<h3 id="21-扁平事务">2.1 扁平事务</h3>
+<p>对于扁平事务来说，其隐式地设置了一个保存点，但是在整个事务中，只有这一个保存点，回滚只能回滚到事务开始时的状态。保存点用SAVE WORK函数来建立，通知系统记录当前的处理状态。</p>
+<h3 id="22-带有保存点的扁平事务">2.2 带有保存点的扁平事务</h3>
+<p>允许在事务执行过程中回滚到同一事务中较早的一个状态，这是因为可能某些事务在执行过程中出现的错误并不会对所有的操作都无效，放弃整个事务不合乎要求，开销也太大。保存点（savepoint）用来通知系统应该记住事务当前的状态，以便以后发生错误时，事务能回到该状态。</p>
+<h3 id="23-链事务">2.3 链事务</h3>
+<p>链事务可视为保存点模式的一个变种。带有保存点的扁平事务，当发生系统崩溃时，所有的保存点都将消失，因为其保存点是易失的（volatile），而非持久的（persistent）。这意味着当恢复保存点时，事务需要从开始处重新执行，而不能从最近的一个保存点继续执行。</p>
+<p>链事务的思想是：在提交一个事务时，释放不需要的数据对象，将必要的处理上下文隐式地传给下一个要开始的事务。注意，提交事务操作和开始下一个事务操作将合并为一个原子操作。这意味着下一个事务将看到上一个事务的结果，就好像在一个事务中进行的。</p>
+<h3 id="24-嵌套事务">2.4 嵌套事务</h3>
+<p>嵌套事务是一个层次结构框架。有一个顶层事务（top-level transaction）控制着各个层次的事务。顶层事务之下嵌套的事务被称为子事务（subtransaction），其控制每一个局部的变换。</p>
+<ul>
+<li>
+<p>嵌套事务是由若干事务组成的一棵树，子树既可以是嵌套事务，也可以是扁平事务。</p>
+</li>
+<li>
+<p>处在叶节点的事务是扁平事务，但是每个子事务从根到叶节点的距离可以是不同的。</p>
+</li>
+<li>
+<p>位于根节点的事务称为顶层事务，其他事务称为子事务。事务的前驱（predecessor）称为父事务（parent），事务的下一层称为儿子事务（child）。</p>
+</li>
+<li>
+<p>子事务既可以提交也可以回滚，但是它的提交操作并不马上生效，除非由其父事务提交。因此可以推论出，任何子事务都在顶层事务提交后才真正提交。</p>
+</li>
+<li>
+<p>树中的任意一个事务的回滚会引起它的所有子事务一同回滚。故子事务仅保留A、C、I特性，不具有D特性。</p>
+</li>
+</ul>
+<p>在Moss的理论中，实际的工作交由叶节点来完成，即只有叶节点的事务才能访问数据库、发送消息、获取其他类型的资源。而高层的事务仅负责逻辑控制，决定何时调用相关的子事务。即使一个系统不支持嵌套事务，用户也可以通过保存点技术来模拟嵌套事务</p>
+<h3 id="25-分布式事务">2.5 分布式事务</h3>
+<p>分布式事务通常是一个在分布式环境下运行的扁平事务，因此需要根据数据所在位置访问网络中的不同节点。</p>
+<h2 id="3-事务控制语句">3 事务控制语句</h2>
+<p>在MySQL命令行的默认设置下，事务都是自动提交（auto commit）的，即执行SQL语句后就会马上执行COMMIT操作。因此要显式地开启一个事务须使用命令BEGIN和START TRANSACTION，或者执行命令SET AUTOCOMMIT=0，以禁用当前会话的自动提交。</p>
+<ul>
+<li>
+<p>START TRANSACTION | BEGIN：显式地开启一个事务。</p>
+</li>
+<li>
+<p>COMMIT：要想使用这个语句的最简形式，只需发出COMMIT。也可以更详细一些，写为COMMIT WORK，不过这二者几乎是等价的。COMMIT会提交事务，并使已对数据库进行的所有修改成为永久性的。</p>
+</li>
+<li>
+<p>ROLLBACK：要使用这个语句的最简形式，只需发出ROLLBACK。同样地，也可以写为ROLLBACK WORK，但是二者几乎是等价的。回滚会结束用户的事务，并撤销正在进行的所有未提交的修改。</p>
+</li>
+<li>
+<p>SAVEPOINT identifier：SAVEPOINT允许在事务中创建一个保存点，一个事务中可以有多个SAVEPOINT。</p>
+</li>
+<li>
+<p>RELEASE SAVEPOINT identifier：删除一个事务的保存点，当没有一个保存点执行这句语句时，会抛出一个异常。</p>
+</li>
+<li>
+<p>ROLLBACK TO [SAVEPOINT] identifier ：这个语句与SAVEPOINT命令一起使用。可以把事务回滚到标记点，而不回滚在此标记点之前的任何工作。例如可以发出两条UPDATE语句，后面跟一个SAVEPOINT，然后又是两条DELETE语句。如果执行DELETE语句期间出现了某种异常情况，而且捕获到这个异常，并发出ROLLBACK TO SAVEPOINT命令，事务就会回滚到指定的SAVEPOINT，撤销DELETE完成的所有工作，而UPDATE语句完成的工作不受影响。</p>
+</li>
+<li>
+<p>SET TRANSACTION：这个语句用来设置事务的隔离级别。InnoDB存储引擎提供的事务隔离级别有READ UNCOMMITTED、READ COMMITTED、REPEATABLE READ和SERIALIZABLE。</p>
+</li>
+</ul>
+<p>START TRANSACTION和BEGIN语句都可以在MySQL命令行下显式地开启一个事务。但是在存储过程中，MySQL数据库的分析器会自动将BEGIN识别为BEGIN &hellip;END，因此在存储过程中只能使用START TRANSACTION语句来开启一个事务。</p>
+<p>COMMIT和COMMIT WORK语句基本上是一致的，都用来提交事务。不同之处在于COMMIT WORK用来控制事务结束后的行为是CHAIN还是RELEASE的。如果是CHAIN方式，那么事务就变成了链事务。用户可以通过参数completion_type来进行控制:</p>
+<ul>
+<li>
+<p>该参数为0，表示没有任何操作。在这种设置下，COMMIT和COMMIT WORK是完全等价的。</p>
+</li>
+<li>
+<p>当参数completion_type的值为1时，COMMIT WORK等同于COMMIT AND CHAIN，表示马上自动开启一个相同隔离级别的事务</p>
+</li>
+<li>
+<p>参数completion_type为2时，COMMIT WORK等同于COMMIT AND RELEASE。当事务提交后会自动断开与服务器的连接</p>
+</li>
+</ul>
+<h2 id="4-事务的隔离级别详解">4 事务的隔离级别详解</h2>
+<p>ISO和ANSI SQL标准制定了四种事务隔离级别的标准，但是很少有数据库厂商遵循这些标准。比如Oracle数据库就不支持READ UNCOMMITTED和REPEATABLE READ的事务隔离级别。</p>
+<ul>
+<li>
+<p>READ UNCOMMITTED</p>
+<p>READ UNCOMMITTED被称为浏览访问（browse access），仅仅只是对事务而言的</p>
+</li>
+<li>
+<p>READ COMMITTED</p>
+<p>READ COMMITTED被称为游标稳定（cursor stability）</p>
+</li>
+<li>
+<p>REPEATABLE READ</p>
+<p>REPEATABLE READ是2.9999°的隔离，没有幻读的保护</p>
+</li>
+<li>
+<p>SERIALIZABLE</p>
+<p>SERIALIZABLE被称为隔离，或3°的隔离。SQL和SQL2标准的默认事务隔离级别是SERIALIZABLE</p>
+</li>
+</ul>
+<p>InnoDB存储引擎默认的支持隔离级别是REPEATABLE READ，但是与标准SQL不同的是，InnoDB存储引擎在REPEATABLE READ事务隔离级别下，使用Next-Key Lock的锁算法，因此避免了幻读的产生。所以说，InnoDB存储引擎在默认的REPEATABLE READ事务隔离级别下已经能完全保证事务的隔离性要求，即达到SQL标准的SERIALIZABLE隔离级别。</p>
+<h2 id="5-分布式事务编程">5 分布式事务编程</h2>
+<p>InnoDB存储引擎提供了对于XA事务的支持，并通过XA事务来支持分布式事务的实现。分布式事务指的是允许多个独立的事务资源 （transactional resources） 参与到一个全局的事务中。事务资源通常是关系型数据库系统，也可以是其他类型的资源。全局事务要求在其中的所有参与的事务要么都提交，要么都回滚，这对于事务原有的ACID要求又有了提高。另外，在使用分布式事务时，InnoDB存储引擎的事务隔离级别必须设置为SERIALIZABLE。</p>
+<p>XA事务允许不同数据库之间的分布式事务，如一台服务器是MySQL数据库的，另一台是Oracle数据库的，可能还有一台服务器是SQL Server数据库的，只要参与到全局事务中的每个节点都支持XA事务即可。</p>
+<p>XA事务由一个或多个资源管理器（resource manager）、一个事务管理器（transaction manager）以及一个应用程序（application program）组成。</p>
+<ul>
+<li>
+<p>资源管理器：提供访问事务资源的方法。通常一个数据库就是一个资源管理器。</p>
+</li>
+<li>
+<p>事务管理器：协调参与全局事务中的各个事务。需要和参与到全局事务中的所有资源管理器进行通信。</p>
+</li>
+<li>
+<p>应用程序：定义事务的边界，指定全局事务中的操作。</p>
+</li>
+</ul>
+<p>在MySQL数据库的分布式事务中，资源管理器就是MySQL数据库，事务管理器为连接到MySQL服务器的客户端。</p>
+<p>分布式事务使用两段式提交（two-phase commit）的方式。在第一个阶段，所有参与全局事务的节点都开始准备（PREPARE），告诉事务管理器它们准备好提交了。第二个阶段，事务管理器告诉资源管理器执行ROLLBACK还是COMMIT。如果任何一个节点显示不能提交，则所有的节点都被告知需要回滚。可见与本地事务不同的是，需要多一次的PREPARE操作，待收到所有节点的同意信息后，再进行COMMIT或ROLLBACK操作。</p>
+
+</section>
+
+
+    <footer class="article-footer">
+    
+    <section class="article-tags">
+        
+            <a href="/stack/tags/mysql/">MySQL</a>
+        
+    </section>
+
+
+    
+    <section class="article-copyright">
+        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-copyright" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="12" cy="12" r="9" />
+  <path d="M14.5 9a3.5 4 0 1 0 0 6" />
+</svg>
+
+
+
+        <span>别扯了，我是有底线的~</span>
+    </section>
+    </footer>
+
+
+    
+        <link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/katex@0.15.6/dist/katex.min.css"integrity="sha256-J&#43;iAE0sgH8QSz9hpcDxXIftnj65JEZgNhGcgReTTK9s="crossorigin="anonymous"
+            ><script 
+                src="https://cdn.jsdelivr.net/npm/katex@0.15.6/dist/katex.min.js"integrity="sha256-InsNdER1b2xUewP&#43;pKCUJpkhiqwHgqiPXDlIk7GzBu4="crossorigin="anonymous"
+                defer
+                >
+            </script><script 
+                src="https://cdn.jsdelivr.net/npm/katex@0.15.6/dist/contrib/auto-render.min.js"integrity="sha256-y39Mpg7V3D4lhBX4x6O0bUqTV4pSrfgwEfGKfxkOdgI="crossorigin="anonymous"
+                defer
+                >
+            </script><script>
+    window.addEventListener("DOMContentLoaded", () => {
+        renderMathInElement(document.querySelector(`.article-content`), {
+            delimiters: [
+                { left: "$$", right: "$$", display: true },
+                { left: "$", right: "$", display: false },
+                { left: "\\(", right: "\\)", display: false },
+                { left: "\\[", right: "\\]", display: true }
+            ]
+        });})
+</script>
+    
+</article>
+
+    
+
+    
+
+<aside class="related-content--wrapper">
+    <h2 class="section-title">相关文章</h2>
+    <div class="related-content">
+        <div class="flex article-list--tile">
+            
+                
+<article class="">
+    <a href="/stack/p/mysql%E6%9F%A5%E8%AF%A2%E4%BC%98%E5%8C%96/">
+        
+        
+
+        <div class="article-details">
+            <h2 class="article-title">MySQL查询优化</h2>
+        </div>
+    </a>
+</article>
+
+            
+                
+<article class="">
+    <a href="/stack/p/mysql%E8%AF%AD%E5%8F%A5%E4%BC%98%E5%8C%96/">
+        
+        
+
+        <div class="article-details">
+            <h2 class="article-title">MySQL语句优化</h2>
+        </div>
+    </a>
+</article>
+
+            
+                
+<article class="">
+    <a href="/stack/p/mysql%E8%8E%B7%E5%8F%96%E6%95%B0%E6%8D%AE%E5%BA%93%E7%BB%93%E6%9E%84/">
+        
+        
+
+        <div class="article-details">
+            <h2 class="article-title">MySQL获取数据库结构</h2>
+        </div>
+    </a>
+</article>
+
+            
+        </div>
+    </div>
+</aside>
+
+     
+    
+        
+    
+
+    <footer class="site-footer">
+    <section class="copyright">
+        &copy; 
+        
+        2022 羡鱼先生的空间
+    </section>
+    
+    <section class="powerby">
+        
+            不那么好过的日子里，要学会每天给自己找一个开心的理由，哪怕只是，阳光很暖，电量很满。 <br/>
+        Built with <a href="https://gohugo.io/" target="_blank" rel="noopener">Hugo</a> <br />
+        主题 <b><a href="https://github.com/CaiJimmy/hugo-theme-stack" target="_blank" rel="noopener" data-version="3.13.0">Stack</a></b> 由 <a href="https://jimmycai.com" target="_blank" rel="noopener">Jimmy</a> 设计
+    </section>
+</footer>
+
+
+    
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+    
+    <div class="pswp__bg"></div>
+
+    
+    <div class="pswp__scroll-wrap">
+
+        
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+
+        
+        <div class="pswp__ui pswp__ui--hidden">
+
+            <div class="pswp__top-bar">
+
+                
+
+                <div class="pswp__counter"></div>
+
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+
+                <button class="pswp__button pswp__button--share" title="Share"></button>
+
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+
+                
+                
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                        <div class="pswp__preloader__cut">
+                            <div class="pswp__preloader__donut"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div>
+            </div>
+
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+
+        </div>
+
+    </div>
+
+</div><script 
+                src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.js"integrity="sha256-ePwmChbbvXbsO02lbM3HoHbSHTHFAeChekF1xKJdleo="crossorigin="anonymous"
+                defer
+                >
+            </script><script 
+                src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe-ui-default.min.js"integrity="sha256-UKkzOn/w1mBxRmLLGrSeyB4e1xbrp4xylgAWb3M42pU="crossorigin="anonymous"
+                defer
+                >
+            </script><link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/default-skin/default-skin.min.css"crossorigin="anonymous"
+            ><link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.css"crossorigin="anonymous"
+            >
+
+            </main>
+    <aside class="sidebar right-sidebar sticky">
+        
+            
+                
+    <section class="widget archives">
+        <div class="widget-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-hash" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <line x1="5" y1="9" x2="19" y2="9" />
+  <line x1="5" y1="15" x2="19" y2="15" />
+  <line x1="11" y1="4" x2="7" y2="20" />
+  <line x1="17" y1="4" x2="13" y2="20" />
+</svg>
+
+
+
+        </div>
+        <h2 class="widget-title section-title">目录</h2>
+        
+        <div class="widget--toc">
+            <nav id="TableOfContents">
+  <ol>
+    <li><a href="#mysql事务">mysql事务</a></li>
+    <li><a href="#1-事务的acid">1 事务的ACID</a></li>
+    <li><a href="#2-事务的分类">2 事务的分类</a>
+      <ol>
+        <li><a href="#21-扁平事务">2.1 扁平事务</a></li>
+        <li><a href="#22-带有保存点的扁平事务">2.2 带有保存点的扁平事务</a></li>
+        <li><a href="#23-链事务">2.3 链事务</a></li>
+        <li><a href="#24-嵌套事务">2.4 嵌套事务</a></li>
+        <li><a href="#25-分布式事务">2.5 分布式事务</a></li>
+      </ol>
+    </li>
+    <li><a href="#3-事务控制语句">3 事务控制语句</a></li>
+    <li><a href="#4-事务的隔离级别详解">4 事务的隔离级别详解</a></li>
+    <li><a href="#5-分布式事务编程">5 分布式事务编程</a></li>
+  </ol>
+</nav>
+        </div>
+    </section>
+
+            
+        
+    </aside>
+
+
+        </div>
+        <script 
+                src="https://cdn.jsdelivr.net/npm/node-vibrant@3.1.6/dist/vibrant.min.js"integrity="sha256-awcR2jno4kI5X0zL8ex0vi2z&#43;KMkF24hUW8WePSA9HM="crossorigin="anonymous"
+                
+                >
+            </script><script type="text/javascript" src="/stack/ts/main.js" defer></script>
+<script>
+    (function () {
+        const customFont = document.createElement('link');
+        customFont.href = "https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&display=swap";
+
+        customFont.type = "text/css";
+        customFont.rel = "stylesheet";
+
+        document.head.appendChild(customFont);
+    }());
+</script>
+
+    </body>
+</html>

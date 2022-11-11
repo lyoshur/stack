@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+    <channel>
+        <title>Pages on 羡鱼先生的空间</title>
+        <link>https://lyoshur.github.io/stack/page/</link>
+        <description>Recent content in Pages on 羡鱼先生的空间</description>
+        <generator>Hugo -- gohugo.io</generator>
+        <language>zh-cn</language>
+        <lastBuildDate>Sun, 06 Mar 2022 00:00:00 +0000</lastBuildDate><atom:link href="https://lyoshur.github.io/stack/page/index.xml" rel="self" type="application/rss+xml" /><item>
+        <title>笔记本</title>
+        <link>https://lyoshur.github.io/stack/archives/</link>
+        <pubDate>Sun, 06 Mar 2022 00:00:00 +0000</pubDate>
+        
+        <guid>https://lyoshur.github.io/stack/archives/</guid>
+        <description></description>
+        </item>
+        <item>
+        <title>关于</title>
+        <link>https://lyoshur.github.io/stack/%E5%85%B3%E4%BA%8E/</link>
+        <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+        
+        <guid>https://lyoshur.github.io/stack/%E5%85%B3%E4%BA%8E/</guid>
+        <description>&lt;p&gt;欢迎来到羡鱼先生的秘密基地：&lt;/p&gt;
+&lt;p&gt;这里可以摸鱼、学习、发呆、打滚，但遵守秘密基地准则：&lt;/p&gt;
+&lt;p&gt;1.搬砖不喝酒，喝酒不搬砖&lt;/p&gt;
+&lt;p&gt;2.代码不规范，亲人两行泪&lt;/p&gt;
+&lt;p&gt;3.封装一小步，文明一大步&lt;/p&gt;
+&lt;p&gt;4.广告位招租，请联系 &lt;a class=&#34;link&#34; href=&#34;mailto:lyoshur@foxmail.com&#34; &gt;lyoshur@foxmail.com&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;请大家离开时，自觉带走垃圾，谢谢&lt;/p&gt;
+</description>
+        </item>
+        <item>
+        <title>搜索</title>
+        <link>https://lyoshur.github.io/stack/search/</link>
+        <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+        
+        <guid>https://lyoshur.github.io/stack/search/</guid>
+        <description></description>
+        </item>
+        
+    </channel>
+</rss>

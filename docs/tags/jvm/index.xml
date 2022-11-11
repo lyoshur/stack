@@ -1,0 +1,381 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+    <channel>
+        <title>Jvm on 羡鱼先生的空间</title>
+        <link>https://lyoshur.github.io/stack/tags/jvm/</link>
+        <description>Recent content in Jvm on 羡鱼先生的空间</description>
+        <generator>Hugo -- gohugo.io</generator>
+        <language>zh-cn</language>
+        <lastBuildDate>Fri, 26 Aug 2022 16:31:00 +0000</lastBuildDate><atom:link href="https://lyoshur.github.io/stack/tags/jvm/index.xml" rel="self" type="application/rss+xml" /><item>
+        <title>常用JVM配置参数</title>
+        <link>https://lyoshur.github.io/stack/p/%E5%B8%B8%E7%94%A8jvm%E9%85%8D%E7%BD%AE%E5%8F%82%E6%95%B0/</link>
+        <pubDate>Fri, 26 Aug 2022 16:31:00 +0000</pubDate>
+        
+        <guid>https://lyoshur.github.io/stack/p/%E5%B8%B8%E7%94%A8jvm%E9%85%8D%E7%BD%AE%E5%8F%82%E6%95%B0/</guid>
+        <description>&lt;h1 id=&#34;常用jvm配置参数&#34;&gt;常用JVM配置参数&lt;/h1&gt;
+&lt;h2 id=&#34;-xms&#34;&gt;-Xms&lt;/h2&gt;
+&lt;p&gt;初始堆内存大小，默认为物理内存的1/64（等价于-XX:InitialHeapSize）&lt;/p&gt;
+&lt;h2 id=&#34;-xmx&#34;&gt;-Xmx&lt;/h2&gt;
+&lt;p&gt;最大堆内存大小，默认为物理内存的1/4（等价于-XX:MaxHeapSize）&lt;/p&gt;
+&lt;h2 id=&#34;-xmn&#34;&gt;-Xmn&lt;/h2&gt;
+&lt;p&gt;设置年轻代大小（等价于-XX:MaxNewSize=512m）&lt;/p&gt;
+&lt;h2 id=&#34;-xss&#34;&gt;-Xss&lt;/h2&gt;
+&lt;p&gt;设置单个线程的线程栈大小，一般默认512k到1024k（等价于-XX:ThreadStackSize）&lt;/p&gt;
+&lt;h2 id=&#34;-xxmetaspacesize&#34;&gt;-XX:MetaspaceSize&lt;/h2&gt;
+&lt;p&gt;设置元空间大小（&lt;strong&gt;元空间与永久代最大的区别为：元空间并不在虚拟机中，而使用的是本地内存，因此，元空间只收本地内存的限制&lt;/strong&gt;）&lt;/p&gt;
+&lt;h2 id=&#34;-xxmaxmetaspacesize&#34;&gt;-XX:MaxMetaspaceSize&lt;/h2&gt;
+&lt;p&gt;设置最大元空间大小&lt;/p&gt;
+&lt;h2 id=&#34;-xxprintgcdetails&#34;&gt;-XX:+PrintGCDetails&lt;/h2&gt;
+&lt;p&gt;输出详细GC收集日志信息&lt;/p&gt;
+&lt;h2 id=&#34;-xxsurvivorratio&#34;&gt;-XX:SurvivorRatio&lt;/h2&gt;
+&lt;p&gt;设置新生代中 eden 和 S0/S1 空间比例，默认 -XX:SurvivorRatio=8，Eden : S0 : S1 = 8 : 1 : 1&lt;/p&gt;
+&lt;h2 id=&#34;-xxnewratio&#34;&gt;-XX:NewRatio&lt;/h2&gt;
+&lt;p&gt;配置年轻代和老年代在堆结构的占比，默认 -XX:NewRatio=2 新生代占1，老年代占2，年轻代占整个堆的 1/3&lt;/p&gt;
+&lt;h2 id=&#34;-xxmaxtenuringthreshold&#34;&gt;-XX:MaxTenuringThreshold&lt;/h2&gt;
+&lt;p&gt;设置垃圾最大年龄。&lt;strong&gt;默认是15&lt;/strong&gt;。-XX:MaxTenuringThreshold=0：设置垃圾最大年龄。如果设置为0的话，则年轻代对象不经过Survivor区，直接进入老年代。对于老年代比较多的应用，可以提高效率。如果此值设置为一个较大的值，则年前对象会在Survivor区进行多次复制，这样可以增加对象在年轻代的存活时间，增加在年轻代被回收的概率！&lt;/p&gt;
+&lt;h2 id=&#34;-xxminheapfreeratio40&#34;&gt;-XX:MinHeapFreeRatio=40&lt;/h2&gt;
+&lt;p&gt;堆内存使用率小于40时缩减堆内存，xms=xmx时该参数无效，默认值40&lt;/p&gt;
+&lt;h2 id=&#34;-xxmaxheapfreeratio70&#34;&gt;-XX:MaxHeapFreeRatio=70&lt;/h2&gt;
+&lt;p&gt;堆内存使用率大于70时扩张堆内存，xms=xmx时该参数无效，默认值70&lt;/p&gt;
+&lt;h2 id=&#34;-xxuseserialgc&#34;&gt;-XX:+UseSerialGC&lt;/h2&gt;
+&lt;p&gt;开启 Serial垃圾收集器（新生代）
+新生代使用Serial  老年代则使用SerialOld&lt;/p&gt;
+&lt;h2 id=&#34;-xx-useserialgc&#34;&gt;-XX:-UseSerialGC&lt;/h2&gt;
+&lt;p&gt;关闭 Serial垃圾收集器（新生代）&lt;/p&gt;
+&lt;h2 id=&#34;-xxuseparnewgc&#34;&gt;-XX:+UseParNewGC&lt;/h2&gt;
+&lt;p&gt;开启ParNew垃圾收集器（新生代）
+新生代使用功能ParNew 老年代则使用功能CMS&lt;/p&gt;
+&lt;h2 id=&#34;-xx-useparnewgc&#34;&gt;-XX:-UseParNewGC&lt;/h2&gt;
+&lt;p&gt;关闭ParNew垃圾收集器（新生代）&lt;/p&gt;
+&lt;h2 id=&#34;-xxuseparalleloldgc&#34;&gt;-XX:+UseParallelOldGC&lt;/h2&gt;
+&lt;p&gt;开启Parallel Scavenge收集器（新生代）&lt;/p&gt;
+&lt;h2 id=&#34;-xx-useparalleloldgc&#34;&gt;-XX:-UseParallelOldGC&lt;/h2&gt;
+&lt;p&gt;关闭Parallel Scavenge收集器（新生代）&lt;/p&gt;
+&lt;h2 id=&#34;-xxuseparallelgc&#34;&gt;-XX:+UseParallelGC&lt;/h2&gt;
+&lt;p&gt;开启ParallelOl垃圾收集器（老年代）&lt;/p&gt;
+&lt;h2 id=&#34;-xx-useparallelgc&#34;&gt;-XX:-UseParallelGC&lt;/h2&gt;
+&lt;p&gt;关闭ParallelOl垃圾收集器（老年代）&lt;/p&gt;
+&lt;h2 id=&#34;-xxuseconcmarksweepgc&#34;&gt;-XX:+UseConcMarkSweepGC&lt;/h2&gt;
+&lt;p&gt;开启CMS垃圾收集器（老年代）&lt;/p&gt;
+&lt;h2 id=&#34;-xx-useconcmarksweepgc&#34;&gt;-XX:-UseConcMarkSweepGC&lt;/h2&gt;
+&lt;p&gt;关闭CMS垃圾收集器（老年代）&lt;/p&gt;
+&lt;h2 id=&#34;-xxuseg1gc&#34;&gt;-XX:+UseG1GC&lt;/h2&gt;
+&lt;p&gt;开启G1垃圾收集器&lt;/p&gt;
+&lt;h2 id=&#34;-xx-useg1gc&#34;&gt;-XX:-UseG1GC&lt;/h2&gt;
+&lt;p&gt;关闭G1垃圾收集器&lt;/p&gt;
+&lt;h2 id=&#34;-xxparallelgcthreads16&#34;&gt;-XX:ParallelGCThreads=16&lt;/h2&gt;
+&lt;p&gt;GC并行执行线程数&lt;/p&gt;
+&lt;h2 id=&#34;-xxpretenuresizethreshold1000000&#34;&gt;-XX:PretenureSizeThreshold=1000000&lt;/h2&gt;
+&lt;p&gt;新生代可容纳的最大对象，大于此值的对象直接会分配到老年代，设置为0则没有限制。
+避免在Eden区和Survivor区发生大量的内存复制，该参数只对Serial和ParNew收集器有效，Parallel Scavenge并不认识该参数&lt;/p&gt;
+&lt;h2 id=&#34;-xxinitialtenuringthreshol7&#34;&gt;-XX:InitialTenuringThreshol=7&lt;/h2&gt;
+&lt;p&gt;进入老年代最小的GC年龄&lt;/p&gt;
+&lt;h2 id=&#34;-xxmaxtenuringthreshold15&#34;&gt;-XX:MaxTenuringThreshold=15&lt;/h2&gt;
+&lt;p&gt;进入老年代最大的GC年龄&lt;/p&gt;
+&lt;h2 id=&#34;-xloggchomegceasygc-tlog&#34;&gt;-Xloggc:/home/GCEASY/gc-%t.log&lt;/h2&gt;
+&lt;p&gt;配置GC文件路径&lt;/p&gt;
+&lt;h2 id=&#34;-xxusegclogfilerotation&#34;&gt;-XX:+UseGCLogFileRotation&lt;/h2&gt;
+&lt;p&gt;开启滚动生成日志&lt;/p&gt;
+&lt;h2 id=&#34;-xxnumberofgclogfiles4&#34;&gt;-XX:NumberOfGCLogFiles=4&lt;/h2&gt;
+&lt;p&gt;滚动GC日志文件数，默认0，不滚动&lt;/p&gt;
+&lt;h2 id=&#34;-xxgclogfilesize100k&#34;&gt;-XX:GCLogFileSize=100k&lt;/h2&gt;
+&lt;p&gt;GC文件滚动大小，需配置UseGCLogFileRotation，设置为0表示仅通过jcmd命令触发&lt;/p&gt;
+&lt;h2 id=&#34;-xxprintgcapplicationstoppedtime&#34;&gt;-XX:+PrintGCApplicationStoppedTime&lt;/h2&gt;
+&lt;p&gt;打印应用暂停时间&lt;/p&gt;
+&lt;h2 id=&#34;-xxprintheapatgc&#34;&gt;-XX:+PrintHeapAtGC&lt;/h2&gt;
+&lt;p&gt;每次GC完成后，打印出JVM堆内存每个区域的使用情况&lt;/p&gt;
+&lt;h2 id=&#34;-xxprinttenuringdistribution&#34;&gt;-XX:+PrintTenuringDistribution&lt;/h2&gt;
+&lt;p&gt;打印存活实例年龄信息&lt;/p&gt;
+&lt;h2 id=&#34;-xxheapdumponoutofmemoryerror&#34;&gt;-XX:+HeapDumpOnOutOfMemoryError&lt;/h2&gt;
+&lt;p&gt;抛出内存溢出错误时导出堆信息到指定文件&lt;/p&gt;
+&lt;h2 id=&#34;-xxheapdumppathdatadumpjvmdump&#34;&gt;-XX:HeapDumpPath=/data/dump/jvm.dump&lt;/h2&gt;
+&lt;p&gt;设置存溢出错误时导出堆信息到指定文件，文件路径&lt;/p&gt;
+&lt;h2 id=&#34;-xxheapdumpbeforefullgc&#34;&gt;-XX:+HeapDumpBeforeFullGC&lt;/h2&gt;
+&lt;p&gt;实现在Full GC前dump&lt;/p&gt;
+&lt;h2 id=&#34;-xxheapdumpafterfullgc&#34;&gt;-XX:+HeapDumpAfterFullGC&lt;/h2&gt;
+&lt;p&gt;实现在Full GC后dump&lt;/p&gt;
+&lt;h2 id=&#34;-xxheapdumppathedump&#34;&gt;-XX:HeapDumpPath=e:\dump&lt;/h2&gt;
+&lt;p&gt;设置Dump保存的路径&lt;/p&gt;
+</description>
+        </item>
+        <item>
+        <title>JDK工具一览表</title>
+        <link>https://lyoshur.github.io/stack/p/jdk%E5%B7%A5%E5%85%B7%E4%B8%80%E8%A7%88%E8%A1%A8/</link>
+        <pubDate>Thu, 11 Aug 2022 15:31:00 +0000</pubDate>
+        
+        <guid>https://lyoshur.github.io/stack/p/jdk%E5%B7%A5%E5%85%B7%E4%B8%80%E8%A7%88%E8%A1%A8/</guid>
+        <description>&lt;h1 id=&#34;jdk工具一览表&#34;&gt;JDK工具一览表&lt;/h1&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;工具名称&lt;/th&gt;
+&lt;th&gt;功能描述&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;appletviewer.exe&lt;/td&gt;
+&lt;td&gt;用于运行并浏览applet小程序。&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;apt.exe&lt;/td&gt;
+&lt;td&gt;注解处理工具(Annotation Processing Tool)，主要用于注解处理。&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;extcheck.exe&lt;/td&gt;
+&lt;td&gt;扩展检测工具，主要用于检测指定jar文件与当前已安装的Java SDK扩展之间是否存在版本冲突。&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;idlj.exe&lt;/td&gt;
+&lt;td&gt;IDL转Java编译器(IDL-to-Java Compiler)，用于为指定的IDL文件生成Java绑定。IDL意即接口定义语言(Interface Definition Language)。&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;jabswitch.exe&lt;/td&gt;
+&lt;td&gt;Java访问桥开关(Java Access Bridge switch)，用于启用/禁用Java访问桥。Java访问桥内置于Java 7 Update 6及以上版本，主要为Windows系统平台提供一套访问Java应用的API。&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;jar.exe&lt;/td&gt;
+&lt;td&gt;jar文件管理工具，主要用于打包压缩、解压jar文件。&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;jarsigner.exe&lt;/td&gt;
+&lt;td&gt;jar密匙签名工具。&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;java.exe&lt;/td&gt;
+&lt;td&gt;Java运行工具，用于运行.class字节码文件或.jar文件。&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;javac.exe&lt;/td&gt;
+&lt;td&gt;Java编译工具(Java Compiler)，用于编译Java源代码文件。&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;javadoc.exe&lt;/td&gt;
+&lt;td&gt;Java文档工具，主要用于根据Java源代码中的注释信息生成HTML格式的API帮助文档。&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;javafxpackager.exe&lt;/td&gt;
+&lt;td&gt;JavaFX包装器，用于执行与封装或签名JavaFX应用有关的任务。&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;javah.exe&lt;/td&gt;
+&lt;td&gt;Java头文件工具，用于根据Java类生成C/C++头文件和源文件(主要用于JNI开发领域)。&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;javap.exe&lt;/td&gt;
+&lt;td&gt;Java反编译工具，主要用于根据Java字节码文件反汇编为Java源代码文件。&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;java-rmi.exe&lt;/td&gt;
+&lt;td&gt;Java远程方法调用(Java Remote Method Invocation)工具，主要用于在客户机上调用远程服务器上的对象。&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;javaw.exe&lt;/td&gt;
+&lt;td&gt;Java运行工具，用于运行.class字节码文件或.jar文件，但不会显示控制台输出信息，适用于运行图形化程序。&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;javaws.exe&lt;/td&gt;
+&lt;td&gt;Java Web Start，使您可以从Web下载和运行Java应用程序，下载、安装、运行、更新Java应用程序都非常简单方便。&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;jcmd.exe&lt;/td&gt;
+&lt;td&gt;Java 命令行(Java Command)，用于向正在运行的JVM发送诊断命令请求。&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;jconsole.exe&lt;/td&gt;
+&lt;td&gt;图形化用户界面的监测工具，主要用于监测并显示运行于Java平台上的应用程序的性能和资源占用等信息。&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;jdb.exe&lt;/td&gt;
+&lt;td&gt;Java调试工具(Java Debugger)，主要用于对Java应用进行断点调试。&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;jhat.exe&lt;/td&gt;
+&lt;td&gt;Java堆分析工具(Java Heap Analysis Tool)，用于分析Java堆内存中的对象信息。&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;jinfo.exe&lt;/td&gt;
+&lt;td&gt;Java配置信息工具(Java Configuration Information)，用于打印指定Java进程、核心文件或远程调试服务器的配置信息。&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;jmap.exe&lt;/td&gt;
+&lt;td&gt;Java内存映射工具(Java Memory Map)，主要用于打印指定Java进程、核心文件或远程调试服务器的共享对象内存映射或堆内存细节。&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;jmc.exe&lt;/td&gt;
+&lt;td&gt;Java任务控制工具(Java Mission Control)，主要用于HotSpot JVM的生产时间监测、分析、诊断。&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;jps.exe&lt;/td&gt;
+&lt;td&gt;JVM进程状态工具(JVM Process Status Tool)，用于显示目标系统上的HotSpot JVM的Java进程信息。&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;jrunscript.exe&lt;/td&gt;
+&lt;td&gt;Java命令行脚本外壳工具(command line script shell)，主要用于解释执行javascript、groovy、ruby等脚本语言。&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;jsadebugd.exe&lt;/td&gt;
+&lt;td&gt;Java可用性代理调试守护进程(Java Serviceability Agent Debug Daemon)，主要用于附加到指定的Java进程、核心文件，或充当一个调试服务器。&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;jstack.exe&lt;/td&gt;
+&lt;td&gt;Java堆栈跟踪工具，主要用于打印指定Java进程、核心文件或远程调试服务器的Java线程的堆栈跟踪信息。&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;jstat.exe&lt;/td&gt;
+&lt;td&gt;JVM统计监测工具(JVM Statistics Monitoring Tool)，主要用于监测并显示JVM的性能统计信息。&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;jstatd.exe&lt;/td&gt;
+&lt;td&gt;jstatd(VM jstatd Daemon)工具是一个RMI服务器应用，用于监测HotSpot JVM的创建和终止，并提供一个接口，允许远程监测工具附加到运行于本地主机的JVM上。&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;jvisualvm.exe&lt;/td&gt;
+&lt;td&gt;JVM监测、故障排除、分析工具，主要以图形化界面的方式提供运行于指定虚拟机的Java应用程序的详细信息。&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;keytool.exe&lt;/td&gt;
+&lt;td&gt;密钥和证书管理工具，主要用于密钥和证书的创建、修改、删除等。&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;kinit.exe&lt;/td&gt;
+&lt;td&gt;主要用于获取或缓存Kerberos协议的票据授权票据。&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;klist.exe&lt;/td&gt;
+&lt;td&gt;允许用户查看本地凭据缓存和密钥表中的条目(用于Kerberos协议)。&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;ktab.exe&lt;/td&gt;
+&lt;td&gt;Kerberos密钥表管理工具，允许用户管理存储于本地密钥表中的主要名称和服务密钥。&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;native2ascii.exe&lt;/td&gt;
+&lt;td&gt;本地编码到ASCII编码的转换器(Native-to-ASCII Converter)，用于&amp;quot;任意受支持的字符编码&amp;quot;和与之对应的&amp;quot;ASCII编码和(或)Unicode转义&amp;quot;之间的相互转换。&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;orbd.exe&lt;/td&gt;
+&lt;td&gt;对象请求代理守护进程(Object Request Broker Daemon)，它使客户端能够透明地定位和调用位于CORBA环境的服务器上的持久对象。&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;pack200.exe&lt;/td&gt;
+&lt;td&gt;JAR文件打包压缩工具，它可以利用Java类特有的结构，对普通JAR文件进行高效压缩，以便于能够更快地进行网络传输。&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;packager.exe&lt;/td&gt;
+&lt;td&gt;这是微软提供的对象包装程序，用于对象安装包。&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;policytool.exe&lt;/td&gt;
+&lt;td&gt;策略工具，用于管理用户策略文件(.java.policy)。&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;rmic.exe&lt;/td&gt;
+&lt;td&gt;Java RMI 编译器，为使用JRMP或IIOP协议的远程对象生成stub、skeleton、和tie类，也用于生成OMG IDL。&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;rmid.exe&lt;/td&gt;
+&lt;td&gt;Java RMI 激活系统守护进程，rmid启动激活系统守护进程，允许在虚拟机中注册或激活对象。&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;rmiregistry.exe&lt;/td&gt;
+&lt;td&gt;Java 远程对象注册表，用于在当前主机的指定端口上创建并启动一个远程对象注册表。&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;schemagen.exe&lt;/td&gt;
+&lt;td&gt;XML schema生成器，用于生成XML schema文件。&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;serialver.exe&lt;/td&gt;
+&lt;td&gt;序列版本命令，用于生成并返回serialVersionUID。&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;servertool.exe&lt;/td&gt;
+&lt;td&gt;Java IDL 服务器工具，用于注册、取消注册、启动和终止持久化的服务器。&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;tnameserv.exe&lt;/td&gt;
+&lt;td&gt;Java IDL瞬时命名服务。&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;unpack200.exe&lt;/td&gt;
+&lt;td&gt;JAR文件解压工具，将一个由pack200打包的文件解压提取为JAR文件。&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;wsgen.exe&lt;/td&gt;
+&lt;td&gt;XML Web Service 2.0的Java API，生成用于JAX-WS Web Service的JAX-WS便携式产物。&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;wsimport.exe&lt;/td&gt;
+&lt;td&gt;XML Web Service 2.0的Java API，主要用于根据服务端发布的wsdl文件生成客户端存根及框架&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;xjc.exe&lt;/td&gt;
+&lt;td&gt;主要用于根据XML schema文件生成对应的Java类。&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+</description>
+        </item>
+        <item>
+        <title>jconsole使用说明</title>
+        <link>https://lyoshur.github.io/stack/p/jconsole%E4%BD%BF%E7%94%A8%E8%AF%B4%E6%98%8E/</link>
+        <pubDate>Thu, 11 Aug 2022 13:31:00 +0000</pubDate>
+        
+        <guid>https://lyoshur.github.io/stack/p/jconsole%E4%BD%BF%E7%94%A8%E8%AF%B4%E6%98%8E/</guid>
+        <description>&lt;h1 id=&#34;jconsole使用说明&#34;&gt;jconsole使用说明&lt;/h1&gt;
+&lt;p&gt;JConsole 是一个内置 Java 性能分析器，可以从命令行（直接输入jconsole）或在 GUI shell （jdk\bin下打开）中运行。&lt;/p&gt;
+&lt;p&gt;它用于对JVM中内存，线程和类等的监控。可使用JTop插件。它可以监控本地的jvm，也可以监控远程的jvm，也可以同时监控几个jvm。&lt;/p&gt;
+&lt;p&gt;这款工具的好处在于，占用系统资源少，而且结合Jstat，可以有效监控到java内存的变动情况，以及引起变动的原因。在项目追踪内存泄露问题时，很实用。&lt;/p&gt;
+&lt;h2 id=&#34;1-概览&#34;&gt;1 概览&lt;/h2&gt;
+&lt;p&gt;以图标的形式显示堆内存使用量，线程使用量，类加载数量，以及CPU占用率&lt;/p&gt;
+&lt;h2 id=&#34;2-内存&#34;&gt;2 内存&lt;/h2&gt;
+&lt;p&gt;这里比jvisualvm实时性要高一点，并且可以通过切换，来展示堆内存、非堆内存、PS Old Gen、PS Eden Space、PS Survivor Space、Metaspace、Code Cache、Compressed Class Space。等内存的使用图标。&lt;/p&gt;
+&lt;h2 id=&#34;3-线程&#34;&gt;3 线程&lt;/h2&gt;
+&lt;p&gt;这里能显示活动线程数量以及峰值线程数量的变化图表。&lt;/p&gt;
+&lt;p&gt;下面的线程框，能查看每个线程的线程名称，以及线程的堆栈跟踪。还有一个按钮来支持死锁检测。&lt;/p&gt;
+&lt;h2 id=&#34;4-类&#34;&gt;4 类&lt;/h2&gt;
+&lt;p&gt;类页卡主要展示已加装当前类数量、已加载类总数、已卸载类总数等类相关信息&lt;/p&gt;
+&lt;h2 id=&#34;5-vm概要&#34;&gt;5 VM概要&lt;/h2&gt;
+&lt;p&gt;vm概要主要显示堆信息、虚拟机信息、类路径等相关信息&lt;/p&gt;
+&lt;h2 id=&#34;6-mbean&#34;&gt;6 MBean&lt;/h2&gt;
+&lt;p&gt;JMX把所有被管理的资源都成为MBean（ManagedBean），这些MBean全部由MBeanServer管理，如果要访问MBean，可以通过MBeanServer对外提供的访问接口，例如RMI或HTTP。&lt;/p&gt;
+&lt;h3 id=&#34;61-spring-boot程序接入mbean&#34;&gt;6.1 spring boot程序接入Mbean&lt;/h3&gt;
+&lt;p&gt;在启动程序添加注解@EnableMBeanExport，告知spring自动注册MBean&lt;/p&gt;
+&lt;p&gt;在Controller上，添加@ManagedResource注解 （objectName = &amp;ldquo;company:name = testName&amp;rdquo;, descriptiopn = &amp;ldquo;描述信息&amp;rdquo;）&lt;/p&gt;
+&lt;p&gt;在值添加 @ManagedAttribute（descriptiopn = &amp;ldquo;描述信息&amp;rdquo;）&lt;/p&gt;
+&lt;p&gt;在方法上添加@ManagedOperation&lt;/p&gt;
+&lt;p&gt;@ManagedOperationParameter（name= &amp;ldquo;name&amp;rdquo;, descriptiopn = &amp;ldquo;描述信息&amp;rdquo;）&lt;/p&gt;
+&lt;h2 id=&#34;7-注意事项&#34;&gt;7 注意事项&lt;/h2&gt;
+&lt;p&gt;想监控JAVA程序需要在程序启动时，添加JMX相关参数。如果是本地连接，可以不加&lt;/p&gt;
+</description>
+        </item>
+        <item>
+        <title>jvisualvm使用说明</title>
+        <link>https://lyoshur.github.io/stack/p/jvisualvm%E4%BD%BF%E7%94%A8%E8%AF%B4%E6%98%8E/</link>
+        <pubDate>Thu, 11 Aug 2022 13:31:00 +0000</pubDate>
+        
+        <guid>https://lyoshur.github.io/stack/p/jvisualvm%E4%BD%BF%E7%94%A8%E8%AF%B4%E6%98%8E/</guid>
+        <description>&lt;h1 id=&#34;jvisualvm使用说明&#34;&gt;jvisualvm使用说明&lt;/h1&gt;
+&lt;p&gt;JVisualVM是JDK自带的性能检测工具，路径在%JAVA_HOME%/bin下面。双击打开&lt;/p&gt;
+&lt;p&gt;在本地页卡下是，本地启动的java程序列表，同时能够包含显示Pid&lt;/p&gt;
+&lt;p&gt;点击某一个程序，能够从 概述、监视、线程、抽样器、Profiler 几个防线显示应用程序的信息&lt;/p&gt;
+&lt;h2 id=&#34;概述&#34;&gt;概述&lt;/h2&gt;
+&lt;p&gt;概述下主要包括应用程序的PID、主类、以及JVM相关的一些参数。系统属性这里能够显示一些java、spring、tomcat等相关属性信息&lt;/p&gt;
+&lt;h2 id=&#34;监视&#34;&gt;监视&lt;/h2&gt;
+&lt;p&gt;监视页卡主要显示CPU使用情况，堆内存使用情况，装载的类数量、以及线程活跃情况&lt;/p&gt;
+&lt;h2 id=&#34;线程&#34;&gt;线程&lt;/h2&gt;
+&lt;p&gt;线程页卡主要显示线程的活跃情况，根据不同颜色包含运行、休眠、等待、驻留、监视等几个不同的状态。&lt;/p&gt;
+&lt;p&gt;这里可以使用右上角的线程Dump,来获取每个线程的调用栈信息。&lt;/p&gt;
+&lt;h2 id=&#34;抽样器&#34;&gt;抽样器&lt;/h2&gt;
+&lt;p&gt;抽样器是这个工具比较核心的部分，主要分为CPU抽样和内存抽样。&lt;/p&gt;
+&lt;p&gt;CPU抽样能按照CPU样例显示每个java方法（这里能看到自定义的方法名）的CPU执行时间，可以通过页卡切换为每个线程的CPU占用时间。这里有些线程是类似Thread-22这种线程名称，如果需要定位到具体某个类启动的方法，可以结合线程的线程Dump来定位具体的线程。&lt;/p&gt;
+&lt;p&gt;内存抽样能按照堆内存中的不同变量类型，显示内存占用，不过因为实现原理的原因，比如说 String的底层是 []char，显示的结果并不是太直观。点击每个线程分配页卡，能看到每个线程的内存分配用量。&lt;/p&gt;
+&lt;p&gt;内存抽样还可以手动点击执行GC，来测试内存回收结果。点击堆Dump，可以导出展示当前堆内存结果，类似String之类比较简单的内存，能看到一些简单值。&lt;/p&gt;
+&lt;h2 id=&#34;profiler&#34;&gt;Profiler&lt;/h2&gt;
+&lt;p&gt;暂时不知道有什么用，点击后显示正在连接到目标VM就卡死了 = =、&lt;/p&gt;
+</description>
+        </item>
+        
+    </channel>
+</rss>
