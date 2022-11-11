@@ -1,12 +1,12 @@
 ---
 title: docker仓库管理
-description: docker仓库管理
+description: #
 slug: docker仓库管理
 date: 2022-03-06 00:00:00+0000
 categories:
-    - Other
-tags:
     - Docker
+tags:
+    - #
 ---
 
 ## docker仓库管理

@@ -1,6 +1,6 @@
 ---
 title: MySQL获取数据库结构
-description: MySQL获取数据库结构
+description: #
 slug: MySQL获取数据库结构
 date: 2022-03-06 00:00:00+0000
 categories:

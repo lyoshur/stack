@@ -1,12 +1,12 @@
 ---
 title: docker常用命令
-description: docker常用命令
+description: #
 slug: docker常用命令
 date: 2022-03-06 00:00:00+0000
 categories:
-    - Other
-tags:
     - Docker
+tags:
+    - #
 ---
 
 ## docker常用命令

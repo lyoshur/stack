@@ -1,6 +1,6 @@
 ---
 title: Linux关于curl安装软件时报错
-description: Linux关于curl安装软件时报错
+description: #
 slug: Linux关于curl安装软件时报错
 date: 2022-03-06 00:00:00+0000
 categories:

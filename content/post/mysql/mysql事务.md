@@ -1,6 +1,6 @@
 ---
 title: MySQL事务
-description: MySQL事务
+description: #
 slug: MySQL事务
 date: 2022-08-25 13:36:00+0000
 categories:

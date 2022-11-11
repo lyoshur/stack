@@ -1,12 +1,12 @@
 ---
 title: git远程命令
-description: git远程命令
+description: #
 slug: git远程命令
 date: 2022-03-06 00:00:00+0000
 categories:
-    - Other
-tags:
     - GIT
+tags:
+    - #
 ---
 
 ## git远程命令
